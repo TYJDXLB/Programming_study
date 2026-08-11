@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS_Study</title>
+    <style>
+        /* Flex布局(弹性布局):是浏览器常见的布局模型,非常适合结构化布局,提供了强大的空间分布和对齐能力
+        Flex模型不会产生布局中脱标现象,布局网页更简单灵活.设置方式:给父级添加display:flex属性,使其变成弹性显示模式,子元素可以自动挤压或者拉伸
+        组成部分:1.弹性容器(父级大盒子) 2.弹性盒子(里面排列的小盒子,会自动挤压拉伸) 3.主轴(默认在水平方向) 4.侧轴(交叉轴):默认在垂直方向
+        弹性盒子如果没有设置宽高:在主轴靠内容撑开,侧轴拉伸效果 */
+        .Flex_box {
+            /* 创建flex容器: display:flex */
+            display: flex;
+            /* 主轴对齐方式: justify-content(放到父级) 属性值:
+            1.flex-start 默认值,弹性盒子从起点开始排列
+            2.flex-end 弹性盒子从终点开始排列
+            3.center 弹性盒子沿主轴居中排列
+            4.space-between 弹性盒子沿主轴均匀排列,空白均匀分布在弹性盒子之间(父级剩余尺寸分配成间距)
+            5.space-around 弹性盒子沿主轴均匀排列,空白均匀分布在弹性盒子两侧
+            6.space-evenly 弹性盒子沿主轴均匀排列,弹性盒子与容器之间间距相等 */
+            justify-content: space-evenly;
+            /* 所有盒子侧轴对齐方式: align-items(放到父级) ; 某个弹性盒子侧轴对齐方式: align-self(放到需要改变的子级)
+            1.stretch 弹性盒子沿着侧轴线被拉伸至铺满容器(弹性盒子没有设置侧轴方向尺寸时默认为拉伸,否则加属性也无法拉伸)
+            2.center 弹性盒子沿着侧轴线居中排列
+            3.flex-start 弹性盒子从起点开始依次排列
+            4.flex-end 弹性盒子从终点开始依次排列 */
+            align-items: flex-end;
+            /* 修改主轴方向: flex-direction
+            1.row 水平方向,从左向右(默认)
+            2.column 垂直方向,从上向下  [最常用!](主轴变成垂直方向,侧轴就变成水平方向)
+            3.row-reverse 水平方向,从右向左
+            4.column-revrese 垂直方向,从下向上 */
+            flex-direction: column;
+
+            height: 300px;
+            border: 1px solid #6CF;
+        }
+        .Flex_box div {
+            width: 200px;
+            height: 100px;
+            background-color: pink;
+        }
+        /* 某个弹性盒子侧轴对齐方式: align-self(放到需要改变的子级) */
+        .Flex_box div:nth-child(2) {
+            align-self: flex-start;
+        }
+
+
+        .Flex_box2 {
+            display: flex;
+            height: 300px;
+            border: 1px solid #000;
+        }
+        .Flex_box2 div {
+            background-color: #6CF;
+        }
+        .Flex_box2 div:nth-child(1) {
+            width: 200px;
+        }
+        /* 弹性伸缩比: flex (控制弹性盒子的主轴方向的尺寸,放在需要改变的子级中)
+        属性值:整数数字,表示占用父级剩余尺寸的份数 */
+        .Flex_box2 div:nth-child(2) {
+            flex: 1;    /* 第二个盒子占剩余的1份 */
+        }
+        .Flex_box2 div:nth-child(3) {
+            flex: 2;    /* 第三个盒子占剩余的2份 */
+        }
+        
+
+        .Flex_box3 {
+            display: flex;
+            /* 弹性盒子换行(加在父级): flex-wrap
+            (由于弹性盒子可以自动压缩或拉伸,默认情况下,所有弹性盒子都在一行显示)
+            1.wrap换行  2.nowrap不换行(默认) */
+            flex-wrap: wrap;
+            justify-content: space-around;
+
+            height: 300px;
+            border: 1px solid #000;
+        }
+        .Flex_box3 div {
+            width: 200px;
+            height: 100px;
+            background-color: #6CF;
+        }
+        /* 行对齐方式(只对多行生效,对单行无效): align-content(行对齐时针对于主轴的行,反应的是行之间的关系)    属性值:
+        1.flex-start 默认值,弹性盒子从起点开始排列
+        2.flex-end 弹性盒子从终点开始排列
+        3.center 弹性盒子沿主轴居中排列
+        4.space-between 弹性盒子沿主轴均匀排列,空白均匀分布在弹性盒子之间(父级剩余尺寸分配成间距)
+        5.space-around 弹性盒子沿主轴均匀排列,空白均匀分布在弹性盒子两侧
+        6.space-evenly 弹性盒子沿主轴均匀排列,弹性盒子与容器之间间距相等 */
+        /* align-items用于单行内部 align-content用于多行之间 */
+    </style>
+</head>
+<body>
+    <!-- Flex布局测试 -->
+    <div class="Flex_box">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+    </div>
+    <hr>
+    <div class="Flex_box2">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+    </div>
+    <hr>
+    <div class="Flex_box3">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+        <div>6</div>
+    </div>
+</body>
+</html>

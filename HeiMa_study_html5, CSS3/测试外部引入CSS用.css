@@ -1,0 +1,5 @@
+/* 该文件存放CSS代码,格式依旧为:选择器{属性名:属性值;} */
+div {
+    color: blue;
+    font-size: 20px;
+}

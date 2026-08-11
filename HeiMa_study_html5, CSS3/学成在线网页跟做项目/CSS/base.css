@@ -1,0 +1,20 @@
+/* 基础公共样式: 清楚默认格式 + 设置通用样式 */
+* {     /* 清除默认内外边距,规定盒子为内减模式 */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+li {    /* 清除li的默认样式 */
+    list-style: none;
+}
+
+body {  /* 设置默认字体为:字号14px,行高1.5倍,字体如下,颜色#333 */
+    font: 14px/1.5 "Microsoft Yahei", "Hiragino Sans GB", "Heiti SC", "wenQuanYi Micro Hei", sans-serif;
+    color: #333;
+}
+
+a {     /* 设置超链接颜色,和去掉超链接下划线 */
+    color: #333;
+    text-decoration: none;
+}

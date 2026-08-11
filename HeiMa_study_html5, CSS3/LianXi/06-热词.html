@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>前端热词</title>
+    <style>
+        /* 设置导航键背景属性
+        .navigation-key {
+            
+        } */
+        /* 设置值超链接的属性 */
+        a {
+            display: block; /* 超链接改为块标签 */
+            /* 设置文字属性 */
+            color: white;
+            font-size: 18px;
+            text-decoration: none;  /* 不要下划线 */
+            line-height: 80px;
+            /* 设置背景属性 */
+            width: 200px;
+            height: 80px;
+            background-color: #3064bb;
+            text-align: center;     /* 文字居中对齐,本质是控制内容的对齐方式,属性设置给内容的父级 */
+        }
+        /* 设置导航键背景鼠标悬停时的属性 */
+        a:hover {
+            background-color: #608dd9;
+        }
+    </style>
+</head>
+<body><!-- 不能用div嵌套超链接,否则点击背景没法跳转 -->
+    <a href="#">HTML</a>
+    <a href="#">CSS</a>
+    <a href="#">JavaScript</a>
+    <a href="#">Vue</a>
+    <a href="#">React</a>
+</body>
+</html>

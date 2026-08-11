@@ -1,0 +1,189 @@
+<!-- HTML(Hyper Text Markup Language)是一种超文本标记语言,是搭建网页骨架的基础语言.不是编程语言 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02-HTML基础框架</title>
+</head>
+
+<body>
+    <!-- 由h1-h6为一级到六级标题, 标题自动加粗并且独占一行. h1标签只能使用一次,用来放新闻标题或网页logo;后面的标题没有限制 -->
+    <h1>一级标题</h1>
+    <hr> <!-- hr标签用来定义水平线, 可以用来分割内容 -->
+    <h2>二级标题</h2>
+    <br> <!-- br标签用来定义换行, 可以在文本中插入一个换行符 -->
+    <h3>三级标题</h3>
+    <h4>四级标题</h4>
+    <h5>五级标题</h5>
+    <h6>六级标题</h6>
+
+    <!-- p标签用来定义段落, p标签会自动在前后添加空行 -->
+    <p>
+        洛天依（LuoTianyi）是Vsinger旗下虚拟歌手，出生于7月12日，是基于语音合成软件VOCALOID系列制作的女性虚拟歌手、虚拟偶像，形象由MOTH参与设计，声源由山新、鹿乃担任，隶属于上海禾念信息科技有限公司，是世界首位中文V家虚拟歌手
+    </p>
+    <p>
+        2011年，雅音宫羽入围VOCALOID CHINA PROJECT中文形象，后经画师ideolo再创作于2012年3月公布洛天依的形象设计；2012年7月，在第八届中国国际动漫游戏博览会正式推出声库。
+        早期主要活跃在动漫“二次元”圈层；2016年起逐渐进入大众视野；与杨钰莹带来《花儿纳吉》，翻唱《忍者神龟2：破影而出》主题曲。2017年与许嵩演唱歌曲《深夜书店》；
+        同年，洛天依等在上海举行万人演唱会。2018年，与京剧演员王佩瑜合唱歌曲《但愿人长久》。2019年，成为首位在日本演出的中国虚拟歌手。2021年与俄罗斯虚拟歌手娜娜共同发布单曲《出发向未来》
+        [5]。2022年，洛天依ACE1.0在ACE虚拟歌姬开启公测；获“最受欢迎虚拟代言人” [163]。2023年，加入索尼音乐。2024年入选“2023年度十大虚拟数字人”。2025年9月举行2025洛天依
+        “无限共鸣・流光协奏”全息巡回演唱会。10月担任国家宝藏推荐官。2026年2月参加《“活力视听 万象同屏”2026中国网络视听盛典》。
+    </p>
+
+    <!-- 图像标签<img src="图片的URL(图片的位置与名称), 图片不自动换行 -->
+    <!-- 图像标签属性: alt(替代文本,图片无法显示的时候显示的文本) title(提示文本,鼠标悬停时显示的文本) [width(宽度,值位数字没有单位) height(高度,值位数字没有单位)]这两项一般由CSS设置,浏览器缩放图片默认时等比缩放的,只变高宽也会改变> -->
+    <img src="./Picture/天依与熊.png" alt="洛天依与熊" title="洛天依与熊" width="500" height="500">
+    <img src="../HeiMa_study_html5, CSS3/Picture/思春期better change.jpg">
+    <!-- 路径学习:./代表当前文件夹, ../代表上一级文件夹, ../../表示上两级文件夹 -->
+    <!-- 绝对路径:以盘符开头的路径,使用网址上的图片 -->
+    <img src="https://bkimg.cdn.bcebos.com/pic/55e736d12f2eb9389b50bcb8a2299235e5dde711c16f?x-bce-process=image/format,f_auto/quality,Q_70/resize,m_lfit,limit_1,w_536" alt="洛天依" title="洛天依">
+
+    <!-- 超链接标签<a href="链接地址">链接文本</a> ; target="_blank"表示在新标签页中打开链接,target="_self"表示在当前标签页中打开链接 -->
+    <a href="https://baike.baidu.com/item/%E6%B4%9B%E5%A4%A9%E4%BE%9D/6753346" target="_blank">洛天依</a>
+    <a href="./01-标签语法和网页框架.html">跳转到本地文件</a>
+    <!-- 开发初期,不知道超链接的跳转地址,href写#,表示空连接不会跳转 -->
+    <a href="#">空链接</a>
+
+    <!-- 音频标签:<audio src="音频文件的URL" (还有三个常见属性: controls(控制面板), autoplay(自动播放,浏览器会禁用自动播放), loop(循环播放)></audio> -->
+    <audio src="./media/斯芬克斯之谜-洛天依.mp3" controls loop></audio>
+
+    <!-- 视频标签:<video src="视频文件的URL" (还有三个常见属性: controls(控制面板), autoplay(自动播放,视频想要自动播放需要在静音条件下进行), muted(静音播放), loop(循环播放)></video> -->
+    <video src="./media/斯芬克斯之谜-洛天依.mp4" controls loop width="1000"></video>
+
+    <!-- 文本格式化标签:为文本添加特殊格式,以突出重点 <strong(b)>加粗</strong>, <em(i)>斜体</em>, <ins(u)>下划线</ins>, <del(s)>删除线</del> -->
+    <p>
+        这是一个<b>加粗</b> <strong>jia cu</strong>的段落。<br>
+        这是一个<i>斜体</i> <em>xie ti</em>的段落。<br>
+        这是一个<u>下划线</u> <ins>xia hua xian</ins>的段落。<br>
+        这是一个<s>删除线</s> <del>shan chu xian</del>的段落。
+    </p>
+    
+    <!-- 表格标签:table嵌套tr, tr嵌套th和td, tr是表格行, th是表格标题, td是表格数据
+        表格属性: border(边框粗细,默认没有边框) cellspacing(单元格之间的间距,默认0) cellpadding(单元格内容与边框的间距,默认1) -->
+    <table border="1" cellpadding="10"> <!-- table标签只能包含tr标签, 但是tr标签内可包含th和td标签 -->
+        <thead> <!-- 主要是方便查看,用户看不到-->
+            <tr> <!-- tr标签独占一行--> <!-- shift + alt + f 可以自动整理格式-->
+                <th>姓名</th>
+                <th>语文</th>
+                <th>数学</th>
+                <th>英语</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>张三</td>
+                <td>85</td>
+                <td rowspan="3">90</td>
+                <td>88</td>
+            </tr>
+            <tr>
+                <td>李四</td>
+                <td>92</td>
+                <!-- <td>90</td> -->
+                <td>95</td>
+            </tr>
+            <tr>
+                <td>平均分</td>
+                <td>88.5</td>
+                <!-- <td>90</td> -->
+                <td>91.5</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>评价</td>
+                <td colspan="3">A</td>
+                <!-- <td>A</td>
+                <td>A</td> -->
+            </tr>
+        </tfoot>
+    </table>
+        <!-- 表格结构标签:用表格结构标签划分内容区域,是表格结构更加清晰.给浏览器看的用户看不到
+        thead(表格头部), tbody(表格主体), tfoot(表格底部) -->
+        <!-- 合并单元格步骤:1.明确合并的目标
+         2.保留最左最上的单元格,添加属性(取值位数字表示要合并的单元格数量);跨行合并(rowspan),跨列合并(colspan)
+         3.删除多余的单元格     (不可跨结构标签合并) -->
+
+    <!-- 列表标签(布局内容排列整齐的区域):有序列表<ol> 无序列表<ul> 列表项<li>;列表标签的写法是嵌套 -->
+    <ul> <!-- ul标签只能包含li标签, 但是li标签内可包含其他标签 -->
+        <li>列表项1</li> <!-- li标签独占一行-->
+        <li>列表项2</li>
+        <li>列表项3</li>
+    </ul>
+    <ol> <!-- ol标签只能包含li标签, 但是li标签内可包含其他标签 -->
+        <li>列表项1</li>
+        <li>列表项2</li>
+        <li>列表项3</li>
+    </ol>
+    <!-- 定义列表:标签为:dl嵌套dt和dd, dt是定义列表的标题,dd是定义列表的详情-->
+    <dl> <!-- dl标签只能包含dt和dd标签, 但是dt和dd标签内可包含其他标签 -->
+        <dt>术语1</dt>
+        <dd>术语1的定义</dd>
+        <dd>术语1的定义2</dd>
+        <dt>术语2</dt>
+        <dd>术语2的定义</dd>
+    </dl>
+
+    <!-- 表单(收集用户信息,常用于登陆,注册,搜索区域) -->
+    <!-- input标签:type属性:1.text(文本输入框) 2.password(密码输入框) 3.radio(单选按钮) 4.checkbox(复选框) 5.file(文件选择框) -->
+    文本框: <input type="text" placeholder="请输入文本">    <!-- placeholder属性:提示文本,在文本框中显示的提示信息 -->
+    <br>
+    密码框: <input type="password" placeholder="请输入密码">
+    <br>
+    单选按钮:<input type="radio" name="gender" value="male"> 男     <!-- name属性:单选按钮的name属性相同,表示同一组单选按钮,只能选择一个 -->
+            <input type="radio" name="gender" value="female" checked> 女    <!--value属性:单选按钮的值,提交表单时传递给服务器 ; checked属性:默认选中 --> 
+    <br>
+    复选框: <input type="checkbox" name="hobby" value="reading"> 阅读
+            <input type="checkbox" name="hobby" value="music"> 音乐
+            <input type="checkbox" name="hobby" value="sports" checked> 代码
+    <br>
+    文件选择框: <input type="file" multiple> <!-- multiple属性:允许选择多个文件 -->
+
+    <!-- 下拉菜单:select嵌套option,select为下拉菜单整体,option为下拉菜单的选项 -->
+    Vsinger:
+    <select name="vsinger" id="vsinger">
+        <option value="洛天依">洛天依</option>
+        <option value="乐正绫" selected>乐正绫</option> <!-- selected属性:默认选中 ; 不加默认第一个 -->
+        <option value="言和">言和</option>
+        <option value="乐正龙牙">乐正龙牙</option>
+        <option value="墨清玄">墨清玄</option>
+    </select>
+
+    <!-- 文本域:textarea双标签,用于多行文本输入(cols,rows两个属性是设置尺寸的属性,但由于一般都使用CSS来控制尺寸故不常用;
+     placeholder属性:提示文本(输入别的文字就没有了 ; 直接在双括号内输入的文字就是输入框里直接就有的,输入的文字在他后面)
+     文本域可以拖拽, 后期会禁用 -->
+    <textarea name="message" id="message" cols="30" rows="5" placeholder="请输入留言">框内已有的文字</textarea>
+
+    <!-- label标签:作为某个标签的说明文本,可增大单控件的点击范围(支持控件:文本框,密码框,上传文件,单选框,多选框,下拉菜单,文本域等等),后期配合CSS使用 -->
+    <!-- 写法1:标签只包裹内容,不包裹控件;label标签的for属性值要与控件的id属性值相同 -->
+    <input type="radio" name="gender" id="man"><label for="man">男</label>
+    <!-- 写法2:标签包裹内容和控件,不需要for属性 -->
+    <label><input type="radio" name="gender" id="woman">女</label>
+    <hr>
+
+    <!-- 表单控件一般写到form标签内统一管理,例如reset重置功能也要借助form标签,想要使用功能需要form管理 -->
+    <!-- 按钮标签:button双标签,可放置文本或图像,可自定义样式
+     (属性:submit提交功能,点击提交后台(默认);reset重置功能,点击表单控件恢复默认;button普通按钮,默认没有功能,与javascript配合使用) -->
+    <form action="" method=""> <!-- action属性:表单提交的地址,method属性:表单提交的方式(get/post) -->
+        name: <input type="text" name="name" placeholder="请输入姓名">
+        <br><br>
+        password: <input type="password" name="password" placeholder="请输入密码">
+        <br><br>
+        <button type="submit">提交</button>
+        <button type="reset">重置</button>
+        <button type="button">普通按钮</button>
+
+        <!-- 布局标签:div(独占一行),span(不换行) -->
+        <div>这是一个div标签</div>
+        <div>div标签又称为:大盒子</div>
+        <span>这是一个span标签</span>
+        <span>span标签又称为:小盒子</span>
+    </form>
+
+    <!-- 字符实体(空格:&nbsp; 小于号:&lt; 大于号:&gt; 和号:&amp;) -->
+    你我皆是&nbsp;&nbsp;&nbsp;&nbsp;&lt;黑&amp;马!&gt;
+
+</body>
+
+</html>

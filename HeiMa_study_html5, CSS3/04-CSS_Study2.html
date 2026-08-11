@@ -1,0 +1,276 @@
+<!-- CSS特性:
+ 1.继承性:子级默认继承父级的 文字控制属性 (标签有自己的特性的还是自己的特性)
+ 2.层叠性:相同的属性后面的会覆盖前面的,不同的属性会叠加
+ 3.优先级:选择器越精确优先级越高(!important为提权属性,在CSS属性里加上该字段使该属性权重为最高[color: red !important;])
+ 对于复合选择器,有权重叠加规则:看哪个权重高的选择器个数多(继成全权重最低) -->
+ <!-- CSS推荐书写顺序:1.盒子模型属性 2.文字样式 3.圆角,阴影等修饰属性 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS_Study</title>
+    <style>
+        /* 复合选择器,由多个选择器符合而成: */
+        /* 1.后代选择器:[父选择器 子选择器{CSS属性}] (表示选中div标签里的所有span标签,哪怕它嵌套在了别的标签里) */
+        /* div span {
+            color: #6CF;
+        } */
+        /* 2.自带选择性:[父选择器>子选择器{CSS属性}] (只选中子代里的span标签) */
+        /* div > span {
+            color: #6CF;
+        } */
+        /* 3.孙子选择器 */
+        /* div > * > span {
+            color: #6CF;
+        } */
+        /* 并集选择器,多组选择器用逗号隔开 */
+        /* span, p {
+            color: red;
+        } */
+        /* 交集选择器,选中同时满足多个条件的元素 写法:各个选择器之间不加空格直接连着写(标签选择器写前面) */
+        /* p.LeiXuanZeQi {
+            color: brown;
+        } */
+        
+        /* 伪类选择器:设置某个状态的样式   鼠标悬停状态:选择器:hover {CSS属性} */
+        /* 伪类-超链接:有四个状态: 1.访问前:link 2.访问后:visited 3.鼠标悬停:hover 4.点击时:active (如果四个状态都要设置按LVHA顺序进行) */
+        /* a:hover {
+            color: yellow;
+        } */
+
+        /* 结构伪类选择器(E:first-child查找的第一个E元素;E:last-child查找的最后一个E元素;E:nth-child(N)查找的第N个E元素(第一个N为1)) */
+        /* li:first-child {
+            background-color: #6CF;
+        }
+        li:nth-child(3) {
+            background-color: yellow;
+        }
+        li:last-child {
+            background-color: pink;
+        } */
+        /* :nth-child(公式) :偶数2n 奇数2n+1 五的倍数5n 第五个及以后n+5 第五个及以前-n+5 */
+        li:nth-child(n+3) {
+            background-color: #6CF;
+        }
+
+        /* 伪元素选择器,用于创建虚拟元素,用来摆放装饰性内容(E::before在E元素前添加一个伪元素;E::after在E元素和后添加一个伪元素)
+        必须设置content属性(content:" ",用来设置伪元素的内容,如果没有内容,则引号内留空);伪元素默认为行内显示模式;权重和标签选择器相同 */
+        .伪类选择器 {
+            width: 300px;
+            height: 300px;
+            background-color: pink;
+        }
+        .伪类选择器::before {
+            content: "老鼠";/* 标签内容(为行内显示模式,一定要有!) */
+        }
+        .伪类选择器::after {
+            content: "大米";
+        }
+        /* 盒子模型(组成部分:内容区域width&height,内边距padding(出现在内容与盒子边缘之间),边框线border,外边距margin(出现在盒子外边)) */
+        .盒子模型 {
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+
+            padding: 20px;
+            border: 2px dotted #6CF; /* 属性值:边框线粗细,线条样式(实线solid,虚线dashed,点线dotted),颜色(不区分顺序) */
+            margin: 20px;
+        }
+        .盒子模型_不同边框线 {
+            width: 200px;
+            height: 200px;
+            background-color: rgb(215, 215, 215);
+            /* 设置单方向边框线,属性名:border-方向名词 */
+            border-top: 2px solid red;
+            border-right: 4px dashed green;
+            border-left: 6px dotted yellow;
+            border-bottom: 8px solid pink;
+        }
+        .盒子模型_不同内边距 {
+            width: 200px;
+            height: 200px;
+            background-color: #6CF;
+            /* 设置单方向内边距,属性名:padding-方向名词 */
+            padding-top: 20px;
+            padding-right: 40px;
+            padding-left: 60px;
+            padding-bottom: 80px;
+            /* padding多值写法:1.padding: 10px(四个方向均为10px)
+            2.padding: 10px 20px(上下10px,左右20px)
+            3.padding: 10px 20px 30px(上10px,左右20px,下30px)
+            4.padding: 10px 20px 30px 40px(上10px,右20px,下30px,左40px)
+            记忆方法:从上开始顺时针旋转一圈,如果当前方向没有数值就和对面一样 */
+            /* 由于加内边距会撑大盒子,需要使用内减模式控制尺寸 */
+            box-sizing: border-box;
+            /* [外边距margin和内边距padding写法一样!!!(margin不会撑大盒子)] */
+            /* 用margin实现版心居中 */
+            margin: 0 auto;
+        }
+        /* 清除默认样式(例如标题,段落标签等等会有默认的内外边距,不一定符合要求可能要清除掉) */
+        * {
+            margin: 0;
+            padding: 0;
+            /* 去掉列表的项目符号 */
+            list-style: none;
+            /* 一般在这里启动内减模式,适用全局 */
+            box-sizing: border-box;
+        }
+        /* 盒子模型-元素溢出(控制溢出的元素内容的显示方式)  属性名:overflow
+        属性值:溢出隐藏hidden, 移除滚动(无论是否溢出,都显示滚动条位置,有水平滚动条)scroll, 溢出滚动(溢出才显示滚动条内容)auto */
+        .盒子模型_内容溢出 {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+
+            overflow: auto;
+        }
+        /* 外边距合并问题:垂直排列的两个元素,上下margin会合并(取两个margin中较大的值生效) */
+        .one {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+            margin-bottom: 50px;
+        }
+        .two {
+            width: 100px;
+            height: 100px;
+            background-color: paleturquoise;
+            margin-top: 20px;
+        }
+        /* 外边距塌陷问题:父子级的标签,自己添加上下边距会产生塌陷问题(导致父级一起向下移动) */
+        /* 解决方法:1.取消子级margin添加父级padding 2.父级设置overflow:hidden 3.父级设置border-top
+        2&3都是使浏览器找到正确的父级位置,从而防止塌陷 */
+        .father {
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+
+            overflow: hidden;
+        }
+        .son {
+            width: 100px;
+            height: 100px;
+            background-color: orange;
+
+            margin-top: 20px;
+        }
+        /* 行内元素改变垂直位置(用margin和padding属性无法改变元素垂直位置,需要给行内元素添加line-height属性) */
+        .行内元素内外边距 {
+            background-color: pink;
+            margin: 50px;
+            padding: 20px;
+            box-sizing: border-box;
+            /* line-height改变行高 */
+            line-height: 100px;
+        }
+        /* 盒子模型-圆角(设置元素外边框为圆角)  属性名border-radius 属性值(圆角半径):数字px,百分比 */
+        .测试盒子模型-圆角 {
+            width: 200px;
+            height: 100px;
+            background-color: #6CF;
+            margin: 50px auto;
+            /* 可以分别定义四个角的圆角(按从左上开始顺时针旋转一圈,如果当前方向没有数值就和对面一样) */
+            border-radius: 20px 30px 50px;
+            /* 百分比是以长宽的边长的百分数做为水平(垂直)圆角半径,只写一个百分数表示水平竖直百分比相同(圆角最大为50%) */
+            /* border-radius: 10% / 20%; */
+        }
+        /* 盒子模型-阴影(给元素添加阴影效果)属性名:box-shadow,属性值:X偏移量 Y轴偏移量 模糊半径 扩散半径 颜色 内外阴影(默认为外阴影,内阴影需要写inset) */
+        .测试盒子模型-阴影 {
+            width: 300px;
+            height: 100px;
+            background-color: #6CF;
+            margin: 50px auto;
+            border-radius: 50px;
+
+            box-shadow: 2px 5px 10px 1px rgba(0, 0, 0, 0.5) inset;
+
+            line-height: 100px;
+            text-align: center;
+        }
+        /* 浮动属性:让块元素水平排列    属性名:float 属性值:左对齐left,右对齐right */
+        .box_one {
+            width: 100px;
+            height: 100px;
+            background-color: brown;
+            /* 要使两个标签都在一行,两个都要加float标签 */
+            float: left;
+        }
+        .box_two {
+            width: 200px;
+            height: 200px;
+            background-color: orange;
+            /* 浮动属性特点:顶对齐;具备行内块模式特点;脱标[浮动后的盒子会脱离标准流的控制,不再占用标准流的控制.
+            以上为浮动的脱标现象(如果该例子第二个盒子不浮动则会和第一个盒子重叠)] */
+            float: right;
+        }
+        /* 由于浮动元素会脱表,如果父级没有高度,子级无法撑开父级高度(可能导致页面布局错乱):清除浮动的方法:
+        1.额外标签法:在父级元素内容的最后添加一个块级元素,给这个块级元素设置CSS属性clear:both
+        2.单伪元素法:给父级元素添加一个新的class="clearfix"(不用定义该选择器的属性,有多个选择器用空格隔开),
+            再定义一个.clearfix::after伪类选择器(里面定义属性:content:""; display:block(变成块级元素); clear:both)
+        3.双伪元素法(推荐):前同单伪元素法,定义:
+            .clearfix::before,
+            .clearfix::after {
+                content:"";
+                display:table;  转为块级元素,类似与block
+            }
+            .clearfix::after {
+                clear:both;
+            }
+            在前后定义双伪元素
+        4.overflow法:在父元素添加CSS属性 overflow:hidden
+            (隐藏多余的内容,本质上脱标是由于找不到父级尺寸了,设置该属性可以找到父级尺寸从而防止页面错乱) */
+    </style>
+</head>
+<body> 
+    <!-- Emmet写法:代码简写方式 -->
+    <div class="hhh"></div>     <!-- div.hhh(标签名.类名) -->
+    <div id="hhh"></div>        <!-- div#hhh(标签名#类名) -->
+    <div></div><p></p>          <!-- div+p(标签名+标签名) -->
+    <span></span><span></span>  <!-- span*2(标签名*个数) -->
+    <div>Hello word!</div>      <!-- div{Hello word!}(标签名{内容}) -->
+    <!-- 结构伪元素选择器测试 -->
+    <ul>
+        <li>项目1</li>
+        <li>项目2</li>
+        <li>项目3</li>
+        <li>项目4</li>
+        <li>项目5</li>
+    </ul>
+    <!-- 伪元素选择器测试(要求效果:老鼠爱大米) -->
+    <div class="伪类选择器">爱</div>
+    <hr>
+    <!-- 盒子模型测试 -->
+    <div class="盒子模型">sign div!</div>
+    <hr>
+    <div class="盒子模型_不同边框线">测试不同边框线</div>
+    <hr>
+    <div class="盒子模型_不同内边距">测试不同内边距</div>
+    <hr>
+    <div class="盒子模型_内容溢出">测试内容溢出测试内容溢出测试内容溢出测试内容溢出测试内容溢出测试内容溢出测试内容溢出测试内容溢出测试内容溢出测试内容溢出测试内容溢出</div>
+    <hr>
+    <!-- 测试外边距合并 -->
+    <div class="one">box_one</div>
+    <div class="two">box_two</div>
+    <hr>
+    <!-- 测试外边距塌陷 -->
+    <div class="father">
+        <div class="son">测试外边距塌陷</div>
+    </div>
+    <hr>
+    <!-- 测试行内元素改变垂直位置 -->
+    <span class="行内元素内外边距">测试行内元素改变垂直位置top</span>
+    <span class="行内元素内外边距">测试行内元素改变垂直位置bottom</span>
+    <hr>
+    <!-- 测试盒子模型-圆角 -->
+    <div class="测试盒子模型-圆角">测试盒子模型-圆角</div>
+    <hr>
+    <!-- 测试盒子模型-阴影 -->
+    <div class="测试盒子模型-阴影">测试盒子模型-阴影</div>
+    <hr>
+    <!-- 标准流(文档流)指标签在页面中的默认排布规则,如果默认排布规则满足不了要求使用:浮动,Flex布局等规则 -->
+    <div class="box_one">box 1</div>
+    <div class="box_two">box 2</div>
+    <hr>
+</body>
+</html>

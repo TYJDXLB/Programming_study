@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>播放特效</title>
+    <link rel="stylesheet" href="../iconfont/iconfont.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        img {
+            /* 清除图片下面的白边 */
+            vertical-align: middle;
+        }
+        .box {
+            margin: 130px auto;
+            width: 300px;
+            height: 220px;
+            background-color: #f2f2f2;
+        }
+        .box .pic {
+            position: relative;
+        }
+        .box .pic span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            /* 不要用transform使其居中，会被下面调尺寸覆盖掉，可用复合属性 */
+            /* transform: translate(-50%, -50%);  */
+            /* margin: -40px 0 0 -40px; */
+            font-size: 80px;
+            color: #6cf;
+            transform: translate(-50%, -50%) scale(5);
+            opacity: 0;
+            transition: all .3s;
+        }
+        .box:hover .pic span {
+            /* 这个也要加上位移 */
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            cursor: pointer;
+        }
+        .box p {
+            margin-top: 4px;
+            line-height: 1.5;
+        }
+        /* 给图加渐变就加遮罩就行了（用伪元素加） */
+        .box .pic::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            /* 宽高100%为跟父级一样大 */
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(
+                transparent, /* transparent表示透明色 */
+                rgba(0, 0, 0, .5)
+            );
+            /* 默认遮罩透明度为零，鼠标悬停透明度为1 */
+            opacity: 0;
+        }
+        .box:hover .pic::after {
+            opacity: 1;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="pic">
+            <img src="../Picture/东方project.jpg" alt="东方project" width="300">
+            <span class="iconfont icon-bofang"></span>
+            <!-- <div class="mask"></div> -->
+        </div>
+        <p>【东方project】一起来感受幻想乡带来的魅力吧</p>
+    </div>
+</body>
+</html>

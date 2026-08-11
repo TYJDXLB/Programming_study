@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS_Study</title>
+    <style>
+        /* 平面转换transform,一般与过渡属性配合使用 */
+        .平面转换 {
+            width: 100px;
+            height: 100px;
+            background-color: #6cf;
+            transition: all 1s;
+        }
+        /* 改变转换中心：transform-origin: 水平原点位置 竖直原点位置;(位置可为:方位词,像素值,百分比) */
+        .平面转换:hover {
+            /* 平移transform: translate(x轴移动距离, y轴移动距离)   取值:百分比参照自身尺寸计算(向右向下为正) */
+            transform: translate(400px, 0);
+            /* 旋转transform: rotate(旋转角度); 角度单位deg(度数) 可取正(顺时针)负(逆时针)
+            旋转中心:默认为盒子中心   */
+            transform: rotate(360deg);
+            /* 多重转换的时候要先平移再旋转(transform作为复合属性)
+            因为旋转会改变轴向,因此先旋转再平移时会沿着不同轴向平移 */
+            transform: translateX(400px) rotate(360deg);
+            /* 缩放transform: scale(缩放倍数);也可写(x缩放倍数, y缩放倍数)  沿中心点缩放 */
+            transform: scale(.5);
+            /* 倾斜transform: skew(角度deg);  取正向左倾斜 */
+            transform: skew(45deg);
+        }
+        /* 渐变一般设置盒子背景   线性渐变：沿一条线渐变；径向渐变：沿中心向外渐变 */
+        .渐变 {
+            width: 100px;
+            height: 100px;
+            background-color: #6cf;
+            /* 线性渐变：background-image: linear-gradient(渐变方向，颜色1 终点位置，颜色2 终点位置)
+            渐变方向（默认上到下）：1. to 方位名词；2. 角度度数     终点位置（默认到一半）：百分比 */
+            background-image: linear-gradient(
+                /* to right, */
+                45deg,
+                red 70%,
+                green
+            );
+            /* 径向渐变：background-image: radial-gradient(半径 at 圆心位置，颜色1 终点位置，颜色2 终点位置)
+            半径可以是两条，为椭圆；圆心位置取值：像素单位数值/百分比/方位名词 */
+            background-image: radial-gradient(
+                100px 20px at center center,
+                red,
+                pink
+            );
+        }
+        /* 空间平移 */
+        .fu_空间 {
+            /* 视距：指定视角与平面的距离为元素添加透视效果（近大远小）
+            perspective: 视距;    添加给直接父级，取值800-1200即可 */
+            perspective: 1000px;
+        }
+        .zi_空间 {
+            margin: 0 auto;
+            width: 100px;
+            height: 100px;
+            background-color: brown;
+            transition: all .5s;
+        }
+        .zi_空间:hover {
+            /* 由于电脑为平面，正常看不到z轴效果(正轴对着屏幕外，负轴对着屏幕里) */
+            transform: translate3d(0, 0, 300px);
+            /* 空间旋转：transform: rotate3d(x，y，z，角度数) （xyz取0-1之间的数）
+            左手法则判断角度填正负值：用左手大拇指指向旋转轴正方向，四指所指的方向为正值 */
+            transform: rotateZ(360deg); /* 由于z轴与中心点重合沿着Z轴转跟平面旋转视觉上没有差别 */
+            transform: rotateX(60deg);
+            transform: rotateY(-60deg);
+        }
+        /* 立体呈现（设置子元素位于3D空间还是平面）transform-style  1.flat：平面 2.preserve-3d：3D空间
+        步骤:1. 父元素添加transform-style: preserve-3d;
+             2. 子级定位
+             3.调盒子的位置（位移或者旋转）*/
+        .立体_fu {
+            position: relative;
+            margin: 20px auto;
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+            transition: all 2s;
+            /* 使其立体呈现 */
+            transform-style: preserve-3d;
+
+            /* transform: rotateY(88deg); */
+        }
+        .立体_fu div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200px;
+            height: 200px;
+        }
+        .立体_zi-front {
+            background-color: orange;
+            /* 第一个盒子往前挪100px */
+            transform: translateZ(100px);
+        }
+        .立体_zi-back {
+            background-color: green;
+            /* 第二个盒子往后挪100px */
+            transform: translateZ(-100px);
+        }
+        .立体_fu:hover {
+            transform: rotateY(360deg);
+        }
+        /* 空间缩放：transform: scale3d(x, y, z); */
+
+        /* animation动画 实现步骤：
+        一、定义动画：写法一用于两个状态切换，写法二用于多个状态(百分比表示动画时长的百分比)；大括号里面写当前状态的CSS
+            1.@keyframes 动画名称{from{} to{}}  2.@keyframes 动画名称{0%{} 10%{} ... 100%{}}
+        二、使用动画(哪个标签使用就给哪个标签加属性)：animation: 动画名称 动画花费时长 */
+        /* 动画属性：动画名称和动画时长必须赋值，如果有两个时间第一个为动画时长第二个为延迟时间
+        animation: 动画名称(name) 动画时长(duration) 速度曲线(timimg-function) 延迟时间(delay) 重复次数(iteration-count) 动画方向(direction) 执行完毕时状态(fill-mode)
+        【拆分属性可以：animation-拆分属性 这样写】
+        animation-play-state: 暂停动画(paused为暂停，常配合hover使用)
+        速度曲线：linear匀速运动 steps()分步动画 
+        重复次数：直接写一个数字（如果要一直播放就写infinite）
+        动画方向：alternate反向
+        执行完毕时状态（默认为开始状态）：forwards结束到完毕状态 */
+        .动画 {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+
+            animation: tolong 1s;
+        }
+        @keyframes tolong {
+            from{
+                width: 100px;
+            }
+            to{
+                width: 500px;
+            }
+        }
+        @keyframes tolong2 {
+            0%{
+                width: 100px;
+            }
+            50%{
+                width: 500px;
+            }
+            100%{
+                width: 200px;
+            }
+        }
+        /* 逐帧动画，使用速度曲线steps();分几步括号里的数字就填几
+        制作步骤：1.准备显示区域（准备一个与精灵小图尺寸相同的盒子）
+                2.定义动画（移动距离=精灵图整体宽度(假如四张图宽度为720px，就是720px)）
+                3.使用动画，用steps(N) N与精灵小图的个数相同 */
+        .逐帧动画 {
+            width: 180px;
+            height: 180px;
+            /* border: 1px solid #6cf; */
+            background: url(./Picture/荷取\ 幽香\ 芙兰.png) 0 -175px;
+            /* 多组动画animation：{ 动画1，动画2，动画3} */
+            animation:
+                hetong_run 1s steps(4) infinite,
+                hetong_move 10s linear forwards
+            ;
+        }
+
+        @keyframes hetong_run {
+            /* from {   如果开始状态是默认状态那么开始状态可以不用写
+                background-position: 0 -175px;
+            } */
+            to {
+                background-position: -720px -175px;
+            }
+        }
+        @keyframes hetong_move {
+            from {
+                transform: translate(1000px);
+            }
+            to {
+                transform: translate(100px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 平移, 旋转, 多重转换, 缩放, 倾斜 -->
+    <div class="平面转换"></div>
+    <hr>
+    <!-- 渐变 -->
+    <div class="渐变"></div>
+    <hr>
+    <!-- 空间平移 -->
+    <div class="fu_空间">
+        <div class="zi_空间"></div>
+    </div>
+    <hr>
+    <!-- 立体呈现 -->
+    <div class="立体_fu">
+        <div class="立体_zi-front">front</div>
+        <div class="立体_zi-back">back</div>
+    </div>
+    <hr>
+    <!-- 动画 -->
+    <div class="动画"></div>
+    <hr>
+    <!-- 逐帧动画 -->
+    <div class="逐帧动画"></div>
+</body>
+</html>

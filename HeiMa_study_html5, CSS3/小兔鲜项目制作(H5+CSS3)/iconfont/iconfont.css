@@ -1,0 +1,87 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 5212727 */
+  src: url('iconfont.woff2?t=1785159744742') format('woff2'),
+       url('iconfont.woff?t=1785159744742') format('woff'),
+       url('iconfont.ttf?t=1785159744742') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-customer-service:before {
+  content: "\e66a";
+}
+
+.icon-goods-start-to-ship-fill:before {
+  content: "\e82c";
+}
+
+.icon-money-finance-seller:before {
+  content: "\e832";
+}
+
+.icon-order-success-fill:before {
+  content: "\e833";
+}
+
+.icon-security-fill:before {
+  content: "\e868";
+}
+
+.icon-mobile-phone:before {
+  content: "\e85c";
+}
+
+.icon-icon-test:before {
+  content: "\e63b";
+}
+
+.icon-icon-test1:before {
+  content: "\e63c";
+}
+
+.icon-xiaoxi-zhihui:before {
+  content: "\e61d";
+}
+
+.icon-xihuan:before {
+  content: "\e61e";
+}
+
+.icon-gengduo:before {
+  content: "\e61f";
+}
+
+.icon-shouye-zhihui:before {
+  content: "\e620";
+}
+
+.icon-gerenzhongxin-zhihui:before {
+  content: "\e621";
+}
+
+.icon-fanhui:before {
+  content: "\e622";
+}
+
+.icon-guanbi:before {
+  content: "\e623";
+}
+
+.icon-a-xiala2:before {
+  content: "\e624";
+}
+
+.icon-jinru:before {
+  content: "\e625";
+}
+
+.icon-tishi:before {
+  content: "\e626";
+}
+

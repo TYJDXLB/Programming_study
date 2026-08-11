@@ -1,0 +1,28 @@
+/* less导出，在less文件第一行添加：//out:储存的URL/文件名字（可不写）
+less禁止导出,在less文件第一行添加：//out: false */
+/* Less是CSS预处理器，后缀为.less 扩充了CSS语言，使其具备一定的逻辑性计算能力
+    目前浏览器不识别Less代码，需要转为对应的CSS语言。安装easy less插件可以在保存
+    less文件的时候生成对应的CSS代码   tips：单行注释无法生成到CSS文件 */
+.father {
+  width: 11px;
+  width: 9px;
+  width: 20px;
+  width: 5px;
+  height: 5rem;
+}
+.father .zi {
+  width: 20px;
+}
+.father .zi a {
+  color: aqua;
+}
+.father .zi a:hover {
+  color: #6cf;
+}
+/* @import "文件路径" [@import url(); 不能这样写less完全不处理这一行]
+将其他less文件都导入一个less文件只生成一个CSS文件，只用引入一个就行了 */
+/* 该文件存放CSS代码,格式依旧为:选择器{属性名:属性值;} */
+div {
+  color: blue;
+  font-size: 20px;
+}

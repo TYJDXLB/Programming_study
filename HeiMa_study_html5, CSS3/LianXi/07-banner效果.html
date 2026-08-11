@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>banner效果</title>
+    <style>
+        .banner {
+        /* 背景 */
+            height: 500px;
+            background-color: #f3f3f4;
+            background-image: url(../Picture/北.jpeg);
+            background-repeat: no-repeat;
+            background-size: contain;
+
+            text-align: right;/* 文字右对齐(在父级设置) */
+        }
+        .banner h2 {    /* 工程上多用复合选择器来精确找到某个父代选择器下面的某个标签 */
+            color: #333;
+            font-size: 36px;
+            line-height: 100px;
+        }
+        .banner p {
+            color: #333;
+            font-size: 20px;
+        }
+        .banner a {
+            display: inline-block;  /* 转化为行内块才能在父级设置文字右对齐 */
+
+            /* 按钮背景样式 */
+            width: 125px;
+            height: 40px;
+            background-color: #f06b1f;
+            /* 字体样式 */
+            color: #fff;
+            font-size: 20px;
+            text-decoration: none;
+            line-height: 40px;
+            text-align: center;
+        }
+        .banner a:hover {
+            background-color: #ff5e00;
+        }
+    </style>
+</head>  
+<body>
+    <div class="banner">
+        <h2>让创造产生价值</h2>
+        <p>我们希望小游戏平台可以提供无限可能,让每一个创造者都可以将他们的才华和创意传递给用户.</p>
+        <a href="#">我要报名</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!-- CSS(Cascading Style Sheets)是一种样式表语言,用于控制网页的外观和格式(美化内容)
+书写位置:写在title标签下面添加style双标签,在style标签内书写CSS代码
+(CSS是给浏览器看的,但是CSS与HTML不是一种语言,因此要打上style标签写在里面)
+CSS的引入方式:
+    1.内部样式(学习使用):写在style标签内
+    2.外部样式(实际开发):通过link标签引入外部CSS文件(<link rel="stylesheet" type="text/css" href="styles.css">还是放在title下)
+    3.行内模式(配合JavaScript使用):写在标签内的style属性值里面(<p style="color:red;font-size:20px;">这是p标签</P> -->
+<!-- 调试工具,按F12打开调试工具;    1.对于错误属性,有黄色感叹号;2.CSS前面有多选框,勾选就使CSS生效,不勾选就不生效 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS_Study</title>
+    <style> /* CSS代码写在style标签内,注释是这样注释 (CSS代码为:选择器{属性名:属性值;}) */
+    /* 选择器分类:1.标签选择器 2.类选择器 3.id选择器 4.通配符选择器 */
+    /* 1.标签选择器:使用标签名作为选择器,选中同名标签设置相同样式 */
+        P { /* 属性名与属性值成对出现的叫:键值对*/
+            color: red;     /* 字体颜色 */
+            font-size: 40px;  /* 字体大小 */
+        }
+    /* 2.类选择器:先定义类选择器(.类名),在再所需改变的标签上添加class="类名"属性 */
+        .yellow {
+            color: yellow;
+        }
+        .size {
+            font-size: 5px;
+        }
+    /* 3.id选择器:查找标签,差异化设置标签效果(一般配合JS使用,很少用于设置CSS)
+    定义:#id名;使用:添加id="id名"(同一个id选择器在一个界面只能使用一次) */
+        #black {
+            color: black;
+        }
+    /* 4.通配符选择器:查找页面所有标签,设置相同格式(* {属性名:属性值;})不需要调用,
+    自动查找所有标签设置相同格式.通配符选择器主要用于开发初期清除标签默认样式 */
+        * {
+            color: brown;
+        }
+    /*[选择器范围越小优先级越高] */
+
+    /* 画盒子`所用属性:width宽度,height高度,background-color背景色(由于要差异化因此使用类选择性) */
+        .box1 {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            line-height: 100px;
+        }
+        .box2 {
+            width: 200px;
+            height: 200px;
+            background-color: orange;
+        }
+
+    /* 文字控制属性:1.文字大小font-size(pc网页常用单位为像素) 2.文字粗细font-weight 
+    3.文字斜体font-style 4.行高line-height 5.字体族font-family 5.字体复合属性font 
+    6.文本缩进text-indent 7.文本对齐text-align 8.修饰线text-decoration 9.颜色color */
+        .Wenzi-shuxing {
+            /* 字号属性一定要有单位(谷歌浏览器里文字有默认大小为16像素) */
+            font-size: 20px;
+            /* 字体粗细属性属性值:既可以设置数字(正常400,加粗可为700),也可以设置关键字(正常nomal,加粗bold) */
+            font-weight: 700;
+            /* 文字斜体(一般常用于清除斜体效果)[正常nomal,倾斜italic] */
+            font-style: italic;
+            /* 行高一般用于调节多文本的行间距(属性值为:数字px(为行高为多少),数字(为当前属性值的倍数)) */
+            line-height: 30px; /* 默认行高为16 */
+            line-height: 2;
+            /* 字体族,属性为字体名[属性值可以有多个字体名,不同字体名用逗号隔开,
+            执行顺序为从左向右依次查找(先看电脑里有无第一个没有就找第二个全没有就默认(sans-serif))] */
+            font-family: Heiti SC, Microsoft YaHei, 楷体, sans-serif;
+            /* 文本缩进,属性值:数字px ; 数字em(1em表示当前字号大小,2em代表首行缩进两字符) */
+            text-indent: 2em;
+            /* 颜色属性:1.写颜色单词;2.rgb(r, g, b);3.argb(r, g, b, a)(a为透明度);4.十六进制表示法eg:#66CCFF */
+            background-color: rgba(0, 255, 0, 0.5);
+            color: #66CCFF;
+        }
+        .test-shuxing {
+            /* font复合属性一个属性对应多个值,各个属性值之间用空格隔开(常用于网页开发初期设置公共字体)
+            (font:是否倾斜 是否加粗 字号/行高 字体 (必须按顺序书写,并且字号与字体值必须写不然font不生效)) */
+            font: italic 700 30px/2 宋体;
+            /* 对齐方式(不改变标签位置,只改变内容对齐方式),属性值:左对齐left, 居中对齐center, 右对齐right
+            本质是控制内容的对齐方式 */
+            text-align: center;
+        }
+        /* 文本修饰线,属性值:无效果none,下划线underline, 删除线line-through, 上划线overline */
+        a {
+            text-decoration: line-through;
+            color: rgb(131, 162, 20);
+        }
+
+        /* 背景属性:1.背景色background-color 2.背景图background-image 3.背景图平铺方式background-repeat
+        4.背景图位置background-position 5.背景图缩放background-size 6.背景图固定background-attachment 
+        7.背景复合属性backgroundr */
+        .background {
+            /* 先定义图片尺寸 */
+            width: 1000px;
+            height: 800px;
+            /* 背景色 */
+            background-color: pink;
+            /* 背景图(默认是平铺效果)(可以与背景色同时存在) */
+            background-image: url(./Picture/天依与熊.png);
+            /* 背景图平铺方式(四个属性:1.不平铺no-repeat 2.平铺(默认)repeat 3.水平平铺repeat-x 4.垂直平铺)repeat-y */
+            background-repeat: no-repeat;
+            /* 背景图位置(属性值:1.关键词表示:left,right,center,top,button 2.坐标(数字px,正负均可(0,0表示左上角))) */
+            /* background-position: center center;  (属性名:水平方向位置 竖直方向位置) */
+            background-position: right 10px;   /* 数字表示的话,水平正向右,数值正向下 */
+            /* 关键字写法可颠倒写的顺序(left,right表示左右;top,button表示上下),只写一个关键字另一个默认居中
+            只写一个数字表示水平,垂直默认居中 */
+            /* 背景图缩放[属性1.关键字cover(完全覆盖背景区,可能部分不可见),contain(图片显示完全,但可能有空白)
+            2.百分比 3.数字+单位] */
+            background-size: 100%;/* 比例100%表示图片宽度和盒子一样,高度等比缩放 */
+            /* 背景图固定(让背景不随内容滚动)(属性值fixed) */
+            background-attachment: fixed;
+            /* 背景复合属性:background:背景色 背景图 平铺方式 位置/缩放 固定;(各个属性用空格隔开,不区分顺序) */
+            /* background: pink url() no-repeat center bottom/cover fixed; */
+        }
+        /* 图片缩放：图片img缩放使用object-fit:cover 如果图片尺寸和父级尺寸不相同，为了避免压缩使用该属性可以对图片宽高进行剪裁
+        类似于background-size，关键字cover(完全覆盖背景区,可能部分不可见),contain(图片显示完全,但可能有空白)，默认伪fill强制拉伸，none不缩放 */
+
+        .转换显示模式 {
+            display: inline;
+        }
+    </style>
+    <!-- link是引入外部CSS文件,rel为样式属性,href为地址属性 -->
+    <link rel="stylesheet" href="./测试外部引入CSS用.css">
+</head>
+<body>
+    <!-- 使用CSS语言 -->
+    <p>初次体验CSS语言,用于测试style标签引入CSS文件效果</p>
+    <div>这是div标签,用于测试外部导入CSS文件效果</div>
+    <span style="color: rebeccapurple; font-size: 30px;">这是span标签,用于测试行内CSS样式</span>
+    <!-- 四大选择器 -->
+    <p>测试标签选择器设置相同样式</p>
+    <p class="yellow size">测试类选择器设置样式,多个选择器时都放在一个class里用空格隔开</p>
+    <div id="black">测试id选择器</div>
+    <!-- 画盒子,使文字行高与盒子高度相同可实现文字居中显示(只是用与单行文字) -->
+    <div class="box1">small box</div>
+    <div class="box2">big box</div>
+    <!-- 文字属性 -->
+    <p class="Wenzi-shuxing">
+        用于测试文字属性的文字,为了测试行高需要写一大段文字<a href="#">用于测试文本修饰线功能,原本超链接是有下划线的</a>
+        行高就类似于行间距,数字加px相当与固定值行间距,直接写数字相当于多倍行间距
+        由此开始为测试文字:CSS的属性汇总:1.文字大小font-size(pc网页常用单位为像素)
+        2.文字粗细font-weight 3.文字斜体font-style 4.行高line-height 5.字体族font-family
+        5.字体复合属性font 6.文本缩进text-indent 7.文本对齐text-align 8.修饰线text-decoration
+        9.颜色color 10.宽度width 11.高度height 12.background-color背景色
+    </p>
+    <p class="test-shuxing">测试font复合属性是生效</p>
+    <div class="test-shuxing">
+        <img src="./Picture/天依与熊.png" alt="TianYi" title="天依与熊">
+        <p>该文字用于测试图片居中</p>
+    </div>
+    <!-- 背景属性 -->
+    <div class="background">我是用来测试背景图的div标签</div>
+    <!-- 显示模式:(判断标签属于哪一类就看标签符合那些特性)[转换显示模式:属性名:display, 属性值:块级block,行内inline,行内块inline-block]
+    1.块级元素(eg:div):独占一行;默认宽度和父级宽度相等;用CSS改宽高生效;
+    2.行内元素(eg:span):一行多个;尺寸由内容撑开;用CSS改宽高不生效;
+    3.行内块元素(eg:img):一行多个;尺寸由内容撑开;用CSS改宽高生效; -->
+    <div class="转换显示模式" style="background-color: #66CCFF;">我是div标签1,用于测试转换显示模式(转为行内)</div>
+    <div class="转换显示模式" style="background-color: pink;">我是div标签2,用于测试转换显示模式(转为行内)</div>
+    <div style="background-color: #66CCFF;">我是div标签1,用于测试转换显示模式</div>
+    <div style="background-color: pink;">我是div标签2,用于测试转换显示模式</div>
+
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>平移双开门</title>
+    <style>
+        * { /* 清除默认样式 */
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .father {
+            display: flex;
+            margin: 30px auto;
+            width: 800px;
+            height: 450px;
+            background-image: url(../Picture/东方project.jpg);
+            background-size: 100%;
+            overflow: hidden; /* 隐藏外边的图 */
+        }
+        .father .left {
+            width: 400px;
+            height: 450px;
+            background-image: url(../Picture/洛_左.jpg);
+            background-size: 100%;
+            transition: all 1s;
+        }
+        .father .right {
+            width: 400px;
+            height: 450px;
+            background-image: url(../Picture/乐_右.jpg);
+            background-size: 100%;
+            transition: all 1s;
+        }
+        .father:hover .left {
+            transform: translateX(-100%);
+        }
+        .father:hover .right {
+            transform: translateX(100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="father">
+        <div class="left"></div>
+        <div class="right"></div>
+    </div>
+</body>
+</html>

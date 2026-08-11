@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新浪新闻</title>
+    <style>
+        * {
+            margin: o;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        li {
+            list-style: none;
+        }
+        a {
+            text-decoration: none;
+        }
+
+        .news {
+            width: 360px;
+            height: 200px;
+            background-color: #f0f0f0;
+            margin: 50px auto;
+        }
+        .news .hd {
+            height: 34px;
+            background-color: #eee;
+            border: 1px solid #dbdee1;
+            border-left: none;/* 左边没有边框 */
+        }
+        .news .hd a {
+            display: block;
+
+            width: 48px;
+            height: 34px;
+            background-color: #fff;
+            border-top: 3px solid #ff8400;
+            border-right: 1px solid #dbdee1;
+            margin: -1px;/* 超链接的盒子往上挪,与父级盒子上端重合 */
+
+            font-size: 14px;
+            color: #333;
+            line-height: 31px;
+            text-align: center;
+        }
+        .news .bd {
+            padding: 5px;
+        }
+        .news .bd li {
+            height: 26px;
+        }
+        .news .bd li::before {
+            content: "";/* 伪类选择器必须要该属性 */
+            display: inline-block;/* 有该属性才能改变大小 */
+            width: 5px;
+            height: 5px;
+            background-color: orange;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="news">
+        <div class="hd"><a href="#">新闻</a></div>
+        <div class="bd">
+            <ul style="margin: 0;">
+                <li><a href="#">点赞"新农人"温暖的伸手</a></li>
+                <li><a href="#">在希望的田野上...</a></li>
+                <li><a href="#">"中国天眼"又有新发现 已在[自然]杂志发表</a></li>
+                <li><a href="#">急!这个领域,缺人!月薪4万元还不好招!啥情况?</a></li>
+                <li><a href="#">G9 "带货"背后:亏损面持续扩大,竞争环境激烈</a></li>
+                <li><a href="#">多地力推二手房"带押过户",有什么好处?</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

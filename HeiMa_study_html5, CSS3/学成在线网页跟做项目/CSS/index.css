@@ -1,0 +1,373 @@
+/* 存放各个页面的CSS样式(首页就叫index.css) */
+/* 版心设置(内容的排版,类名起为wrapper) */
+.wrapper {
+    margin: 0 auto;  /* 一般为版心居中 */
+    width: 1200px;   /* 内容宽度 */
+}
+
+body {
+    background-color: #f3f5f7;
+}
+
+
+/* 头部区域------------------------------------------------------------ */
+.header {
+    height: 100px;
+    background-color: #fff;
+}
+.header .wrapper {
+    padding-top: 29px;
+    display: flex;   /* 设置头部区域布局为flex布局使div可以放在一排 */
+}
+
+/* logo区域 */
+.loge a {
+    display: block;
+    width: 195px;
+    height: 41px;
+    background-image: url(../images/logo.jpg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    font-size: 0;
+}
+
+/* 导航区域 */
+.nav {
+    margin-left: 102px;
+}
+.nav ul {
+    display: flex;
+    text-align: center;
+}
+.nav li {
+    margin-right: 24px;
+}
+.nav li a {
+    display: block;
+    padding: 6px 8px;
+    line-height: 27px;
+    font-size: 19px;
+}
+/* active类选择器,表示默认选中的a标签 */
+.nav li .active, /* 默认选中的标签状态 */
+.nav a:hover { /* 鼠标悬停状态 */
+    border-bottom: 2px solid #6cf;
+}
+
+/* 搜素区域 */
+.search {
+    display: flex;
+    margin-left: 64px; /* 盒子与"职业规划"字的间距 - "职业规划"字的内边距和外边距之和 */
+    padding-left: 19px;
+    padding-right: 12px;
+    width: 412px;
+    height: 40px;
+    background-color: #f3f5f7;
+    border-radius: 20px;
+}
+.search input {
+    flex: 1; /* 为了使除了搜索建以外的区域全部被搜索框所占 */
+    border: 0;
+    background-color: rgba(0, 0, 0, 0); /* 使用rgba设置透明度为零 */
+    outline: none; /* outline为文本框选中之后会有的边框(焦点框) */
+}
+/* .search input::placeholder为设置placeholder中字体的属性 */
+.search input::placeholder {
+    font-size: 14px;
+    color: #999;
+}
+/* 父级为flex布局的话,子级自动为弹性盒子(相当于行内块)加宽高生效 */
+.search a {
+    align-self: center;
+    width: 20px;
+    height: 20px;
+    background-image: url(../images/search.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+/* 用户区域 */
+.user {
+    margin-left: 20px;
+    margin-top: 4px;
+}
+.user img {
+    margin-right: 2px;
+    /* vertical-align(只作用于行内元素,使
+    '这一行都垂直居中)是专门用来处理 行内块和行内 垂直方向对齐方式 */
+    vertical-align: middle; 
+    width: 30px;
+    height: 30px;
+    border-radius: 50%; /* 图片圆角 */
+}
+.user span {
+    font-size: 14px;
+    color: #666;
+}
+
+
+/* banner区域------------------------------------------------------------ */
+.banner {
+    height: 420px;
+    background-color: #1b046b;
+}
+
+/* 背景颜色,大图 */
+.banner .wrapper {
+    display: flex; /* 为了使下面两个盒子水平排列 */
+    justify-content: space-between;
+    height: 420px; /* 不加高度图片显示不出来 */
+    background-image: url(../uploads/banner.jpg);
+}
+
+/* 左侧导航 */
+.banner .left {
+    padding: 3px 0;
+    width: 180px;
+    background-color: rgba(0, 0, 0, 0.42);
+}
+.banner .left ul li {
+    display: flex; /* 因为其子元素a设这位块级元素了,要加伪元素使其同行排列 */
+    /* justify-content: space-between; */
+    padding: 0 20px;
+}
+.banner .left ul li:hover {
+    background-color: rgba(222, 222, 222, 0.4);
+}
+.banner .left ul li::after { /* 把伪元素放在li标签 */
+    content: ">";
+    align-self: center;
+    color: #fff;
+}
+/* 相要写伪元素鼠标悬停效果,要按如下方法(不可以:父级::after:hover) */
+.banner .left ul li:hover::after {
+    color: #6cf;
+}
+.banner .left ul a {
+    display: block;
+    flex: 1;
+    height: 46px;
+    font-size: 16;
+    line-height: 46px;
+    color: #fff;
+}
+.banner .left ul a:hover {
+    color: #6cf;
+}
+
+/* 右侧课程表 */
+.banner .right {
+    margin-top: 60px;
+    width: 218px;
+    height: 305px;
+    background-color: #209dd5;
+    border-radius: 10px;
+}
+.banner .right h3 {
+    padding-left: 14px;
+    color: #fff;
+    font: 700 17px/48px Microsoft YaHei;
+}
+.banner .right .content {
+    padding: 14px;
+    height: 257px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+.banner .right dl {
+    margin-bottom: 12px;
+    border-bottom: 1px solid #e0e0e0;
+}
+.banner .right dl dt {
+    margin-bottom: 8px;
+    /* font-size: 14px; 字体默认为14px不用设置了 */
+    line-height: 20px;
+    font-weight: 700;
+    /* color: #333; 颜色在base里已经设置过了,不用再设置了 */
+}
+.banner .right dl dd {
+    margin-bottom: 8px;
+    line-height: 16px;
+    /* font-size: 14px; 字体默认为14px不用设置了 */
+}
+.banner .right dd span {
+    color: #00a4ff;
+}
+.banner .right dd strong {
+    color: #7d7d7d;
+    font-weight: 400;
+}
+.banner .right a {
+    display: block;
+    height: 32px;
+    background-color: #00a4ff;
+    color: #fff;
+    line-height: 32px;
+    text-align: center;
+    border-radius: 15px;
+}
+
+
+/* recommed区域------------------------------------------------------------ */
+.recommend {
+    display: flex;
+    margin-top: 11px;
+    padding: 10px 20px;
+    height: 60px;
+    background-color: #fff;
+    line-height: 40px;
+    box-shadow: 0 1px 2px 0 rgba(211, 211, 211, 0.5);
+}
+.recommend h3 {
+    font-size: 18px;
+    color: #00a4ff;
+    font-weight: 400;
+}
+.recommend ul {
+    display: flex; /* 为了使li都在一行排列 */
+    /* 除去"精品推荐"和"修改兴趣"的尺寸,父级剩余的尺寸都给别,实现了"精品推荐"和"修改兴趣"分布两边 */
+    flex: 1;
+}
+.recommend ul a {
+    padding: 0 24px;
+    border-right: 1px solid #e0e0e0;
+    font-size: 18px;
+}
+.recommend ul li:last-child a {
+    border-right: 0;
+}
+.recommend .modify {
+    font-size: 16px;
+    color: #00a4ff;
+}
+
+
+/* course区域------------------------------------------------------------ */
+.course {
+    margin-top: 16px;
+}
+
+/* 可公用 */
+.hd { /* 这个hd在其他版块还能使用,因此就不要加板块的类名了 */
+    display: flex;
+    justify-content: space-between;
+    line-height: 60px;
+}
+.hd h3 {
+    font-size: 21px;
+    font-weight: 400;
+}
+.hd a {
+    color: #999;
+}
+
+.bd ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.bd li {
+    margin-bottom: 14px;
+    width: 228px;
+    height: 271px;
+    background-color: pink;
+}
+.bd li .pic {
+    height: 156px;
+}
+.bd li .text {
+    padding: 20px;
+    height: 115px;
+    background-color: #fff;
+}
+.bd li .text h4 {
+    margin-bottom: 13px;
+    height: 40px;
+    line-height: 20px;
+    font-weight: 400;
+}
+.bd li .text p {
+    line-height: 20px;
+    color: #999;
+}
+.bd li .text p span {
+    color: #fa6400;
+}
+.bd li .text p i {
+    font-style: normal;
+}
+/* 可公用(以上) */
+
+
+
+/* 前端开发工程师,人工智能区域------------------------------------------------------------ */
+.hd ul {
+    display: flex;
+}
+.hd li {
+    margin-right: 60px;
+    font-size: 16px;
+}
+.hd li a:hover {
+    color: #6cf;
+}
+
+.bd .left {
+    width: 228px;
+    /* background-color: pink; */
+}
+.bd .right {
+    width: 957px;
+    /* background-color: pink; */
+}
+.bd .right img {
+    margin-bottom: 15px;
+}
+
+
+/* 版权区域------------------------------------------------------------ */
+.fotter {
+    margin-top: 60px;
+    padding-top: 60px;
+    height: 273px;
+    background-color: #fff;
+}
+.fotter .wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+.fotter .left {
+    width: 440px;
+    /* background-color: #6cf; */
+}
+.fotter .left p {
+    margin-top: 24px;
+    margin-bottom: 14px;
+    font-size: 12px;
+    line-height: 17px;
+    color: #666;
+}
+.fotter .left .download {
+    display: block;
+    width: 120px;
+    height: 36px;
+    background-color: #fff;
+    line-height: 36px;
+    text-align: center;
+    border: 1px solid #6cf;
+}
+.fotter .right {
+    display: flex;
+}
+.fotter .right dl {
+    margin-left: 130px;
+}
+.fotter .right dl dt {
+    margin-bottom: 12px;
+    font-size: 16px;
+    line-height: 23px;
+}
+.fotter .right dl a {
+    line-height: 24px;
+    color: #666;
+}

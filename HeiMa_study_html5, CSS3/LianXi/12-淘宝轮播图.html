@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>淘宝轮播图</title>
+    <link rel="stylesheet" href="../iconfont/iconfont.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        li {
+            list-style: none;
+        }
+
+        .pic {
+            position: relative; /* 父相 */
+            margin: 50px auto; /* 版心居中 */
+            width: 500px;
+            height: 281px;
+            /* background-color: #6cf; */
+            overflow: hidden; /* 浮动那一章知识,隐藏多余的内容 */
+        }
+        .pic ul {
+            display: flex;
+        }
+        .pic li img {
+            vertical-align: middle; /* 防止图片底下右空白 */
+            border-radius: 10px;
+        }
+        .pic .lift {
+            display: none; /* 表示隐藏 */
+            position: absolute; /* 子绝 */
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+
+            width: 21px;
+            height: 26px;
+            line-height: 26px;
+            text-align: left; /* 图片文字左对齐 */
+            color: #fff;
+            background-color: #818181;
+            opacity: 0.5;
+
+            border-radius: 0 13px 13px 0;
+        }
+        .pic .right {
+            display: none; /* 表示隐藏 */
+            position: absolute; /* 子绝 */
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+
+            width: 21px;
+            height: 26px;
+            line-height: 26px;
+            text-align: right; /* 图片文字右对齐 */
+            color: #fff;
+            background-color: #818181;
+            opacity: 0.5;
+
+            border-radius: 13px 0 0 13px;
+        }
+        .pic .lift:hover {
+            cursor: pointer;
+            opacity: 0.7;
+        }
+        .pic .right:hover {
+            cursor: pointer;
+            opacity: 0.7;
+        }
+        /* 鼠标滑动到图片上时需要显示左右箭头 */
+        .pic:hover .lift, /* 鼠标滑动到图片上时的lift和right标签 */
+        .pic:hover .right {
+            display: block;
+        }
+
+        .pic .xuantu {
+            display: none; /* 表示隐藏 */
+            align-items: center; /* 三个li垂直居中 */
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+
+            /* width: 60px; 不加长度了,后期图多圆点就多靠内容撑开,边距对圆点用margin */
+            height: 18px;
+            background-color: rgba(225, 225, 225, 0.4);
+
+            border-radius: 9px;
+        }
+        .pic .xuantu li {
+            margin: 5px;
+            width: 10px;
+            height: 10px;
+            background-color: rgba(225, 225, 225, 0.8);
+
+            border-radius: 5px;
+        }
+        .pic .xuantu .active,
+        .pic .xuantu li:hover {
+            background-color: orange;
+            cursor: pointer;
+        }
+        /* 鼠标放到图上显示下面的圆点 */
+        .pic:hover .xuantu {
+            display: flex;
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <div class="pic">
+        <!-- 图片,后期用js实现换图效果(用ul嵌套li,有几张图就放几个li) -->
+        <ul>
+            <li><a href="#"><img src="../Picture/东方project.jpg" alt="yezhengling" width="500"></a></li>
+            <li><a href="#"><img src="../Picture/东方project.jpg" alt="yezhengling" width="500"></a></li>
+            <li><a href="#"><img src="../Picture/东方project.jpg" alt="yezhengling" width="500"></a></li>
+        </ul>
+        <div class="iconfont icon-fanhui lift"></div>
+        <div class="iconfont icon-jinru right"></div>
+        <ol class="xuantu">
+            <li></li>
+            <li class="active"></li>
+            <li></li>
+        </ol>
+    </div>
+</body>
+</html>

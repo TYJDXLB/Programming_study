@@ -1,0 +1,559 @@
+/* 存放首页内容样式 */
+/* 快捷导航(shortcut)---------------------------------------------------- */
+/* 标签结构: .shortcut>版心>ul */
+.shortcut {
+    height: 53px;
+    background-color: #333;
+}
+.shortcut ul {
+    display: flex;
+    justify-content: end;
+    line-height: 53px; /* 行高加到这防止使分割线太高 */
+
+}
+.shortcut ul a {
+    padding: 0 15px;
+    font-size: 14px;
+    color: #cdcdcd;
+    border-right: 1px solid #999;
+}
+.shortcut ul a:hover {
+    color: #5eb69c;
+}
+.shortcut ul a .iconfont {
+    margin-right: 4px;
+    vertical-align: middle;
+}
+
+/* 头部区域(hander)---------------------------------------------------- */
+/* 标签结构: .header>logo+导航+搜索+购物车图标 */
+.hander {
+    display: flex;
+    margin: 22px auto;
+    align-items: center; /* 使元素居中排列 */
+    /* box-shadow: 10px 10px 20px 3px rgba(0, 0, 0, 0.5); */
+}
+
+/* logo标签 */
+.hander .logo {
+    width: 200px;
+    height: 80px;
+    background-image: url(../images/logo.png);
+    background-size: contain;
+}
+.hander .logo a {
+    display: block;
+    width: 200px;
+    height: 80px;
+    opacity: 0; /* 使文字透明 */
+}
+
+/* 导航(nav)标签 */
+.hander .nav {
+    width: 820px;
+    height: 32px;
+    /* background-color: #6cf; */
+}
+.hander .nav ul {
+    display: flex;
+    padding-left: 40px;
+}
+.hander .nav li a {
+    display: inline-block;
+    margin-right: 40px;
+    width: 38px;
+    line-height: 32px;
+    text-align: center;
+}
+.hander .nav li a:hover {
+    color: #27ba9b;
+    border-bottom: 1px solid #27ba9b;
+}
+
+/* 搜索(search)标签 */
+.hander .search {
+    display: flex;
+    align-items: center;
+    width: 170px;
+    height: 32px;
+    border-bottom: 0.8px solid #ecebeb;
+}
+.hander .search .iconfont {
+    margin-left: 5px;
+    font-size: 22px;
+}
+.hander .search input {
+    padding-left: 5px;
+    flex: 1; /* 开始flex:1不生效是因为input有默认宽度 */
+    width: 0; /* 需要设置一下width:0(相当于取消默认行宽了) */
+    height: 16px;
+    color: #666;
+    border: 0;
+    outline: none;
+}
+
+/* 购物车(cart)标签 */
+.hander .cart a {
+    display: block;
+    position: relative; /* 父相 */
+    width: 50px;
+    height: 32px;
+    font-size: 28px;
+    line-height: 32px;
+    text-align: center;
+}
+.hander .cart a em {
+    position: absolute; /* 子绝 */
+    top: 0;
+    /* right: 0; 购物车角标一般不用距离右边的距离表示,因为会向左撑开 */
+    left: 26px;
+    padding: 1px 8px;
+    background-color: #e26237;
+    line-height: 1; /* 默认设置的为1.5倍行间距要改一下 */
+    font-size: 12px;
+    color: #fff;
+    border-radius: 7px;
+}
+
+
+/* 底部区域(foot)[先做底部区域再做中间]---------------------------------------------------- */
+.foot {
+    height: 580px;
+    background-color: #333;
+    color: #fff; /* 字体设置为白色方便测试用 */
+}
+
+/* 服务(service) */
+.foot .service {
+    display: flex;
+    justify-content: space-between;
+    padding: 60px 100px;
+    height: 178px;
+    border-bottom: 1px solid #434343;
+}
+.foot .service a {
+    display: flex;
+    align-items: center;
+    width: 177px;
+    height: 58px;
+    font-size: 28px;
+    color: #fff;
+}
+.foot .service .yuan {
+    margin-right: 10px;
+    /* vertical-align: middle; 由于后面span字体已经在a处设置了行高,因此不需要这个了 */
+    width: 50px;
+    height: 50px;
+    text-align: center; /* 使图片左右居中对齐(上下对齐a标签已经设置了行高属性了) */
+    /* 要加line-height: 0;原因: 
+    由于strust(隐型支架)机制:浏览器在每一个block容器每一行开头都要加一个看不见的strust虚拟字符
+    由于我们在base.css里面设置了行高为1.5倍行间距(1.5*28=42px)因此当设置图片字符行高低于42px时
+    由于图片字符的父级设置了行高,因此不会生效.我们要在yuan标签上加上line-height: 0;属性使父级的
+    行高为零从而不影响子级设置行高 */
+    line-height: 0;
+    border-radius: 25px;
+    border: 3px solid #fff;
+}
+.foot .service .yuan i { /* 这个属性不要设置到i身上,要设置到iconfont上因为类选择器优先级大于标签选择器,会覆盖不掉之前设置的属性 */
+    font-size: 30px;
+    line-height: 45px; /* 实际yuan盒子的行高(原本高度-两个边线宽度) */
+}
+.foot .service span {
+    line-height: 58px;
+}
+
+/* 帮助中心(help) */
+.foot .help {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 60px;
+    height: 300px;
+    /* background-color: #6cf; */
+}
+.foot .help .left {
+    display: flex;
+}
+.foot .help .left dl {
+    margin-right: 84px;
+}
+.foot .help .left dl:last-child {
+    margin-right: 0;
+}
+.foot .help .left dt {
+    margin-bottom: 30px;
+    font-size: 18px;
+}
+.foot .help .left dd {
+    margin-bottom: 10px;
+}
+.foot .help .left dd a {
+    color: #999;
+}
+.foot .help .left dd .iconfont {
+    color: #27ba9b;
+}
+
+.foot .help .right ul {
+    display: flex;
+}
+.foot .help .right li:first-child {
+    margin-right: 55px;
+}
+.foot .help .right .pic {
+    margin-bottom: 10px;
+}
+.foot .help .right p {
+    color: #999;
+    text-align: center;
+}
+
+/* 版权(copyright) */
+.foot .copyright p {
+    color: #999;
+    text-align: center;
+}
+.foot .copyright p:first-child {
+    display: flex;
+    justify-content: center;
+    height: 20px;
+    margin-bottom: 20px;
+}
+.foot .copyright a {
+    padding: 0 10px;
+    color: #999;
+    line-height: 20px;
+    border-right: 1px solid #999;
+}
+.foot .copyright a:last-child {
+    border: none;
+}
+
+
+/* banner区域(banner)---------------------------------------------------- */
+.banner {
+    height: 500px;
+    background-color: #f5f5f5;
+}
+.banner .warpper {
+    position: relative;
+}
+
+/* 轮播图 */
+.banner .pic ul {
+    display: flex;
+    overflow: hidden;
+}
+
+/* 圆点指示器 */
+.banner .yuandian {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    padding: 4px 10px;
+    bottom: 0;
+    right: 0;
+    /* 该宽度靠内容撑开 */
+}
+.banner .yuandian li {
+    margin-left: 8px;
+    width: 22px;
+    height: 22px;
+    border-radius:50%;
+}
+.banner .yuandian i {
+    display: block;
+    margin: 4px;
+    width: 14px;
+    height: 14px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius:50%;
+}
+.banner .yuandian i:hover {
+    cursor: pointer;
+}
+.banner .yuandian .active {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+.banner .yuandian .active i {
+    background-color: #fff;
+}
+
+/* 侧导航 */
+.banner .subnav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 500px;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+.banner .subnav li {
+    padding-left: 40px;
+    height: 50px;
+    line-height: 50px; /* 行高放到父级,使只点击字才能跳转 */
+}
+.banner .subnav li:hover {
+    background-color: #27ba9b;
+}
+.banner .subnav li a {
+    margin-right: 4px;
+    color: #fff;
+    font-size: 14px;
+}
+
+
+/* 新鲜好物区域(goods)---------------------------------------------------- */
+/* 写到公共区域 */
+
+
+/* 人气推荐区域(recommend)---------------------------------------------------- */
+/* 写到公共区域 */
+
+
+
+/* 热门品牌(brand)---------------------------------------------------- */
+.brand {
+    height: 460px;
+    background-color: #f5f5f5;
+}
+
+/* 标题的左右选择功能 */
+.brand .title a {
+    display: block;
+    margin-left: 5px;
+    width: 20px;
+    height: 20px;
+    background-color: #27ba9b;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+}
+.brand .title .icon-fanhui {
+    /* 第一个图标背景色 */
+    background-color: #ccc;
+    /* 第一个图标为不可选中状态 */
+    cursor: not-allowed;
+}
+.brand .hot_bd ul {
+    display: flex;
+    width: 1240px;
+    overflow: hidden;
+}
+.brand .hot_bd li {
+    margin-right: 10px;
+}
+
+
+/* 居家(home)区域(居家,美食,服饰三区域这里只写一个)---------------------------------------------------- */
+/* 写到公共区域 */
+
+
+/* 最新专题区(new)---------------------------------------------------- */
+.new {
+    height: 515px;
+    background-color: #f5f5f5;
+}
+/* 标题在公共区域 */
+.new .bd3 {
+    padding-bottom: 20px;
+    height: 380px;
+}
+.new .bd3 ul {
+    position: relative;
+}
+.new .bd3 li {
+    position: absolute;
+    top: 0;
+    width: 404px;
+    height: 360px;
+    transition: all .5s;
+}
+/* 定位四个li的位置(为了做出选中上浮的效果) */
+.new .bd3 li:nth-child(1) {
+    left: 0;
+}
+.new .bd3 li:nth-child(2) {
+    left: 418px;
+}
+.new .bd3 li:nth-child(3) {
+    left: 836px;
+}
+.new .bd3 li:hover {
+    top: -3px;
+    box-shadow: 0px 3px 10px 1px rgba(0, 0, 0, 0.2);
+}
+/* 设置三个子级的背景 */
+.new .bd3 li:nth-child(1) .nei {
+    /* 把图片作为背景图放到最外层盒子上,里面用背景图做渐变 */
+    background-image: url(../uploades/new1.jpg);
+}
+.new .bd3 li:nth-child(2) .nei {
+    background-image: url(../uploades/new2.jpg);
+}
+.new .bd3 li:nth-child(3) .nei {
+    background-image: url(../uploades/new3.png);
+}
+.new .bd3 .nei a {
+    position: relative;
+    display: block;
+    width: 404px;
+    height: 288px;
+    /* 这是用背景图制作渐变 */
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.8), transparent 50%);
+}
+.new .bd3 .nei p {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: block;
+    padding-left: 16px;
+    width: 70%;
+    height: 70px;
+}
+.new .bd3 .nei p span {
+    display: block;
+    white-space: nowrap;
+}
+.new .bd3 .nei .name {
+    font-size: 22px;
+    color: #fff;
+    line-height: 1.4;
+    overflow: hidden;
+}
+.new .bd3 .nei .jieshao {
+    font-size: 19px;
+    color: #999;
+    overflow: hidden;
+}
+.new .bd3 .nei .price {
+    position: absolute;
+    bottom: 25px;
+    right: 16px;
+    padding: 4px 7px;
+    color: #cf4444;
+    background-color: #fff;
+    border-radius: 2px;
+}
+.new .bd3 .wai {
+    display: flex;
+    padding: 0 20px;
+    height: 72px;
+    background-color: #fff;
+}
+.new .bd3 .wai span {
+    margin-right: 25px;
+    line-height: 72px;
+}
+.new .bd3 .wai span .iconfont {
+    margin-right: 5px;
+}
+.new .bd3 .wai span:nth-child(2) {
+    flex: 1;
+}
+.new .bd3 .wai span:nth-child(3) {
+    margin-right: 0;
+}
+
+
+/* 联系方式区(lianxi)---------------------------------------------------- */
+.lianxi {
+    height: 290px;
+}
+.lianxi .warpper {
+    display: flex;
+    /* justify-content: space-between; */
+    padding: 60px 24px 40px 24px;
+}
+.lianxi dl {
+    padding: 0 72px;
+    height: 190px;
+    border-right: 1px solid #f2f2f2;
+}
+.lianxi .warpper dl:first-child {
+    /* 第一个dl没有左边距 */
+    padding-left: 0;
+}
+.lianxi .warpper dl:last-child {
+    /* 最后一个dl没有右边距 */
+    padding-right: 0;
+    /* 最后一个dl有右边没有边距 */
+    border-right: none;
+}
+.lianxi dt {
+    line-height: 1;
+    font-size: 18px;
+    color: #999;
+    text-align: center;
+}
+.lianxi dl .kuang {
+    padding-top: 10px;
+    margin: 36px 12px 0 0;
+    width: 92px;
+    height: 92px;
+    color: #999;
+    text-align: center;
+    border: 1px solid #ededed;
+    float: left; /* 浮动使两个元素并列排列 */
+}
+.lianxi dl .kuang .iconfont {
+    display: block;
+    line-height: 1.4;
+    font-size: 36px;
+    color: #333;
+}
+.lianxi dl .kuang .iconfont:hover {
+    color: #27ba9b;
+}
+.lianxi dl .kuang2 {
+    padding: 7px;
+    margin: 36px 12px 0 0;
+    width: 92px;
+    height: 92px;
+    border: 1px solid #ededed;
+    float: left;
+}
+.lianxi dl .zi {
+    margin-top: 36px;
+    padding-top: 5px;
+    text-align: center;
+    float: left;
+}
+.lianxi dl .zi span {
+    display: block;
+    color: #999;
+    font-size: 14px;
+}
+.lianxi dl .zi a {
+    display: block;
+    margin-top: 5px;
+    width: 106px;
+    height: 34px;
+    background-color: #27ba9b;
+    color: #fff;
+    font-size: 14px;
+    line-height: 34px;
+    border-radius: 2px;
+}
+.lianxi dl .zi2 {
+    margin-top: 36px;
+    padding-top: 20px;
+    font-size: 22px;
+    color: #666;
+}
+.lianxi dl .zi2 small {
+    display: block;
+    font-size: 14px;
+    color: #999;
+}
+
+
+
+
+
+
+
+
+
+

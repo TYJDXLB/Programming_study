@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>走马灯</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            /* box-sizing: border-box;为了使照片完全放到盒子里 */
+        }
+        li {
+            list-style: none;
+        }
+        img {
+            display: block;
+            width: 200px;
+        }
+        .box {
+            margin: 100px auto;
+            width: 600px;
+            height: 112px;
+            border: 5px solid #000;
+            overflow: hidden;
+        }
+        /* 为了使所有图片一起走要给父级ul使用动画 */
+        .box ul {
+            display: flex;
+            animation: move 3s linear infinite; /* 设置速度曲线为匀速使其动画播放速度均匀 */
+        }
+        .box:hover ul {
+            animation-play-state: paused;
+        }
+
+        @keyframes move {
+            from {
+                transform: translate(0);
+            }
+            to {
+                transform: translate(-600px);
+            }
+        }
+        
+
+
+
+    </style>
+</head>
+<body>
+    <div class="box">
+        <ul>
+            <li><img src="../Picture/image1.jpg" alt="image1"></li>
+            <li><img src="../Picture/image2.jpg" alt="image2"></li>
+            <li><img src="../Picture/image3.jpg" alt="image3"></li>
+<!-- 无缝动画：复制开头的图片到结尾复制图片的宽度应该和显示区域的宽度相同 -->
+            <li><img src="../Picture/image1.jpg" alt="image1"></li>
+            <li><img src="../Picture/image2.jpg" alt="image2"></li>
+            <li><img src="../Picture/image3.jpg" alt="image3"></li>
+        </ul>
+    </div>
+</body>
+</html>

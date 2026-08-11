@@ -1,0 +1,78 @@
+<!-- 写移动端分辨率都是参考逻辑分辨率的（电脑屏幕本身的分辨率为物理分辨率，缩放之后的分辨率为逻辑分辨率）
+为了防止网页里图片失真，一般使用多倍图作为素材 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 下面为视口标签（显示HTML网页的区域，用来约束HTML尺寸）
+    width=device-width：视口宽度=设备宽度；initial-scale=1.0：缩放1倍 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS_Study</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    /* 适配方案：
+        一、宽度适配（宽度自适应）1.百分比布局(宽度不固定尺寸用百分比表示，高度固定)  2.Flex布局
+        二、等比适配（宽高等比缩放）1.rem  2.vm */
+    /* rem(是一种相对单位)：相对于HTML根字号的计算结果(1rem=1HTML字号大小)
+    目前常用的是将网页平分为10份，HTML标签字号为视口宽度的1/10 使用视口查询给不同设备写不同HTML字号 */
+    /* html {
+        font-size: 30px;
+    } */
+    .rem {
+        width: 5rem;
+        height: 5rem;
+        background-color: pink;
+    }
+    /* 使用媒体查询功能（检测视口宽度，差异化CSS样式）当某个条件成立时，执行对应的CSS样式
+    @media(媒体特性) { 选择器{ css属性 } } */
+    /* 跟屏幕缩放比有关，可以检查元素看一下该缩放比下html实际宽度 */
+    /* @media (width:375.2px) { 
+        body {
+            background-color: #6cf;
+        }
+        html {
+            font-size: 37.52px;
+        }
+    }
+    @media (width:414.4px) {
+        body {
+            background-color: orange;
+        }
+        html {
+            font-size: 41.44px;
+        }
+    } */
+    /* vw(是一种相对单位)：相对于视口宽度的计算结果(1vw=1/100视口宽度，1vh=1/100视口高度)  vw和vh不能混用
+    目前常用的是将网页平分为10份，HTML标签字号为视口宽度的1/10 使用视口查询给不同设备写不同HTML字号 */
+    .vw {
+        width: 20vw;
+        height: 30vw;
+        background-color: aqua;
+    }
+
+    /* 媒体查询  媒体特性写法：max-width:最大宽度；min-width:最小宽度
+    如果要实现多个区间书写，用max-width从大到小写，用min-width从小到大写 */
+    @media (max-width:768px) {
+        body {
+            background-color: #6cf;
+        }
+    }
+    @media (min-width:1200px) {
+        body {
+            background-color: #e00;
+        }
+    }
+
+</style>
+</head>
+<body>
+    <!-- rem -->
+    <div class="rem"></div>
+    <hr>
+    <!-- vw -->
+    <div class="vw"></div>
+</body>
+</html>

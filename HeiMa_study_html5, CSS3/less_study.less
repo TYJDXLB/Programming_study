@@ -1,0 +1,40 @@
+// out: ./less_name.css
+/* less导出，在less文件第一行添加：//out:储存的URL/文件名字（可不写）
+less禁止导出,在less文件第一行添加：//out: false */
+
+
+//less是一种辅助完成css的语言，可以进行逻辑计算，算是css的扩展。
+// less在CSS书写中起着非常重要的意义，如果要修改某个父级的选择其名称，用less非常方便
+/* Less是CSS预处理器，后缀为.less 扩充了CSS语言，使其具备一定的逻辑性计算能力
+    目前浏览器不识别Less代码，需要转为对应的CSS语言。安装easy less插件可以在保存
+    less文件的时候生成对应的CSS代码   tips：单行注释无法生成到CSS文件 */
+
+// less变量的写法(常用小驼峰命名法)语法：@变量名: 数据;   使用变量：CSS属性: @变量名;
+@loveColor: #6cf;
+
+.father {
+    width: 10 + 1px;
+    width: 10 - 1px;
+    width: 10 * 2px;
+    // 除法需要加小括号或者.
+    width: (10 / 2px);
+    // 不推荐下式(如果表达式中有多个单位以第一个为准)
+    height: 10rem ./ 2px;
+    .zi {
+        // less里面可以嵌套 
+        width: 10 + 2 * 5px;
+        a {
+            color: aqua;
+            // &：表示父级标签(相当于this)应用于伪类或结构伪类
+            &:hover {
+                color: @loveColor;
+            }
+        }
+    }
+}
+
+// less导入：在less文件里导入其他文件，如果导入的是less文件可以省略后缀
+/* @import "文件路径" [@import url(); 不能这样写less完全不处理这一行]
+将其他less文件都导入一个less文件只生成一个CSS文件，只用引入一个就行了 */
+// 对于Less文件会合并编译，对于CSS文件则不会合并；可以使用@import (less) "文件路径" 强制编译解析
+@import (less) "./测试外部引入CSS用.css";

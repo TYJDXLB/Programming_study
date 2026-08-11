@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JD_service</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #ede9e9;
+        }
+        li {
+            list-style: none;
+        }
+
+        .service {
+            margin: 100px auto;
+            padding: 25px 40px;
+            width: 2000px;
+            height: 175px;
+            background-color: #fff;
+        }
+        .service ul {
+            display: flex;
+            justify-content: space-between;
+        }
+        .service li {
+            display: flex;
+            width: 450px;
+            height: 125px;
+            /* background-color: #6cf; */
+        }
+        .service li .pic {
+            margin-right: 20px;
+            width: 110px;
+            height: 125px;
+            background: url(../Picture/京东图.png) 0 -20px;
+        }
+        /* 每一个pic盒子的背景图都是一样的,改位置就行了 */
+        .service li:nth-child(2) .pic {
+            background-position: -127px -20px;
+        }
+        .service li:nth-child(3) .pic {
+            background-position: -254px -20px;
+        }
+        .service li:nth-child(4) .pic {
+            background-position: -380px -20px;
+        }
+        .service li h3 {
+            font-size: 35px;
+            line-height: 125px;
+            color: #444;
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <div class="service">
+        <ul>
+            <li>
+                <div class="pic"></div>
+                <h3>品类齐全,轻松购物</h3>
+            </li>
+            <li>
+                <div class="pic"></div>
+                <h3>多仓直发,急速配送</h3>
+            </li>
+            <li>
+                <div class="pic"></div>
+                <h3>正品行货,精致服务</h3>
+            </li>
+            <li>
+                <div class="pic"></div>
+                <h3>天天低价,畅选无忧</h3>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

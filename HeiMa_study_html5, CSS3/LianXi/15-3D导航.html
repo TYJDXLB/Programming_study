@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D导航</title>
+    <style>
+        /* clear default formatting(清除默认格式) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        li {
+            list-style: none;
+        }
+        a {
+            text-decoration: none;
+        }
+
+        .nav ul {
+            display: flex;
+            margin: 100px auto;
+            width: 600px;
+            height: 100px;
+            /* background-color: #6cf; */
+        }
+        .nav li {
+            position: relative;
+            width: 200px;
+            height: 100px;
+            background-color: pink;
+            transform-style: preserve-3d;
+            transition: all 1s;
+            /* 呈现出立体效果，帮助判断 */
+            /* transform: rotateX(-20deg) rotateY(30deg); */
+            /* transform: scale3d(0.5, 0.5, 0.5); */
+        }
+        /* 父级旋转 */
+        .nav li:hover {
+            transform: rotateX(-90deg);
+        }
+        .nav li .front {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            width: 200px;
+            height: 100px;
+            background-color: green;
+            transform: translateZ(50px);
+            color: #fff;
+            text-align: center;
+            line-height: 100px;
+            font-size: 30px;
+        }
+        .nav li .top {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            width: 200px;
+            height: 100px;
+            background-color: orange;
+            transform: translateY(-50px) rotateX(90deg);
+            color: #fff;
+            text-align: center;
+            line-height: 100px;
+            font-size: 30px;
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <ul>
+            <li>
+                <a href="#" class="front">首页</a>
+                <a href="#" class="top">Index</a>
+            </li>
+            <li>
+                <a href="#" class="front">登录</a>
+                <a href="#" class="top">Login</a>
+            </li>
+            <li>
+                <a href="#" class="front">注册</a>
+                <a href="#" class="top">Register</a>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

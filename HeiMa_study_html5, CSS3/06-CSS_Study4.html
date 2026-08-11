@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS_Study</title>
+    <!-- 字体图标(展示的是图标,本质上是字体;作用:用于图片简单是纯色的小图标,如果是多色的则用CSS精灵)
+    使用方法: 1.引入字体样式表(iconfont.css) 2.标签使用字体图标类名(class="iconfont icon-xxx") -->
+    <link rel="stylesheet" href="./iconfont/iconfont.css"> <!-- 这个link一定要放到style之前!!! -->
+    <style>
+        * { /* 清除默认格式 */
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        hr { /* 设置一下分割线样式 */
+            margin: 50px 0;
+        }
+        /* 定位(灵活改变盒子在网页中的位置,使两个标签压在一起):
+        1.定位模式: position
+        2.边偏移: 设置盒子位置(left,right,top,bottom) */
+
+        /* relative(相对定位,工作不常用):  特点:
+            1. 改变相对位置的参照物为自己原来的位置
+            2. 脱标,占位(自己原来位置的空白不被别人占用)
+            3. 标签显示模式不变 */
+        .Xiangdui {
+            position: relative;
+            top: 100px;
+            left: 200px;
+        }
+        /* absolute(绝对定位,用于"子绝对,父相对"):   特点: 
+            1. 脱标,不占位
+            2. 参照物:先找已经定位的祖先元素,没有就参照浏览器格式该位置
+            3. 标签显示模式改变,具备行内块特点(宽高改变) */
+        .fu {
+            position: relative; /* 父相 */
+
+            width: 400px;
+            height: 350px;
+            background-color: #6cf;
+        }
+        .zi {
+            position: absolute; /* 子绝 */
+            top: 0;
+            right: 0;
+
+            /* display: block; */
+            width: 68px;
+            height: 31px;
+            background-color: #6cf;
+            padding: 5px 10px;
+        }
+        /* 定位居中`1 */
+        .D_f {
+            position: relative;
+            width: 600px;
+            height: 300px;
+            background-color: pink;
+        }
+        .D_z {
+            position: absolute;
+            top: 50%; /* 以左上角为基准点移动 */
+            left: 50%;
+            /* margin向哪个负的距离,为向哪个方向移动 */
+            /* margin-top: -50px;
+            margin-left: -100px; */
+            transform: translate(-50%, -50%); /* 移动水平(垂直)方向多少距离(50%代表自己宽高的一半) */
+            width: 200px;
+            height: 100px;
+            background-color: #6cf;
+        }
+        /* fixed(固定定位,元素位置在网页滚动时步会改变):   特点: 
+            1. 脱标,不占位
+            2. 参照物:浏览器窗口
+            3. 标签显示模式改变,具备行内块特点(宽高改变) */
+        .Guding {
+            position: fixed;
+            top: 0;
+            right: 0;
+
+            width: 300px;
+        }
+        /* 堆叠层级:z-index(作用:设置定位元素的层级顺序,改变元素的显示顺序.
+        取值为整数,默认为0取值越大显示顺序越靠上)
+        默认效果为:后来者居上,后写的标签会显示在之前的标签前面
+         */
+        .box {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            background-color: #c9c3c3;
+        }
+        .box1 {
+            position: absolute;
+            z-index: 1;
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+        }
+        .box2 {
+            position: absolute;
+            left: 100px;
+            top: 100px;
+            width: 200px;
+            height: 200px;
+            background-color: #6cf;
+        }
+
+        /* CSS Sprites: 网页图片处理方式,把网页中背景图片整合到一张图片中,
+        再用background-position精确定位出背景图片的位置(优点:减少服务器被请求的次数,减轻服务器压力,提高页面加载速度)
+        实现方式: 1.创建盒子,盒子尺寸与小图尺寸相同 2.设置盒子背景图为精灵图(大图)
+        3.添加background-position属性,改变背景图位置(3.1先找出小图片在左上方的图标3.2取负数坐标为background-position设置属性值(向左上移动图片位置)) */
+        .bgp {
+            width: 100px;
+            height: 100px;
+            background-color: #6cf;
+            background-image: url(./Picture/北.jpeg);
+            background-position: -13px -27px;
+        }
+
+        .字体图标 {
+            font-size: 50px;
+            color: #6cf;
+        }
+
+        /* 垂直对齐方式vertical-align
+        属性值:baseline基线对齐(默认,底部默认会有一些空白,因为浏览器吧行内块和行标签当成文字处理,转为块级可以解决)
+        top顶端对齐,middle居中对齐,bottom底部对齐 */
+        .duiqi {
+            border: 1px solid #6cf;
+        }
+        .duiqi img { /* 谁比较大加到谁身上 */
+            vertical-align: middle;
+        }
+
+        /* 过渡属性transition(可以为一个元素不同状态之间切换添加过渡效果) 属性值:过渡的属性 花费时间(s)
+        tips: 过渡属性可以是具体CSS属性, 也可以是all(两个状态不同的属性都慢慢过渡), transition设置给元素本身 */
+        .guodu {
+            width: 400px;
+            /* transition: width 3s; */
+            transition: all 2s;
+        }
+        .guodu:hover {
+            width: 800px;
+        }
+
+        /* 透明度opacity(设置整个元素的透明度(包含背景和内容))  属性值:0-1(0为完全透明,1为不透明) */
+        .toumingdu {
+            width: 800px;
+            height: 500px;
+            background-color: #6cf;
+            opacity: 0.5;
+        }
+
+        /* 光标类型cursor(鼠标悬停在元素上时指针的显示样式) 
+        属性值: default默认值箭头, pointer小手, text文本输入, move十字光标 */
+        .guangbiao {
+            width: 200px;
+            height: 200px;
+            background-color: #6cf;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- 相对定位演示 -->
+    <p>
+        2011年，雅音宫羽入围VOCALOID CHINA PROJECT中文形象，后经画师ideolo再创作于2012年3月公布洛天依的形象设计；2012年7月，在第八届中国国际动漫游戏博览会正式推出声库。
+        早期主要活跃在动漫“二次元”圈层；2016年起逐渐进入大众视野；与杨钰莹带来《花儿纳吉》，翻唱《忍者神龟2：破影而出》主题曲。2017年与许嵩演唱歌曲《深夜书店》；
+        同年，洛天依等在上海举行万人演唱会。2018年，与京剧演员王佩瑜合唱歌曲《但愿人长久》。2019年，成为首位在日本演出的中国虚拟歌手。2021年与俄罗斯虚拟歌手娜娜共同发布单曲《出发向未来》
+        [5]。2022年，洛天依ACE1.0在ACE虚拟歌姬开启公测；获“最受欢迎虚拟代言人” [163]。2023年，加入索尼音乐。2024年入选“2023年度十大虚拟数字人”。2025年9月举行2025洛天依
+        “无限共鸣・流光协奏”全息巡回演唱会。10月担任国家宝藏推荐官。2026年2月参加《“活力视听 万象同屏”2026中国网络视听盛典》。
+    </p>
+    <div class="Xiangdui"><img src="./Picture/东方project.jpg" alt="tofo" width="800"></div>
+    <p>
+        2011年，雅音宫羽入围VOCALOID CHINA PROJECT中文形象，后经画师ideolo再创作于2012年3月公布洛天依的形象设计；2012年7月，在第八届中国国际动漫游戏博览会正式推出声库。
+        早期主要活跃在动漫“二次元”圈层；2016年起逐渐进入大众视野；与杨钰莹带来《花儿纳吉》，翻唱《忍者神龟2：破影而出》主题曲。2017年与许嵩演唱歌曲《深夜书店》；
+        同年，洛天依等在上海举行万人演唱会。2018年，与京剧演员王佩瑜合唱歌曲《但愿人长久》。2019年，成为首位在日本演出的中国虚拟歌手。2021年与俄罗斯虚拟歌手娜娜共同发布单曲《出发向未来》
+        [5]。2022年，洛天依ACE1.0在ACE虚拟歌姬开启公测；获“最受欢迎虚拟代言人” [163]。2023年，加入索尼音乐。2024年入选“2023年度十大虚拟数字人”。2025年9月举行2025洛天依
+        “无限共鸣・流光协奏”全息巡回演唱会。10月担任国家宝藏推荐官。2026年2月参加《“活力视听 万象同屏”2026中国网络视听盛典》。
+    </p>
+    <hr>
+    <!-- 绝对定位演示 -->
+    <div class="fu">
+        <img src="./Picture/北.jpeg" alt="bei">
+        <span class="zi">南北组</span>
+        <h4>woshiyigebiaoti</h4>
+    </div>
+    <hr>
+    <!-- 定位居中 -->
+    <div class="D_f">
+        <div class="D_z"></div>
+    </div>
+    <hr>
+    <!-- 固定定位 -->
+    <div class="Guding">
+        <img src="./Picture/思春期better change.jpg" alt="思春期better change" width="200">
+    </div>
+
+    <!-- 堆叠顺序 -->
+    <div class="box">
+        <div class="box1">box1</div>
+        <div class="box2">box2</div>
+    </div>
+    <hr>
+    <!-- CSS Sprites -->
+    <div class="bgp"></div>
+    <hr>
+    <!-- 字体图标 -->
+    <span class="iconfont icon-gerenzhongxin-zhihui 字体图标"></span>
+    <hr>
+    <!-- 垂直对齐方式 -->
+    <div class="duiqi">
+        <img src="./Picture/0-抖音解决方案.png" alt="#">
+        垂直对齐方式
+    </div>
+    <hr>
+    <!-- 过渡属性 -->
+    <img src="./Picture/东方project.jpg" alt="#" class="guodu">
+    <hr>
+    <!-- 透明度 -->
+    <div class="toumingdu">
+        <img src="./Picture/北.jpeg" alt="#">
+    </div>
+    <hr>
+    <!-- 光标学习 -->
+    <div class="guangbiao"></div>
+
+</body>
+</html>
