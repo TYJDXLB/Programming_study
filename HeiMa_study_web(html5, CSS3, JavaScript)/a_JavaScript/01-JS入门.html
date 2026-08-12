@@ -1,0 +1,26 @@
+<!-- JavaScript是什么？  JS是一门运行在客户端(浏览器)上的编程语言（css，html不是编程语言，是一种文本标记语言） -->
+<!-- JavaScript组成：
+ 一、ECMAScript(规定了js的核心语法知识)
+ 二、Web APIs：1.DOM(页面文档对象模型) 操作文档 2.BOM(浏览器对象模型) 操作浏览器 -->
+<!-- JS书写位置：行内，内部，外部 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS入门</title>
+</head>
+<body>
+    <!-- 行内js -->
+    <button onclick="alert('逗你玩的~')">点我月薪过万！</button>
+
+    <!-- 内部js -->
+    <script>
+        // 弹出警示框
+        alert("我是内部js")
+    </script>
+    <!-- 外部js -->
+    <script src="./01-JS入门_外部js.js">// 中间不要写内容不然会被忽略</script>
+</body>
+</html>
