@@ -12,13 +12,127 @@
     <title>JS入门</title>
 </head>
 <body>
+    
+
+    
     <!-- 行内js -->
     <button onclick="alert('逗你玩的~')">点我月薪过万！</button>
-
     <!-- 内部js -->
-    <script>
-        // 弹出警示框
-        alert("我是内部js")
+    <!-- <script>  // D1
+        /* 我是块注释Ctrl+Alt+A */
+        // 1. 弹出警示框
+        alert('我是内部js')
+        // 2. 文档输出内容
+        document.write('<h1>测试文档输出</h1>')
+        document.write('I am div')
+        // 3. 控制台打印输出(在控制台输出，用户看不到)
+        console.log('right or not?')
+        // 4. 输入语句（alert和prompt会跳过页面渲染先被执行）
+        prompt('请输入文本：')
+        /* 5. 变量
+        命名规则：1.不能用关键词；2.只能用字母，下划线，数字，$组成，数字不能开头；3.严格区分大小写
+        规范：遵循小驼峰命名法，第一个字母小写后面每个单词首字母大写 eg：userName
+        （大驼峰命名法：第一个字母也大写；下划线命名法：单词之间用下划线连接 */
+        let age // let 变量名  (旧版本用var声明，var可以先使用再声明，可以重复定义)
+        age = 22 // 赋值
+        console.log(age) // 输出
+        let age2 = 18
+        console.log(age2) // 变量初始化
+        // 多变量声明
+        let a = 'Hello', b = 'js'
+        console.log(a + b) // Hellojs
+        // test1
+        let name = prompt('请输入姓名：')
+        console.log('你的名字是：' + name)
+        // test2
+        let num1 = 10, num2 = 20
+        num3 = num1 // num3没必要再定义
+        num1 = num2
+        num2 = num3
+        console.log(num1, num2)
+        // test3
+        let uname = prompt('请输入姓名：'), uage = prompt('请输入年龄：'), ugrnder = prompt('请输入性别：')
+        console.log(uname, uage, ugrnder)
+        // 6. 数组(有序的)
+        let arr = ['小明', '小美', '小亮'] // 定义数组 let 数组名 = [数据1，数据2，...]
+        console.log(arr)
+        console.log(arr[0]) // 通过索引输出某个元素
+        console.log(arr.length) // 数组长度（元素个数）
+        // 7. 常量  不允许重新赋值，恒定不变
+        const G = 9.8 // const 常量名
+        console.log(G)
+        /* 8. 数据类型： (js为若数据类型语言，不需要先定义数字类型再使用)
+            一、基本数据类型：1.number数字 2.string字符串 3.boolean布尔 4.undefined未定义 5.null空类型
+            二、引用数据类型：1.object对象 */
+        // 9. 运算符：+, -, *, /, %(取余数), **(乘方)
+        // test4
+        const PI = 3.14
+        console.log(PI * (prompt('请输入半径：') ** 2))
+        console.log('Hello' - 2) // NaN (not a number 计算错误时出现（不报错）) NaN是粘性的，任何对它的操作都等于NaN 并且NaN != NaN
+        // 10. 字符串类型 用"", '', `` 都可定义
+        let str1 = "111"
+        let str2 = '222'
+        let str3 = `333`
+        console.log('说的\'道理\'') // \为转义符
+        // 11. 模板字符串(占位符)
+        let bl = '天依'
+        console.log(`我的名字是：${bl}`)
+        // 12. undefined 当只声明不赋值变量时值为undefined 用于后期判断这个变量是否已有值
+        let und
+        console.log(und)
+        // 13. null(把null作为尚未赋值的对象) (null和undefined区别：undefined表示没有赋值，null表示赋值了但值为空)
+        // 14. 检测数据类型 两种写法：typeof 变量名；typeof(变量名)
+        let num = 11, name = 'tianyi'
+        console.log(typeof num, typeof(name))
+        /* 15. 类型转换：
+            一、隐式转换：1.+两边只要有一个是字符串，就会把另一个变成字符串  2.除了+之外的运算符会把数据变成数字类型
+            二、显示转换：转为数字型：Number(数据)；parseint(数据)；parseFloat(数据) */
+        console.log(typeof('hello' + 1))
+        console.log(typeof('10' / 2))
+        console.log(typeof(+'123')) // number 小技巧：使用隐式转换使字符串变为数字(转化为浮点数)
+        console.log(parseInt('11.45px14')) // 11
+        console.log(parseFloat('11.45px14')) //11.45
+        // test5
+        alert(`相加结果为：${+prompt('请输入第一个数：') + parseFloat(prompt('请输入第二个数：'))}`)
+    </script> -->
+
+    <script>  // D2
+    // 1. 运算符  +=, -=, *=, /=, %= 和python的类似
+    // 2. 自增，自减 (前置自增：++i；后置自增：i++；二者都类似于i += 1)
+    let i = 1
+    let k = 1
+    console.log(++i + 2) // 4  前置自增，先自增再运算
+    console.log(k++ + 2) // 3  后置自增，先运算再自增
+    console.log(k) // 先用k+2得出结果3输出之后k再自增为2
+    let test = 1
+    // 【test++先使用所以为1，然后自增因此test++执行完之后test为2。之后test++先自增为3，执行完之后test为3。故最终为：1+3+3=7】
+    console.log(test++ + ++test + test) // 7
+    // 3. 比较运算符  >, >=, <, <=, ==, ===, !==(左右两边不相等)
+    console.log(2 == '2') // true  比较运算符有隐式转换(== 表示数值是否相等)
+    console.log(2 === '2') // false (=== 表示类型和值都相等)
+    console.log(NaN === NaN) // false (NaN不等于任何人)
+    console.log('a' < 'b') // true 字符串比较ASCII码
+    // 4. 逻辑运算符 &&与，||或，！非
+    // test6
+    let num = +prompt('请输入数字：') // str转成数字
+    alert(num % 4 === 0 && num % 100 !== 0)
+    /* 运算符优先级：
+        1. 小括号：()
+        2. 一元运算符：++ -- !
+        3. 算数运算符：先* / 后+ -
+        4. 比较运算符：> >= < <=
+        5. 相等运算符：== != === !==
+        6. 逻辑运算符：先&& 后||
+        7. 赋值运算符：=
+        8. 逗号：, */
+
+
+
+
+
+
+
+
     </script>
     <!-- 外部js -->
     <script src="./01-JS入门_外部js.js">// 中间不要写内容不然会被忽略</script>

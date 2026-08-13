@@ -60,8 +60,9 @@
     </p>
     
     <!-- 表格标签:table嵌套tr, tr嵌套th和td, tr是表格行, th是表格标题, td是表格数据
-        表格属性: border(边框粗细,默认没有边框) cellspacing(单元格之间的间距,默认0) cellpadding(单元格内容与边框的间距,默认1) -->
-    <table border="1" cellpadding="10"> <!-- table标签只能包含tr标签, 但是tr标签内可包含th和td标签 -->
+        表格属性: border(边框粗细,默认没有边框) cellspacing(单元格之间的间距,默认0) cellpadding(单元格内容与边框的间距,默认1)
+        ！！！以上属性全部废弃！！！想实现可以设置CSS实现，详情请见：https://developer.mozilla.org/zh-CN/docs/Web/HTML/Reference/Elements/table -->
+    <table> <!-- table标签只能包含tr标签, 但是tr标签内可包含th和td标签 -->
         <thead> <!-- 主要是方便查看,用户看不到-->
             <tr> <!-- tr标签独占一行--> <!-- shift + alt + f 可以自动整理格式-->
                 <th>姓名</th>
