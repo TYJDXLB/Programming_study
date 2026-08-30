@@ -1,0 +1,79 @@
+DanLei
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi17
+{
+    /// <summary>
+    /// 单列.
+    /// </summary>
+    internal class DanLie
+    {                       //(当前类类型是：DanLie)
+        //1.生命一个静态且私有的当前类类型字段
+        private static DanLie instance;         //instance是实例的意思
+
+        //2.创建私有的无参构造法，保证外界无法实例化这个类
+        private DanLie() { }
+        
+        //3.创建一个静态方法，用于创建此类的唯一对象
+        public static DanLie Instance()
+        {
+            if(instance == null)
+            {
+                instance = new DanLie();
+            }
+            return instance;
+        }
+    }
+}
+Program
+namespace lianxi17
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Web w1 = new Web("百度","www.baidu.com");
+            w1.Show();
+            Web w2 = new Web("擅码网", "www.shanma.com");
+            w2.Show();
+
+            DanLie a = DanLie.Instance();
+            DanLie b = DanLie.Instance();
+            //实际上a，b是一个
+            Console.WriteLine(a == b);  //判断a，b是否相同
+            Console.WriteLine(w1 == w2);
+
+        }
+    }
+}
+Web
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi17
+{
+    internal class Web
+    {
+        private string name;
+        private string url;
+
+        public Web(string name, string url)         //构造封装
+        {
+            this.name = name;
+            this.url = url;
+        }
+
+        public void Show()
+        {
+            Console.WriteLine("名字：{0}，地址：{1}", name, url);
+        }
+        
+    }
+}

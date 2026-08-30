@@ -1,0 +1,413 @@
+﻿/* 同类型的数小的可以转换成大的 int-->float, int-->double
+隐式类型转换
+int a = 10;
+float b;
+double c;
+b = a;
+c = a;
+Console.WriteLine("a:{0}b:{1}c:{2}",a,b,c);
+*/
+/*显式类型转换[强制转换类型] 同类型的数小的可以转换成大的 int-->float, int-->double
+float a = 3.2f;
+double b = 3.1415926;
+int c = (int)a;
+int d = (int)b;
+Console.WriteLine("a{0}b{1}c{2}d{3}",a,b,c,d);
+*/
+//表达式中的类型转换
+/*int a = 6;
+float b = 7.3f;
+float c = a + b;
+Console.WriteLine(c);*/
+//convert类型 可以转换不同类型的变量
+/*string a = "56";
+string c = "24.5";
+double b=Convert.ToDouble(c);
+int d=Convert.ToInt32(a);
+Console.WriteLine(b+d);*/
+//实现一个加法计算器
+/*Console.WriteLine("请输入加数");
+double a=Convert.ToDouble(Console.ReadLine());
+Console.WriteLine("请输入被加数");
+double b = Convert.ToDouble(Console.ReadLine());
+Console.WriteLine("得数为：{0}",a+b);*/
+//常量 声明完不可改变 用大写字母组成的单词加下划线构成
+//const int a = 12;
+//a = 13;
+//if语句
+/*bool a = false;
+if (a == false)
+{
+    Console.WriteLine("a为False");
+}
+Console.WriteLine("我是后面的代码");*/
+//if-else语句
+/*if (5 < 3)
+{
+    Console.WriteLine("这是真的");
+}else{
+    Console.WriteLine("这是假的");
+}
+Console.WriteLine("我是后面的代码");*/
+//模拟账号登入
+//string Name = "yanke";
+//string Num = "123456";
+/*string Name;
+string Num;
+Console.WriteLine("请输入用户名");
+Name=Console.ReadLine();
+Console.WriteLine("请输入密码");
+Num=Console.ReadLine();
+if (Name == "yanke" && Num == "123456")
+{
+    Console.WriteLine("登入成功");
+}
+else
+{
+    Console.WriteLine("登入失败");
+}
+Console.WriteLine("我是后面的代码");*/
+//switch语句
+//if else-if语句
+//练习：我的时间
+/*int a;
+Console.WriteLine("请输查询入时间");
+a = Convert.ToInt32(Console.ReadLine());
+if ((a < 7 || a >= 21) && (a < 24 && a > 0))
+{
+    Console.WriteLine("在睡觉");
+}
+else if ((a >= 7 || a < 21) && (a < 24 && a > 0))
+{
+    Console.WriteLine("在玩");
+}
+else
+{
+    Console.WriteLine("没有这个时间");
+}
+Console.WriteLine("我是后面的代码");*/
+//switch-case句型
+/*int a;
+Console.WriteLine("请输入数字");
+a=Convert.ToInt32(Console.ReadLine());
+switch (a)
+{
+    case 0:
+        Console.WriteLine("这是0");
+        break; // 跳出循环
+    case 1:
+        Console.WriteLine("这是1");
+        break;
+    case 2:
+        Console.WriteLine("这是2");
+        break;
+    default: // 不满足所有case时就运行default语句
+        Console.WriteLine("其他数字");
+        break;
+}*/
+/*for句型   for (初始表达式;条件表达式;增量表达式;) { 循环体代码; }
+初始表达式：声明循环变量，记录循环次数 int a = 1;只运行一次
+条件表达式：循环条件
+增量表达式：使其跳出循环的必要的式子 */
+/*for (int a = 1; a <= 10; a++)
+{
+    Console.WriteLine(a);
+}*/
+//从一加到一百练习
+/*int total=0;
+for (int a = 1; a <= 100; a++)
+{
+    total = total + a;
+}
+Console.WriteLine(total);*/
+//人一天吃三顿饭
+/*for(int i=1;i<=7;i++)
+{
+    Console.WriteLine("这2月的第{0}天",i);
+    for(int j=1;j<=3;j++)
+    {
+        Console.WriteLine("这是第{0}顿饭",j);
+    }
+}*/
+//做一个99乘法表
+/*for(int i=1;i<=9;i++)
+{
+    for(int j=1;j<=i;j++)
+    {
+        Console.Write("{0}*{1}={2}\t",j,i,i*j);
+    }
+    Console.WriteLine(); // 表示换行
+}*/
+//while语句
+/*int a = 1;
+while (a < 11)
+{
+    Console.WriteLine(a);
+    a++; // 增量使其可以跳出循环
+}*/
+//计算1+。。。。+100的值
+/*int a = 1;
+int b = 0;
+while (a <= 100)
+{
+    b += a;
+    a++;
+}
+Console.WriteLine(b);*/
+//do-while 语句（先做在判断）
+/*int i = 1;
+do
+{
+    Console.WriteLine(i);
+    i++;
+} while (i <= 10);*/
+/*for(int a=1;a<10;a++)
+{
+    if (a == 5)
+    {
+        break; // 直接跳出循环
+    }
+    Console.WriteLine(a);
+}*/
+/*for(int a=1;a<10;a++)
+{
+    if (a % 2 == 0)
+    {
+        continue; // 结束本次循环
+    }
+    Console.WriteLine(a);
+}*/
+//数组 一个储存相同元素固定大小顺序的集合
+/*int[] a;  // 声明：数据类型[] 数组名 “[]”指定数组维度，默认为1维
+a = new int[5]; // 初始化  new 数据类型[数组长度]
+a[0] = 1; // 赋值
+Console.WriteLine(a[0]);*/
+/*int[]a=new int[3];
+a[0]=0;
+Console.WriteLine(a[0]);*/
+//int[] a = new int[3]{1,2,3}; // 声明，初始化，赋值 三合一：放入了三个值1,2,3 中括号里可不写数字
+//Console.WriteLine(a[2]);
+//double[] a = new double[] { 0, 1, 2, 3 };
+//Console.WriteLine(a[2]);
+//数组遍历
+/*（取值）
+int[]a=new int[] {1,2,3};
+for(int i=0;i<a.Length;i++)
+{
+    Console.WriteLine(a[i]);
+}*/
+/*赋值
+string[] a = new string[5];
+    for(int i=0;i<a.Length;i++)
+{
+    a[i] = "元素" + i;
+    Console.WriteLine(a[i]);
+}*/
+//遍历五个数
+/*string[] a = new string[] { "一", "二", "三", "四", "五" };
+string b = "";
+for(int i = 0; i < a.Length; i++)  // a.Length获取数组长度
+{
+    b+=a[i];
+    if(i<a.Length-1)
+    {
+        b += "|";
+    }
+}
+Console.WriteLine(b);*/
+//foreach遍历数组  foreach (数组数据类型 临时变量 in 数组名)
+/*int[]a=new int[] {1,2,3};
+foreach(int i in a)
+{
+    Console.WriteLine(i);
+}
+
+string[] b = new string[] { "一", "二", "三", "四", "五" };
+foreach(string s in b)
+{
+    Console.WriteLine(s);
+}*/
+//二维数组
+/*int[,] a; // 声明
+a=new int[2,2]; // 初始化 数组名 = new 数据类型[行数,列数];
+int[,] b = new int[2,2]; // 合并
+a[0, 0] = 2;
+Console.WriteLine(a[0,0]);*/
+/*int[,] a = new int[,]
+{
+    {1,2,3}, // 每一行用一个大括号
+    {4,5,6},
+    {7,8,9},
+};
+for(int i=0;i<a.GetLength(0);i++)  // .GetLength(轴向下标)获得某个轴的元素个数
+{
+    for(int j=0;j<a.GetLength(1);j++)
+    {
+        Console.Write(a[i,j] +"\t");
+    }
+    Console.WriteLine();
+}*/
+//二维数组储存游戏地图
+/*int[,] a = new int[,]
+{
+    {0,0,0,0,0,0,0,0,0},
+    {0,1,0,1,1,1,0,1,0},
+    {0,0,1,0,0,0,1,0,0},
+    {0,1,0,1,1,1,0,1,0},
+    {0,0,0,0,0,0,0,0,0},
+};
+for(int i=0;i<a.GetLength(0);i++)
+{
+    for(int j=0;j<a.GetLength(1);j++)
+    {
+        if(a[i,j] != 0)
+        {
+            Console.Write("□");
+        }
+        else
+        {
+            Console.Write("■");
+        }
+    }
+    Console.WriteLine();
+}*/
+//自己声明一个函数（无参无返回值）
+/*static void Hellow(int a) // static：静态标识符；void：返回值类型；数据类型 a：传入参数，形参（可不写）
+{
+    Console.WriteLine("大家好我是严轲，今年十八岁了！");
+}
+//调用函数
+Hellow();*/
+//有参无返回值
+/*static void Hellow(string name,int age)
+{
+    Console.WriteLine("大家好我是{0}，今年{1}岁了！",name,age);
+}
+Console.WriteLine("输入姓名");
+string name=Console.ReadLine();
+Console.WriteLine("输入年龄");
+int age=Convert.ToInt32(Console.ReadLine());
+Hellow(name,age);*/
+/*这样也可以
+static void Hellow(string name, int age)
+{
+    Console.WriteLine("大家好我是{0}，今年{1}岁了！", name, age);
+}
+Hellow("yk", 12);*/
+//有参有返回值
+/*static int Hellow(string name, int age)
+{
+    Console.WriteLine("大家好我是{0}，今年{1}岁了！", name, age);
+    return age + 20; // 返回值
+    Console.WriteLine("我是后面的代码");
+}
+int age=Hellow("yk", 100);
+Console.WriteLine(age);*/
+/* 
+函数的重载：当两个函数名称相同，但是传入参数不同时 调用该函数的时候会根据自动匹配
+一、static int add(int a, int b)
+二、static int add(int a, double b)
+如果传入add(10, 9.99);  就调用二号函数
+*/
+//练习
+//int[] a = new int[] { 1, 2, 3, 4, 5, 6 };
+//static void ShowTitle()
+//{
+//    Console.WriteLine("演示：封装一个int类型的一位数组进行相关的操作");
+//}
+//static void ForArray(int[] suibian)
+//{
+//    foreach (int i in suibian)
+//    {
+//        Console.WriteLine(i);
+//    }
+//}
+//static int GetArrayLength(int[] a)
+//{
+//    return a.Length;
+//}
+////使用
+//ShowTitle();
+//Console.WriteLine("----------------------");
+//ForArray(a);
+//Console.WriteLine("----------------------");
+//int b = GetArrayLength(a);
+//Console.WriteLine(b);
+
+
+//static int Add(int a, int b)
+//{
+//    return a + b;
+//}
+//int a = Add(2, 1);
+//Console.WriteLine(a);
+
+
+// 函数的高等参数：
+/* 1.ref参数 （引用传递）
+作用：将一个变量传入一个函数中进行"处理"，"处理"完毕后再把"处理"后的结果代出
+【函数外必须为变量赋值，而函数内可以不赋值】
+语法：形参，实参前面加上ref
+static void add(ref int num)
+add(ref num); */
+/* 2.out参数
+作用：一个函数中需要返回多个不同类型的值，用out参数
+【函数外可以不为变量赋值，函数内必须为变量赋值】
+语法：
+stastic void number(int a, int b, out int max, out int ming)
+number(a, b, out max, out min) */
+
+/* 函数递归调用  递归是一种直接或间接调用自身函数或方法的算法[自己调用自己]
+stastic int A(int a) {
+if (n == 1) return 1; // 如果if只有一句语句可以不写{}
+return n + A(n - 1);
+} */
+
+/* 函数：访问修饰符：
+应用场合：一、修饰类：public，internal（默认）
+二、修饰类成员：（五种均可，不写为默认private）
+    1. static 关键字：用于修饰 类，字段，属性，方法，构造方法
+        被static修饰的类为 静态类；
+        被static修饰的类成员为 静态类成员：
+            （1）静态字段 不属于任何对象只属于类，访问需要：类名.静态字段名(可重新赋值 类名.静态字段名 = 值；储存的数据再内存中只有一份)
+            （2）静态属性 对静态字段进行封装保证其合法性 访问需要：类名.静态属性名(不能封装非静态对象)
+            （3）静态普通方法 调用需要：类名.方法名(静态方法中不能调用静态方法)
+            （4）静态构造方法 用于初始化静态成员，一个类中只能有一个，该方法没有访问修饰符，没有参数，可定义在(非)静态类中
+            （5）静态类 类中成员全部为静态成员，声明需要在class前加上static
+【先生成静态成员，后有实例成员；后出现的可以调用先出现的，先出现的不能调用后出现的】 */
+
+/* 设计模式：
+一、单列(设计一个类时，整个程序运行期间只有一个实例对象)设计模式：（用于非静态类）
+步骤：1.声明一个静态且私有的当前类型的字段 private stastic ClassName instance;
+     2.创建私有无参的构造方法，保证外边无法实例化该类 private ClassName() {}
+     3.创建一个静态方法，用于创建此类的唯一对象（返回值为当前类的类型）
+     public stastic ClassName Instance() {
+        if (instance == null){
+            instance = new ClassName();
+        }
+        return instance;
+     }
+二、嵌套类 把一个类定义在另一个类的内部中；外边的叫外部类，里面的叫嵌套类(嵌套类与普通类相同，只是位置不同)
+    实例化：外部类名.内部类名 （person.web a = new person.web();
+三、匿名类 如果某个类的实例对象只会用一次，可以使用匿名类创建这个对象，不用定义类即可创建一个对象（这个类一般用于储存只读属性）
+    语法：var p = new { Name = "monkey", Age = 100};
+    输出：Console.WriteLine("姓名：{0}年龄：{1}", p.Name, p.Age); 因为是只读的所以不能重新赋值
+四、密封类 被sealed的类不可被继承，不能有子类 */
+
+/* 装箱与拆箱 （装箱：值类型-->引用类型；拆箱：引用类型-->值类型）
+1.object类（是所有类的父类）
+2.重写Tostring(是虚方法，可用override重写)将类中的信息打印输出
+    在子类中：public override string Tostring(){
+        return string.Format(该类中的信息);
+    }
+Object 类；object 类型
+
+对象初始化器：在一个类中常用构造方法对属性进行赋值，完成对象初始化。
+但是当一个类中的属性很多时，不可能为各种情况都定义构造方法，这时可以用“对象初始化器”完成属性赋值
+语法：类名 对象名 = new 类名() {属性名 = 值, 属性名 = 值};
+
+
+
+*/
+
+

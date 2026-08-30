@@ -1,0 +1,43 @@
+﻿namespace lianxi8
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            //tiger的实例化
+            Tiger t = new Tiger();
+            t.Leg = 4;
+            t.Sleep();
+            t.Eat();
+            t.Cry();
+            t.YSNL();
+            t.CR();
+            Console.WriteLine("------------------");
+            Cat c=new Cat();
+            c.Leg = 4;
+            c.Sleep();
+            c.Eat();
+            c.Cry();
+            c.YSNL();
+            c.ZLS();
+            Console.WriteLine("------------------");
+            Eagle e = new Eagle();
+            e.Leg = 2;
+            e.Sleep();
+            e.Eat();
+            e.Cry();
+            e.Fly();
+            e.ZLS();
+            Console.WriteLine("------------------");
+            Swallow s = new Swallow();
+            s.Leg = 2;
+            s.Sleep();
+            s.Eat();
+            s.Cry();
+            s.Fly();
+            s.CC();
+
+
+        }
+    }
+}

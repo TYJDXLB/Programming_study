@@ -1,0 +1,95 @@
+Person
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi19
+{
+    internal class Person
+    {
+        //这就是一个区域指令，可以点击旁边的减号收缩。
+        #region 字段
+        private string name;
+        private int age;
+        private string address;
+        #endregion
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+        public int Age
+        {
+            get { return age; }
+            set { age = value; }
+        }
+        public string Address
+        {
+            get { return address; }
+            set { address = value; }
+        }
+
+
+
+        #region 构造方法
+        public Person(string name, int age, string address)
+        {
+            this.name = name;
+            this.age = age;
+            this.address = address;
+        }
+        #endregion
+
+        #region 普通方法
+        public void Hellow()
+        {
+            Console.WriteLine("华风夏韵，洛水天依");
+        }
+        public override string ToString()   //重写ToString
+        {
+            return String.Format("{0}----{1}----{2}",name,age,address);
+        }
+        #endregion
+    }
+}
+Program
+namespace lianxi19
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            //Person p1 = new Person("严轲",18,"周口市");
+            //p1.Hellow();
+            //Console.WriteLine(p1.ToString());
+            object a;
+
+            Object o;       //o是一个对象                    该Object是个类
+            object p;       //p只是一个普通的变量             该object是个关键字，或类型
+            int b;
+
+
+            //装箱与拆箱
+            int x = 10;
+            Console.WriteLine(x);
+            object y = x;       //装箱操作  值类型--->引用类型.
+            Console.WriteLine(y);
+
+            //x = y;      不能直接转换
+            x=(int)y;   //强制转换  拆箱操作    引用类型--->值类型
+            Console.WriteLine(x);
+
+            //对象初始化器        有它就不用写构造方法了
+            Person p1 = new Person() { Name = "严轲", Age = 18 };
+            Person p2 = new Person() { Address = "周口", Name = "严轲" };
+            Person p3 = new Person() { Age = 18, Name = "严轲" };
+
+            p1.Hellow();
+            p2.Hellow();
+            Console.WriteLine(p3.ToString());
+            }
+    }
+}

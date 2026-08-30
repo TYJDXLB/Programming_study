@@ -1,0 +1,121 @@
+ChouxiangleiF
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi14
+{
+    /// <summary>
+    /// 抽象方法.
+    /// </summary>
+    internal abstract class ChouxiangleiF
+    {
+        public abstract void Chouxiangfu();
+    }
+}
+ChouZ
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi14
+{
+    internal class ChouZ : ChouxiangleiF,IJieKou
+
+    {
+        public override void Chouxiangfu()
+        {
+            Console.WriteLine("抽象方法中的子类");
+        }
+
+        public void JK()
+        {
+            Console.WriteLine("这是接口的方法");
+        }
+    }
+}
+IJieKou
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi14
+{
+    internal interface IJieKou
+    {
+        void JK();
+    }
+}
+Program
+namespace lianxi14
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            //虚方法
+            XuZ x=new XuZ();//实例化一个子类的对象
+            x.xufu();
+            x.xuzi();
+            XufangfaF x2=new XufangfaF();//实例化一个父类的对象
+            x2.xufu();
+            Console.WriteLine("--------------------------------");
+            //抽象类
+            ChouZ c=new ChouZ();
+            c.Chouxiangfu();
+            c.JK();         //对接口的调用
+
+        }
+    }
+}
+Xufangfa
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi14
+{
+    /// <summary>
+    /// 虚方法.
+    /// </summary>
+    internal class XufangfaF
+    {
+        public virtual void xufu()
+        {
+            Console.WriteLine("我是虚方法的父类。");
+        }
+
+    }
+}
+XuZ
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi14
+{
+    internal class XuZ:XufangfaF
+    {
+        public void xuzi()//子类自己的方法
+        {
+            Console.WriteLine("子类中自己的方法");
+        }
+
+        public override void xufu()//重写父类的方法
+        {
+            base.xufu();
+            Console.WriteLine("虚方法子类");
+        }
+        
+    }
+}

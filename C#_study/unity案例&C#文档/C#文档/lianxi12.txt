@@ -1,0 +1,106 @@
+Batmoble
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi12
+{
+    /// <summary>
+    /// 蝙蝠侠战车
+    /// </summary>
+    internal class Batmobile:Car,IFly       //想用接口，就加个逗号写上接口名，再点实现接口。
+    {
+        public Batmobile(string brand) : base(brand)
+        { }
+
+        public void Fly()
+        {
+            Console.WriteLine("{0}在天上飞行。。。",base.Brand);
+        }
+    }
+}
+BMWcar
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi12
+{
+    internal class BMWcar:Car
+    {
+        //建一个构造方法用于初始化父类，传值给父类
+        public BMWcar(string brand):base(brand)
+        {
+
+        }
+    }
+}
+Car
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi12
+{
+    /// <summary>
+    /// 汽车的父类.
+    /// </summary>
+    internal class Car
+    {
+        private string brand;       //建一个字段
+        public string Brand         //用一个属性封装
+        {
+            get { return brand; }
+            set { brand = value; }
+        }
+        public Car(string brand)    //建一个构造方法，用于初始化这个父类
+        {
+            this.brand = brand;
+        }
+        public void Run()           //一个普通方法
+        {
+            Console.WriteLine("{0}品牌的车在奔跑。。。",brand);
+        }
+
+
+
+    }
+}
+IFly
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi12
+{
+    internal interface IFly
+    {
+        //private string name;          接口中不能包含字段
+
+        void Fly();              //接口中的方法不能有方法体，不能有访问修饰符
+    }
+}
+Program
+namespace lianxi12
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            BMWcar bm = new BMWcar("宝马750");
+            bm.Run();
+
+            Batmobile bat = new Batmobile("蝙蝠侠战车");
+            bat.Run();
+            bat.Fly();
+        }
+    }
+}

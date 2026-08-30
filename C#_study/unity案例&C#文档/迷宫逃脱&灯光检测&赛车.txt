@@ -1,0 +1,186 @@
+人物控制（用刚体）
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerControl : MonoBehaviour
+{
+    //刚体
+    private Rigidbody rb;
+    //吃到的金币数
+    private int CoinCont;
+
+    void Start()
+    {
+        //获取刚体组件
+        rb = GetComponent<Rigidbody>();
+    }
+
+    void Update()
+    {
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+        Vector3 dir = new Vector3(horizontal, 0, vertical);
+        if(dir != Vector3.zero)
+        {
+            transform.rotation = Quaternion.LookRotation(dir);  //看向dir向量
+            //向前移动
+            rb.velocity = dir.normalized * 3;   //先初始化再乘3
+        }
+        else
+        {
+            //停止移动
+            rb.velocity = Vector3.zero;
+        }
+    }
+
+    //判断碰撞
+    private void OnCollisionEnter(Collision collision)
+    {
+        //如果碰到墙壁
+        if(collision.collider.tag=="Wall")
+        {
+            //游戏结束
+            Debug.Log("游戏失败！");
+            //停止游戏
+            Time.timeScale = 0;
+        }
+    }
+
+    //增加金币的方法
+    public void AddCoin()
+    {
+        //增加金币个数
+        CoinCont++;
+        //如果吃完所有的金币，就是金币数大于5
+        if(CoinCont >= 5)
+        {
+            //游戏结束
+            Debug.Log("游戏胜利！");
+            //停止游戏
+            Time.timeScale = 0;
+        }
+    }
+}
+金币脚本
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Coin : MonoBehaviour
+{
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Player")
+        {
+            //如果触发执行则证明玩家碰到金币，增加玩家的金币
+            other.GetComponent<PlayerControl>().AddCoin();
+            //删除自己
+            Destroy(gameObject);
+        }
+    }
+}
+
+
+测试
+刚体移动
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class RigibodyMove : MonoBehaviour
+{
+    //刚体
+    private Rigidbody rbody;
+    // Start is called before the first frame update
+    void Start()
+    {
+        //获取刚体组件
+        rbody = GetComponent<Rigidbody>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+        Vector3 dir = new Vector3(horizontal,0,vertical);
+        //给该方向上一个速度
+        rbody.velocity = dir * 5;
+    }
+}
+自制赛车
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CarControl : MonoBehaviour
+{
+    //关联两前轮(车轮碰撞器的数组）
+    public WheelCollider[] frontWheels;
+    //关联两后轮(车轮碰撞器的数组）
+    public WheelCollider[] backWeels;
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+        //给前后轮分配功能（让前轮负责拐弯，后轮负责驱动）
+        //遍历前轮
+        foreach(WheelCollider wheel in frontWheels)
+        {
+            wheel.steerAngle = horizontal*30;   //水平转最大角度为30度
+        }
+        foreach(WheelCollider wheel in backWeels)
+        {
+            wheel.motorTorque = vertical*-200;   //竖直方向上最大动力为200（如果测试时发现前后方向反了可以在数之前加一个符号）
+        }
+    }
+}
+
+
+灯光检测
+用之前先把所有蜡烛设置为“Candle”标签，并且添加胶囊碰撞器
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CandleControl : MonoBehaviour
+{
+    void Start()
+    {
+        
+    }
+
+    void Update()
+    {
+        //用射线检测的方法判断是否点击物体
+        //单击鼠标左键
+        if(Input.GetMouseButtonDown(0))
+        {
+            //获取鼠标指针位置的射线
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //碰撞信息类
+            RaycastHit hit;
+            //如果发生了碰撞,并且碰撞对象的标签是Candle
+            if (Physics.Raycast(ray, out hit) && hit.collider.tag == "Candle")
+            {
+                //判断火苗(蜡烛的第一个子物体）是否激活
+                if (hit.transform.GetChild(0).gameObject.activeSelf == true)//如果激活了
+                {
+                    //就熄灭它
+                    hit.transform.GetChild(0).gameObject.SetActive(false);
+                }
+                else
+                {
+                    hit.transform.GetChild(0).gameObject.SetActive(true);
+                }
+            }
+        }
+    }
+}

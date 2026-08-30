@@ -1,0 +1,352 @@
+CollisionCube脚本
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CollisionCube : MonoBehaviour
+{
+    private void OnCollisionEnter(Collision coll)
+    {
+        if (coll.gameObject.name != "Ground")
+        {
+            Debug.Log("Enter" + coll.gameObject.name);
+        }
+    }
+    void OnCollisionExit(Collision coll)
+    {
+        if (coll.gameObject.name != "Ground")
+        {
+            Debug.Log("Enter" + coll.gameObject.name);
+        }
+    }
+    private void OnCollisionStay(Collision coll)
+    {
+        if (coll.gameObject.name != "Ground")
+        {
+            Debug.Log("Enter" + coll.gameObject.name);
+        }
+    }
+}
+DeskTrigger	(trigger是触发器）
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class DeskTrigger : MonoBehaviour
+{
+    private GameObject[] m_Desk;
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+        m_Desk = GameObject.FindGameObjectsWithTag("Desks");
+        /*
+        for(int i = 0; i < m_Desk.Length; i++)
+        {
+            Debug.Log(m_Desk[i].name);
+        }*/
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.B))
+        {
+            //up
+            DeskUp();
+        }
+        if(Input.GetKeyUp(KeyCode.B))
+        {
+            //down
+            DeskDown();
+        }    
+    }
+
+    void DeskUp()
+    {
+        for(int i = 0; i < m_Desk.Length; i++)
+        {
+            m_Desk[i].GetComponent<Transform>().Translate(Vector3.up*2,Space.Self);
+        }
+    }
+    void DeskDown()
+    {
+        for( int i = 0; i < m_Desk.Length; i++)
+        {
+            m_Desk[i].GetComponent<Transform>().Translate(Vector3.down * 2, Space.Self);
+        }
+    }
+
+    //触发器
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name == "Student")
+        {
+            DeskUp();
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.gameObject.name == "Student")
+        {
+            DeskDown();
+        }
+    }
+
+}
+Door
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Door : MonoBehaviour
+{
+    private Transform m_transform;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        m_transform = gameObject.GetComponent<Transform>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        /*按键实现开关门
+        if(Input.GetKeyDown(KeyCode.Z))
+        {
+            //开门
+            OpenDoor();
+        }
+        if (Input.GetKeyUp(KeyCode.Z))
+        {
+            //关门
+            CloseDoor();
+        }*/
+    }
+
+    //声明两个方法，来处理开关门
+     public void OpenDoor()     //开门
+    {
+        m_transform.Rotate(Vector3.up, 90);
+    }
+    public void CloseDoor()    //关门
+    {
+        m_transform.Rotate(Vector3.up, -90);
+    }
+}
+DoorTrigger
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class DoorTrigger : MonoBehaviour
+{
+    private Door m_Door;
+    // Start is called before the first frame update
+    void Start()
+    {
+        m_Door = GameObject.Find("Zou").GetComponent<Door>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    //触发器
+    private void OnTriggerEnter(Collider a)
+    {
+        if(a.gameObject.name=="Student")
+        {
+            //开门
+            m_Door.OpenDoor();
+        }
+    }
+    private void OnTriggerExit(Collider a)
+    {
+        if (a.gameObject.name == "Student")
+        {
+            //关门
+            m_Door.CloseDoor();
+        }
+    }
+}
+InputTest
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class InputTest : MonoBehaviour
+{
+    // Start is called before the first frame update
+    //只会执行一次
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    //会执行多次（1秒60次）
+    void Update()
+    {
+        if(Input.GetKey(KeyCode.A))
+        {
+            Debug.Log("GetKey:A....");
+        }
+
+        if(Input.GetKeyDown(KeyCode.A))
+        {
+            Debug.Log("GetKeyDown:A Down");
+        }
+
+        if (Input.GetKeyUp(KeyCode.A))
+        {
+            Debug.Log("GetKeyDown:A Up");
+        }
+
+        if(Input.GetMouseButton(0))
+        {
+            Debug.Log("Mouse Left");
+        }
+
+        if(Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("Mouse Left Down");
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            Debug.Log("Mouse Left Up");
+        }
+    }
+}
+RigidbodyMove	（用刚体移动）
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class RigidbodyMove : MonoBehaviour
+{
+    private Rigidbody m_Rigidbody;
+    private Transform m_Transform;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        m_Rigidbody = gameObject.GetComponent<Rigidbody>();
+        m_Transform = gameObject.GetComponent<Transform>();
+
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.W))        //向前
+        {
+            m_Rigidbody.MovePosition(transform.position + Vector3.forward * 0.2f);
+        }
+        if (Input.GetKey(KeyCode.S))        //向后
+        {
+            m_Rigidbody.MovePosition(transform.position + Vector3.back * 0.2f);
+        }
+        if (Input.GetKey(KeyCode.A))        //向左
+        {
+            m_Rigidbody.MovePosition(transform.position + Vector3.left * 0.2f);
+        }
+        if (Input.GetKey(KeyCode.D))        //向右
+        {
+            m_Rigidbody.MovePosition(transform.position + Vector3.right * 0.2f);
+        }
+
+
+    }
+    /*触发事件相关
+    private void OnCollisionEnter(Collision coll)
+    {
+        if (coll.gameObject.name != "Ground")
+        {
+            Debug.Log("Enter" + coll.gameObject.name);
+        } 
+    }
+    void OnCollisionExit(Collision coll)
+    {
+        if (coll.gameObject.name != "Ground")
+        {
+            Debug.Log("Enter" + coll.gameObject.name);
+        }
+    }
+    private void OnCollisionStay(Collision coll)
+    {
+        if (coll.gameObject.name != "Ground")
+        {
+            Debug.Log("Enter" + coll.gameObject.name);
+        }
+    }
+    */
+
+}
+StufentMove	（用变换组件移动）
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class StufentMove : MonoBehaviour
+{
+    private Transform m_transform;//建个变量来保存组件的引用
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        m_transform = gameObject.GetComponent<Transform>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //m_transform.Translate(Vector3.forward*0.1f, Space.Self);
+        //向前走
+        if (Input.GetKey(KeyCode.W))
+        {
+            m_transform.Translate(Vector3.forward * 0.1f, Space.Self);
+        }
+        //向后走
+        if (Input.GetKey(KeyCode.S))
+        {
+            m_transform.Translate(Vector3.back * 0.1f, Space.Self);
+        }
+        //向左走
+        if (Input.GetKey(KeyCode.A))
+        {
+            m_transform.Translate(Vector3.left * 0.1f, Space.Self);
+        }
+        //向右走
+        if (Input.GetKey(KeyCode.D))
+        {
+            m_transform.Translate(Vector3.right * 0.1f, Space.Self);
+        }
+    }
+}
+Yanke
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Yanke : MonoBehaviour
+{
+    // Start is called before the firs t frame update
+    void Start()
+    {
+        Debug.Log("start");
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        Debug.Log("update");
+    }
+}

@@ -1,0 +1,32 @@
+﻿using System.Text;          //如果编译器中没有则应自行引入
+using System.Diagnostics;
+
+namespace SB
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Stopwatch sw = Stopwatch.StartNew();
+            sw.Start();
+
+            StringBuilder sb = new StringBuilder();
+            //单个追加
+            sb.AppendLine("yanke");
+            sb.Append(123455);
+            sb.Append("严轲");
+            //for连续追加
+            for(int i=0;i<=50;i++)
+            {
+                sb.Append(i);
+            }
+            Console.WriteLine(sb.ToString());
+            sb.Clear();
+            Console.WriteLine("---------------------");
+            Console.WriteLine(sb.ToString());
+            Console.WriteLine("---------------------");
+            sw.Stop();
+            Console.WriteLine(sw.Elapsed);
+        }
+    }
+}

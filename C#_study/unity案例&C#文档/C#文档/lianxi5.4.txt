@@ -1,0 +1,26 @@
+﻿namespace OOP
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            //对象的实例化
+            Apple a=new Apple();
+            //对象的赋值
+            a.color = Color.red;
+            a.weight = 200;
+            a.shape = "圆形";
+            //对象的取值
+            Console.WriteLine(a.color+a.shape+a.weight);
+            Console.WriteLine("----------------------------");
+            Person p1=new Person();
+            p1.name = "洛天依";
+            p1.gender = Gender.女;
+            //p1.age = 15;
+            p1.Age = 1000;
+            Console.WriteLine("p1对象的姓名是{0}，性别是{1}，年龄是{2}。",p1.name,p1.gender,p1.Age);
+
+
+        }
+    }
+}

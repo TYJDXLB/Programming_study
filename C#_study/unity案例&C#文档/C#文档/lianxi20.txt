@@ -1,0 +1,293 @@
+LuoTianYi
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace OOPtest
+{
+    internal class LuoTianYi
+    {
+        private string heroName;        //名称
+        private string heroInfo;        //简介
+        private int attack;             //攻击
+        private int defense;            //防御
+        private int speed;              //速度
+        private string nickName;        //昵称
+
+        public LuoTianYi()
+        { }
+
+        public void Hellow()
+        {
+            Console.WriteLine("姓名：" + this.heroName);
+            Console.WriteLine("介绍：" + this.heroInfo);
+            Console.WriteLine("攻击：" + this.attack);
+            Console.WriteLine("防御：" + this.defense);
+            Console.WriteLine("速度：" + this.speed);
+            Console.WriteLine("昵称：" + this.nickName);
+        }
+
+        public LuoTianYi(string nickName)
+        {
+            this.heroName = "洛天依";
+            this.heroInfo = "虚拟歌姬洛天依";
+            this.attack = 64;
+            this.defense = 77;
+            this.speed = 88;
+            this.nickName = nickName;
+        }
+
+        public string HeroName
+        {
+            get { return heroName; }
+            set { heroName = value; }
+        }
+        public string HeroInfo
+        {
+            get { return heroInfo; }
+            set { heroInfo = value; }
+        }
+        public int Attack
+        {
+            get { return attack; }
+            set { attack = value; }
+        }
+        public int Defense
+        {
+            get { return defense; }
+            set { defense = value; }
+        }
+        public int Speed
+        {
+            get { return speed; }
+            set { speed = value; }
+        }
+        public string NickName
+        {
+            get { return nickName; }
+            set { nickName = value; }
+        }
+
+        public void GanWuNv()
+        {
+            Console.WriteLine("干物女");
+        }
+        public void GouZhiQiShi()
+        {
+            Console.WriteLine("勾指起誓");
+        }
+        public void PiaoLiangMianDui()
+        {
+            Console.WriteLine("漂亮面对");
+        }
+    }
+}
+YanHe
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace OOPtest
+{
+    internal class YanHe
+    {
+        private string heroName;        //名称
+        private string heroInfo;        //简介
+        private int attack;             //攻击
+        private int defense;            //防御
+        private int speed;              //速度
+        private string nickName;        //昵称
+
+        public YanHe()
+        { }
+
+        public void Hellow()
+        {
+            Console.WriteLine("姓名：" + this.heroName);
+            Console.WriteLine("介绍：" + this.heroInfo);
+            Console.WriteLine("攻击：" + this.attack);
+            Console.WriteLine("防御：" + this.defense);
+            Console.WriteLine("速度：" + this.speed);
+            Console.WriteLine("昵称：" + this.nickName);
+        }
+
+        public YanHe(string nickName)
+        {
+            this.heroName = "言和";
+            this.heroInfo = "虚拟歌姬言和";
+            this.attack = 68;
+            this.defense = 82;
+            this.speed = 68;
+            this.nickName = nickName;
+        }
+
+        public string HeroName
+        {
+            get { return heroName; }
+            set { heroName = value; }
+        }
+        public string HeroInfo
+        {
+            get { return heroInfo; }
+            set { heroInfo = value; }
+        }
+        public int Attack
+        {
+            get { return attack; }
+            set { attack = value; }
+        }
+        public int Defense
+        {
+            get { return defense; }
+            set { defense = value; }
+        }
+        public int Speed
+        {
+            get { return speed; }
+            set { speed = value; }
+        }
+        public string NickName
+        {
+            get { return nickName; }
+            set { nickName = value; }
+        }
+
+        public void GuanShiYiZhan()
+        {
+            Console.WriteLine("冠世一战");
+        }
+        public void ShaDiaoZhiGe()
+        {
+            Console.WriteLine("沙雕之歌");
+        }
+        public void MengZhiYu()
+        {
+            Console.WriteLine("梦之雨");
+        }
+    }
+}
+YueZhengLing
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace OOPtest
+{
+    internal class YueZhengLing
+    {
+        private string heroName;        //名称
+        private string heroInfo;        //简介
+        private int attack;             //攻击
+        private int defense;            //防御
+        private int speed;              //速度
+        private string nickName;        //昵称
+
+        public YueZhengLing()
+        { }
+
+        public void Hellow()
+        {
+            Console.WriteLine("姓名：" + this.heroName);
+            Console.WriteLine("介绍：" + this.heroInfo);
+            Console.WriteLine("攻击：" + this.attack);
+            Console.WriteLine("防御：" + this.defense);
+            Console.WriteLine("速度：" + this.speed);
+            Console.WriteLine("昵称：" + this.nickName);
+        }
+
+        public YueZhengLing(string nickName)
+        {
+            this.heroName = "乐正绫";
+            this.heroInfo = "虚拟歌姬乐正绫";
+            this.attack = 84;
+            this.defense = 54;
+            this.speed = 77;
+            this.nickName = nickName;
+        }
+
+        public string HeroName
+        {
+            get { return heroName; }
+            set { heroName = value; }
+        }
+        public string HeroInfo
+        {
+            get { return heroInfo; }
+            set { heroInfo = value; }
+        }
+        public int Attack
+        {
+            get { return attack; }
+            set { attack = value; }
+        }
+        public int Defense
+        {
+            get { return defense; }
+            set { defense = value; }
+        }
+        public int Speed
+        {
+            get { return speed; }
+            set { speed = value; }
+        }
+        public string NickName
+        {
+            get { return nickName; }
+            set { nickName = value; }
+        }
+
+        public void JiuJiuBaShiYi()
+        {
+            Console.WriteLine("九九八十一");
+        }
+        public void WoZai()
+        {
+            Console.WriteLine("我在");
+        }
+        public void MengYinQu()
+        {
+            Console.WriteLine("梦吟曲");
+        }
+    }
+}
+Program
+namespace OOPtest
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("请输入昵称：");
+            LuoTianYi p1=new LuoTianYi(Console.ReadLine());
+            p1.Hellow();
+            Console.WriteLine("曲目：");
+            p1.PiaoLiangMianDui();
+            p1.GouZhiQiShi();
+            p1.GanWuNv();
+            Console.WriteLine("----------------------------");
+
+            Console.WriteLine("请输入昵称：");
+            YueZhengLing p2=new YueZhengLing(Console.ReadLine());
+            p2.Hellow();
+            Console.WriteLine("曲目：");
+            p2.MengYinQu();
+            p2.WoZai();
+            p2.JiuJiuBaShiYi();
+            Console.WriteLine("----------------------------");
+
+            Console.WriteLine("请输入昵称：");
+            YanHe p3=new YanHe(Console.ReadLine());
+            p3.Hellow();
+            Console.WriteLine("曲目：");
+            p3.MengZhiYu();
+            p3.GuanShiYiZhan();
+            p3.ShaDiaoZhiGe();           
+        }
+    }
+}

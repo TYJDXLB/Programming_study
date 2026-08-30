@@ -1,0 +1,657 @@
+文档
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class application : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        //游戏数据文件夹类型,路径
+        //读取一个文件(只读，导出后会被加密压缩）
+        Debug.Log(Application.dataPath);    //输出路径
+        //（以Assets文件下的“新建文本文档”举例）
+        Debug.Log(Application.dataPath + "/新建文本文档.txt");
+
+        //持久化文件夹路径(可以去写的，写在它下面在不同平台下都是没问题的）
+        Debug.Log(Application.persistentDataPath);
+
+        //在Assets文件夹下创建一个StreamingAssets文件夹（只读，StreamingAssets文件夹中的文件不会被加密压缩）
+        Debug.Log(Application.streamingAssetsPath);
+
+        //临时文件的文件夹夹
+        Debug.Log(Application.temporaryCachePath);
+
+        //是否在后台运行
+        Debug.Log(Application.runInBackground);     //输出查看是或否
+        //设置一下      
+        Application.runInBackground = false;
+        Debug.Log(Application.runInBackground);
+        Application.runInBackground = true;        //再改回来
+
+        //打开一个URL（链接）
+        Application.OpenURL("https://www.bilibili.com/");
+
+        //退出游戏
+        Application.Quit();
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}
+异步
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Threading;
+using UnityEngine;
+using UnityEngine.SceneManagement;  //要做场景操作，要先导入这个命名空间
+
+public class async : MonoBehaviour
+{
+    AsyncOperation operation;       //因为SceneManager.LoadSceneAsync(2);有个返回值，所以最开始声明一下
+    
+    void Start()
+    {
+        StartCoroutine(LoadScene());        //算是开启了一个协程
+    }
+
+    //协程方法来异步加载场景（异步比同步块）
+    IEnumerator LoadScene()         //返回值固定是IEnumerator千万别写错成IEnumerable！！！！！
+    {
+        operation = SceneManager.LoadSceneAsync(2);     //接受一下返回值
+        //不允许场景自动跳转
+        operation.allowSceneActivation = false;     //true为自动跳转，默认为true
+
+        yield return operation;
+
+    }
+
+    //做一个计时器，让它在5秒后再跳转
+    float timer = 0;
+
+    void Update()
+    {
+        //获取异步加载进度，范围就是0-0.9
+        Debug.Log(operation.progress);
+
+        timer +=Time.deltaTime;
+        if(timer > 5)             //括号内输入：Input.GetKey(KeyCode.W)就是按W键跳转
+        {
+            operation.allowSceneActivation = true;
+        }
+    }
+}
+虚拟轴
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+
+public class axis : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        /*
+        //虚拟轴，为了兼容
+        //获取水平轴     获取的最终是一个数字
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+        //""内写轴的名称（名称在：编辑>项目设置>输入管理器>轴线>打开你想找的轴看他的名字
+        Debug.Log(horizontal+"      "+ vertical);
+        */
+        //虚拟按键""内写虚拟按键的名称
+        if(Input.GetButtonDown("Jump"))
+        {
+            Debug.Log("空格");
+        }
+
+
+
+    }
+}
+输出
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class debug : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        //输出普通信息
+        Debug.Log("这是普通信息");
+        //输出警告信息
+        Debug.LogWarning("这是警告信息");
+        //输出错误信息
+        Debug.LogError("这是错误信息");
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //画线方法      (只有运行时在编辑场景才能看到）
+        Debug.DrawLine(Vector3.zero, Vector3.one,Color.blue);   //线段,两点为起点，终点，颜色
+        //射线
+        Debug.DrawRay(Vector3.zero, Vector3.up, Color.red);     //射线，两点为起点，芳香，颜色（颜色可不写）
+        //比较
+        Debug.DrawLine(new Vector3(1, 0, 0), new Vector3(1, 1, 0), Color.black);
+        Debug.DrawRay(new Vector3(1, 0, 0), new Vector3(1, 1, 0), Color.yellow);
+    }
+}
+物体
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class empty : MonoBehaviour
+{
+    public GameObject cube;
+    //获取预制体（实现电脑自动生成预制体）
+    public GameObject prefab;
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        //拿到当前脚本所挂载的游戏物体
+        //1.
+        GameObject go = this.gameObject;
+        Debug.Log(go.name);
+        //2.
+        Debug.Log(gameObject.name);
+        //1和2相同
+        //标签
+        Debug.Log(gameObject.tag);
+        //图层
+        Debug.Log(gameObject.layer);
+
+        //打印一下立方体的名称
+        Debug.Log(cube.name);
+        //判断一下是否被激活（检查器下第一个勾是否打上）
+        Debug.Log(cube.activeInHierarchy);      //真正的激活状态
+        Debug.Log(cube.activeSelf);             //自身的激活状态
+        //真正与自身
+        //如果物体外又有一个父物体是非激活的，即使该物体是激活状态，但是真正是不激活的。
+        //获取Transform组件的简便方法
+        Transform a = this.transform;
+        Debug.Log(transform.position);  //直接用
+        //获取组件的一般方法
+        BoxCollider b=GetComponent<BoxCollider>();
+        //获取当前物体子物体上的某个组件
+        GetComponentInChildren<CapsuleCollider>();
+        //获取当前物体父物体上的某个组件
+        GetComponentInParent<SphereCollider>();
+        //添加一个组件
+        cube.AddComponent<AudioSource>();
+        //通过名称获取物体
+        GameObject test = GameObject.Find("test");
+        //通过标签获取物体
+        test = GameObject.FindWithTag("Finish");
+        Debug.Log(test.name);
+        //设置激活状态
+        test.SetActive(false);
+
+        //通过预制体实例化一个对象
+        Instantiate(prefab);
+        //其他方法
+        Instantiate(prefab, transform); //实例化一个物体，并将它作为当前物体的子物体存在
+        GameObject yk = Instantiate(prefab,Vector3.zero,Quaternion.identity);
+        //销毁一个物体
+        Destroy(yk);
+
+
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}
+键盘
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+//using UnityEngine.Windows;        没用，会报错
+
+public class key : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //键鼠操作要写在这里（输出用if语句）
+
+        /*鼠标操作（0左键，1右键，2滚轮）
+        按下鼠标的过程  Input.GetMouseButton()
+        抬起鼠标        Input.GetMouseButtonDown()
+        按下鼠标        Input.GetMouseButtonUp()
+        */
+        /*键盘操作(括号内写“KeyCode.按键”）
+        按下按键的过程  Input.GetKey()
+        抬起按键        Input.GetKeyDown()
+        按下按键        Input.GetKeyUp()
+        */
+        //例子
+        if (Input.GetMouseButtonDown(2))
+        {
+            Debug.Log("按下了滚轮");
+        }
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("按下了空格");
+        }
+
+
+
+    }
+}
+移动
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class move : MonoBehaviour
+{
+    //private Transform a;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        //a = gameObject.GetComponent<Transform>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(Input.GetKey(KeyCode.W))       //向前
+        {
+            gameObject.GetComponent<Transform>().Translate(Vector3.forward*2, Space.World);
+        }
+        if (Input.GetKey(KeyCode.S))       //向后
+        {
+            gameObject.GetComponent<Transform>().Translate(Vector3.back * 2, Space.World);
+        }
+        if (Input.GetKey(KeyCode.A))       //向左
+        {
+            gameObject.GetComponent<Transform>().Translate(Vector3.left * 2, Space.World);
+        }
+        if (Input.GetKey(KeyCode.D))       //向右
+        {
+            gameObject.GetComponent<Transform>().Translate(Vector3.right * 2, Space.World);
+        }
+
+
+
+    }
+}
+旋转
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class rotate : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        //旋转：欧拉角，四元数
+        Vector3 rotate = new Vector3(0, 30, 0);     //欧拉角可用vector3表示
+        //四元数
+        Quaternion quaternion = new Quaternion(0, 0, 0, 0);//四个数字表示x,y,z,w
+        //四元数初始化
+        Quaternion quaternion2 = Quaternion.identity;       //表示无旋转
+        //看向一个物体(看向（1,0,0））
+        quaternion = Quaternion.LookRotation(new Vector3(1, 0, 0));
+        //相互转化
+        //欧拉角转四元数
+        quaternion = Quaternion.Euler(rotate);
+        //四元数转欧拉角
+        rotate = quaternion.eulerAngles;
+
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}
+场景（同步）
+using System.Collections;
+using System.Collections.Generic;
+using UnityEditor.SearchService;
+using UnityEngine;
+using UnityEngine.SceneManagement;  //要先导入这个命名空间，才能找到场景管理
+
+public class scene : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        //两个类：场景类，场景管理类
+
+        //同步加载场景,可通过场景序号，名称等等加载
+        //从一个场景跳转到另一个场景(跳转前先到“文件”中的“生成设置（build setting)”中把想跳转的场景添加上）
+        //SceneManager.LoadScene(1);   序号就是索引（buildsetting面板里场景后的编号）
+        //SceneManager.LoadScene("3");
+
+        //获取当前场景    (如果不加“UnityEngine.SceneManagement.”会报错
+        //错误原因是因为UnityEngine.SceneManagement与UnityEditor.SearchService下都有“Scene”类，写的时候
+        //把 命名空间.类 的名字写完整应该就解决了，例如以下：
+        UnityEngine.SceneManagement.Scene scene = SceneManager.GetActiveScene();
+        Debug.Log(scene.name);
+
+        //场景是否已被加载
+        Debug.Log(scene.isLoaded);
+
+        //场景路径
+        Debug.Log(scene.path);
+
+        //查看场景在buildsetting面板里是什么索引（就是场景后的编号）
+        Debug.Log(scene.buildIndex);
+
+        //得到当前场景中的所有物体      scene.GetRootGameObjects();     返回的是一个数组
+        GameObject[] gos = scene.GetRootGameObjects();
+        Debug.Log(gos.Length);      //查看下数组长度（有几个物体）
+
+        //场景管理类
+
+        //创建新场景
+        UnityEngine.SceneManagement.Scene newscene = SceneManager.CreateScene("new scene");//新场景储存在“newscene”中
+
+        //当前所加载的数量
+        Debug.Log(SceneManager.sceneCount);
+
+        //卸载一个场景
+        SceneManager.UnloadSceneAsync(newscene);
+
+        //加载一个场景（另外）
+        //SceneManager.LoadScene(1,LoadSceneMode.Single);//作为替换
+        SceneManager.LoadScene(2, LoadSceneMode.Additive);//添加一个新的,并且两个场景的物体同时显示
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+}
+方法顺序
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class test : MonoBehaviour
+{
+    //1.Awake方法，(最先调用）
+    private void Awake()
+    {
+        Debug.Log("最先Awake");
+    }
+
+    //2.OnEnable方法，（第二个调用）
+    private void OnEnable()
+    {
+        Debug.Log("第二OnEnable");
+    }
+
+    //3.Start方法，（第一次OnEnable调用后调用一次）
+    void Start()
+    {
+        Debug.Log("第三Start");
+    }
+    //4.FixedUpdate方法，（固定时间调用一次）
+    private void FixedUpdate()
+    {
+        Debug.Log("第四FixedUpdate");
+    }
+
+    // 5.Update方法，（每帧调用一次）
+    void Update()
+    {
+        Debug.Log("第五Update");
+    }
+
+    //6.LateUpdate方法，（跟在Update后紧接着调用）
+    private void LateUpdate()
+    {
+        Debug.Log("第六LateUpdate");
+    }
+}
+时间
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class time : MonoBehaviour
+{
+    //声明一个时间变量
+    float timer=0;
+    // Start is called before the first frame update
+    void Start()
+    {
+        //游戏开始到现在所用的时间
+        Debug.Log(Time.time);
+        //时间缩放值
+        Debug.Log(Time.timeScale);
+        //固定时间间隔
+        Debug.Log(Time.fixedDeltaTime);     //与FixUpdate相关
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //上一帧到这一帧所用的时间
+        Debug.Log(Time.deltaTime);
+        //做一个计时器
+        timer +=Time.deltaTime;
+        //如果大于三秒
+        if(timer > 10)
+        {
+            Debug.Log("大于十秒了！");
+        }
+
+
+
+    }
+    private void FixedUpdate()
+    {
+        
+    }
+
+
+}
+触摸
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class touch : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        //设置为多点触摸       默认为单点触摸：false
+        Input.multiTouchEnabled = true;     
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //判断单点触摸
+        if(Input.touchCount == 1)
+        {
+            //触摸对象
+            Touch touch = Input.touches[0];     //令touch为第一个触摸对象
+            //触摸位置
+            Debug.Log(touch.position);
+            //触摸阶段
+            switch (touch.phase)        //逻辑写在“：”后
+            {
+                case TouchPhase.Began:      //开始触摸
+                    break;
+                case TouchPhase.Moved:      //移动
+                    break;
+                case TouchPhase.Stationary: //静止
+                    break;
+                case TouchPhase.Ended:      //结束
+                    break;
+                case TouchPhase.Canceled:   //因为某事打断
+                    break;
+            }
+        }
+        //判断多点触摸
+        if(Input.touchCount == 2)
+        {
+            Touch a=Input.touches[0];
+            Touch b=Input.touches[1];
+            //这就获取了两个触摸对象
+
+        }
+
+
+
+    }
+}
+transform组件
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class transform : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        /*
+        //transform组件不仅控制着基本信息，还控制着父子关系
+
+        //获取位置（position是vector3类型）
+        Debug.Log(transform.position);  //在世界中的位置
+        Debug.Log(transform.localPosition); //相对与父物体位置
+
+        //获取旋转（rotation是四元数）
+        Debug.Log(transform.rotation);//相对于世界
+        Debug.Log(transform.localRotation);//相对于父物体
+        Debug.Log(transform.eulerAngles);//是一个欧拉角，vector3类型，相对于世界
+        Debug.Log(transform.localEulerAngles);//是一个欧拉角，vector3类型，相对于父物体
+
+        //获取缩放
+        Debug.Log(transform.localScale);//相对于父物体的缩放
+
+        //向量
+        Debug.Log(transform.forward);       //前方，Z轴
+        Debug.Log(transform.right);         //后方，X轴
+        Debug.Log(transform.up);            //上方，Y轴
+        */
+
+        //父子关系
+        //获取父物体         transform.parent.gameObject
+        //获取子物体个数
+        Debug.Log(transform.childCount);
+        //解除与所有子物体的父子关系
+        //transform.DetachChildren();
+        //获取子物体(返回值是transform类型的)
+        Transform trans = transform.Find("Zi");     //""内写要获取的子物体的名字
+        trans = transform.GetChild(0);              //括号内写要获取的子物体的编号
+        //判断一个物体是不是另一个物体的子物体
+        bool a = trans.IsChildOf(transform);        //这里的transform就代表自身
+        Debug.Log(a);
+        //设置父物体     把该物体的父物体设置为括号内的物体
+        trans.SetParent(transform);
+
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        /*
+        //时刻看向某点，或某物体           别写错位置
+        transform.LookAt(Vector3.zero);     //看向（0,0,0）点
+        
+        //旋转
+        transform.Rotate(Vector3.up,5);     //旋转一度（由于写到update中，所以是每一帧一度，","后的是速度）
+        //绕某个地方旋转
+        transform.RotateAround(new Vector3(0, 0, 0), Vector3.up, 5);//三个参数为：绕的点，绕的轴，速度
+        //移动
+        transform.Translate(方向 * 速度, 相对于哪个坐标系（可不写）);
+        */
+
+    }
+}
+vector语句
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class vector : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        /*
+        //Vector可带表：向量，坐标
+        Vector3 v1 = new Vector3(1, 1, 1);
+        //旋转
+        Vector3 v2 = new Vector3(90, 45, 0);
+        //缩放
+        Vector3 v3 = new Vector3(1, 2, 0.5f);
+
+        v1 = Vector3.zero;//使其初始化为（0,0,0）
+        v2 = Vector3.one;//初始化为（1,1,1）
+        //修改
+        v3.x = 2;
+        v3.y = 3;
+        v3.z = 4.2f;
+        v3 = Vector3.right;//转化为（1,0,0）
+        */
+        //向量计算
+        Vector3 v1 = Vector3.forward;
+        Vector3 v2 = Vector3.right;
+        //算夹角
+        Debug.Log(Vector3.Angle(v1, v2));
+        //算两点之间的距离
+        Debug.Log(Vector3.Distance(v2, v1));
+        //向量点乘
+        Debug.Log(Vector3.Dot(v1, v2));
+        //向量叉乘
+        Debug.Log(Vector3.Cross(v1, v2));
+        //插值(差值就是在两向量之间做比例计算)
+        Debug.Log(Vector3.Lerp(Vector3.zero, Vector3.one, 0.8f));
+        //向量的模
+        Debug.Log(v1.magnitude);
+        //规范化向量（把向量转化为单位向量）
+        Debug.Log(v2.normalized);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}

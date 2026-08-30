@@ -1,0 +1,162 @@
+CuCun
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi15._5
+{
+    internal class CuCun
+    {
+        private string brand;
+        public string Brand
+        {
+            get { return brand; }
+            set { brand = value; }
+        }
+        public CuCun(string brand)
+        {
+            this.brand = brand;
+        }
+    }
+}
+IUSB
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi15._5
+{
+    internal interface IUSB
+    {
+        void Read();
+        void Write(string content);
+    }
+}
+JiYiBang
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi15._5
+{
+    internal class JiYiBang : CuCun,IUSB
+    {
+        public string content;
+        public JiYiBang(string brand) : base(brand)
+        { }
+
+
+        public void Write(string content)
+        {
+            this.content += content;
+            Console.WriteLine("输入："+content);
+        }
+
+        public void Read()
+        {
+            Console.WriteLine("{0}品牌的输出{1}", Brand, content);
+        }
+
+    }
+}
+KaDai
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi15._5
+{
+    internal class KaDai : CuCun,IUSB
+    {
+        private string content;
+        public KaDai(string brand) : base(brand)
+        { }
+
+        public void Write(string content)
+        {
+            this.content += content;
+            Console.WriteLine("输入：" + content);
+        }
+
+        public void Read()
+        {
+            Console.WriteLine("{0}品牌的输出{1}", Brand, content);
+        }
+
+    }
+}
+Program
+namespace lianxi15._5
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            JiYiBang J1 = new JiYiBang("索尼");
+            KaDai K1 = new KaDai("梦龙");
+
+            PSP p1 = new PSP("psp1000");
+
+            p1.USB1 = J1;
+            p1.USB2 = K1;
+
+            p1.Start();
+            p1.USB1.Write("洛天依");
+            p1.USB1.Write("赛高！");
+            p1.USB1.Read();
+            p1.USB2.Write("梦龙卡带");
+            p1.USB2.Read();
+            p1.End();
+        }
+    }
+}
+PSP
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi15._5
+{
+    internal class PSP
+    {
+        public IUSB USB1;
+        public IUSB USB2;
+
+
+
+
+        private string brand;
+        public string Brand
+        {
+            get { return brand; }
+            set { brand = value; }
+        }
+        public PSP(string brand)
+        {
+            this.brand = brand;
+        }
+        
+
+        public void Start()
+        {
+            Console.WriteLine("{0}品牌的PSP开机中。。。。",brand);
+        }
+        public void End()
+        {
+            Console.WriteLine("{0}品牌的PSP关机中。。。。",brand);
+        }
+
+
+
+    }
+}

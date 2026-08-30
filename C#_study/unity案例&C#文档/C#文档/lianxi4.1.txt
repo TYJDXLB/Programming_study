@@ -1,0 +1,81 @@
+﻿namespace lianxi4
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            ////改变字母大小写
+            //string name = "YanKe";
+            //Console.WriteLine("转换前：" + name);
+            //Console.WriteLine("转换后：" + name.ToUpper());
+            //Console.WriteLine("变小后：" + name.ToLower());
+
+            ////比较字符串
+            //string name_1 = "yk";
+            //Console.WriteLine("比较：" + name.Equals(name_1));
+
+            ////小练习(设置密码并判断)
+            //Console.Write("请设置密码：");
+            //string myname=Console.ReadLine();
+            //Console.Write("请输入密码：");
+            //string myname_1=Console.ReadLine();
+            //myname.Equals(myname_1);
+            //if(myname.Equals(myname_1)==true)
+            //{
+            //    Console.WriteLine("密码正确");
+            //}
+            //else
+            //{
+            //    Console.WriteLine("密码错误");
+            //}
+
+            ////分割字符串
+            //string address = "地球|中国|河南|周口|川汇区";
+            //char[] a= new[] {'|'};
+            //string[] ad=address.Split('|');
+            //for(int i=0;i<ad.Length;i++)
+            //{
+            //    Console.WriteLine(ad[i]);
+            //}
+
+            //截取字符串
+            string name = "yankea";
+            Console.WriteLine(name.Substring(2, 2));
+
+            //查位置
+            Console.WriteLine(name.IndexOf("a"));
+            Console.WriteLine(name.LastIndexOf("a"));
+            Console.WriteLine(name.IndexOf("w"));
+
+            //判断是否以。。。开始（结束）
+            Console.WriteLine(name.StartsWith("ya"));
+            Console.WriteLine(name.EndsWith("e"));
+
+            //替换
+            Console.WriteLine(name.Replace("an","AN"));
+
+            //判断是否包含
+            Console.WriteLine(name.Contains("ke"));
+
+            //去空格
+            string web = "    严轲    ";
+            Console.WriteLine(web + "a");
+            Console.WriteLine(web.Trim()+"a");          //去前后空格
+            Console.WriteLine(web.TrimEnd() + "a");     //去后部分空格
+            Console.WriteLine(web.TrimStart() + "a");   //去前部分空格
+
+            //判断是否为空或null
+            string n = null;
+            Console.WriteLine(string.IsNullOrEmpty(n));
+
+            //字符串是一个用字符组成的数组
+            string asd = "我是严轲";
+            for (int i = 0; i < asd.Length; i++)
+            {
+                Console.WriteLine(asd[i]);
+            }
+
+
+        }
+    }
+}

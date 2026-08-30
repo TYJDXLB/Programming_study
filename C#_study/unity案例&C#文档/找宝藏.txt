@@ -1,0 +1,170 @@
+金币控制
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CoinControl : MonoBehaviour
+{
+    //关联胜利特效
+    public GameObject EffectPre;
+    //玩家角色的位置
+    private Transform player;
+    //金币初始数量
+    public static int Count = 0;
+    //音乐播放组件
+    private AudioSource audioSource;
+    
+    void Start()
+    {
+        //通过标签找到玩家，但是由于玩家是一个物体的子物体，所以要额外获取一次子物体
+        player = GameObject.FindWithTag("Player").transform;
+        //获取自身的音乐播放器组件
+        audioSource = GetComponent<AudioSource>();
+
+    }
+
+    
+    void Update()
+    {
+        //获取与玩家的距离
+        float dis = Vector3.Distance(transform.position, player.position);
+        //如果距离小于1就算吃到了
+        if(dis < 1.5)
+        {
+            //金币数加一
+            Count++;
+            //播放吃金币的音效
+            audioSource.PlayOneShot(Resources.Load<AudioClip>("WenJianJia/Item3"));//Resources文件夹下的文件夹中的文件，可以用“/”
+            //输出当前金币数
+            Debug.Log("当前金币为" + Count);
+            //当金币数大于三时，播放胜利特效
+            if(Count == 3)
+            {
+                //实例化胜利特效
+                GameObject Win = Instantiate(EffectPre, transform.position, transform.rotation);
+                //因为特效大约8秒，所以8秒后删除特效
+                Destroy(Win,8f);
+            }
+            //为了使音效播放完，要延迟销毁物体
+            Destroy(gameObject, 0.3f);
+            //为了延迟销毁期间再次触发脚本，所以要销毁脚本
+            Destroy(this);
+        }
+    }
+}
+宝箱控制
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ChestControl : MonoBehaviour
+{
+    //关联金币预制件
+    public GameObject CoinPre;
+    //获取玩家角色位置
+    private Transform player;
+
+    void Start()
+    {
+        //通过标签找到玩家
+        player = GameObject.FindWithTag("Player").transform;
+    }
+
+    
+    void Update()
+    {
+        //获取与玩家的距离
+        float dis = Vector3.Distance(transform.position,player.position);
+        //如果距离小于2米并按下鼠标左键
+        if(dis < 2 && Input.GetMouseButtonDown(0))
+        {
+            //随机给金币(0到10之间的随机数如果大于5就给）
+            if(Random.Range(0,10)>5)
+            {
+                //实例化出来一个金币
+                Instantiate(CoinPre,transform.position,Quaternion.identity);
+            }
+            //删除宝箱
+            Destroy(gameObject);
+        }
+    }
+}
+人物控制
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerMovement : MonoBehaviour
+{
+    public CharacterController controller;      //角色控制器组件
+    public float baseSpeed = 12f;
+    public float gravity = -9.81f;
+    public float jumpHeight = 3f;
+    public float sprintSpeed = 5f;
+
+    float speedBoost = 1f;
+    Vector3 velocity;
+    void Start()
+    {
+
+    }
+
+    void Update()
+    {
+        if (controller.isGrounded && velocity.y < 0)
+        {
+            velocity.y = -2f;
+        }
+
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
+
+        if (Input.GetButton("Fire3"))
+            speedBoost = sprintSpeed;
+        else
+            speedBoost = 1f;
+
+
+        Vector3 move = transform.right * x + transform.forward * z;
+
+        controller.Move(move * (baseSpeed + speedBoost) * Time.deltaTime);
+
+        if (Input.GetButtonDown("Jump") && controller.isGrounded)
+        {
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
+
+        velocity.y += gravity * Time.deltaTime;
+
+        controller.Move(velocity * Time.deltaTime);
+    }
+}
+鼠标移动控制视线
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class MouseCamLook : MonoBehaviour
+{
+    public float mouseSensitivity = 100f;
+    public Transform playerBody;
+    float xRotation = 0f;
+
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    void Update()
+    {
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+
+        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+
+        playerBody.Rotate(Vector3.up * mouseX);
+    }
+}

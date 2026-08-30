@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简易ATM系统</title>
+</head>
+<body>
+
+    <script>
+        let money = 0
+        while (true) {
+            let re = prompt(`
+                请您选择操作：
+                    1. 存钱
+                    2. 取钱
+                    3. 查看余额
+                    4. 退出
+                `) // 反引号可以换行)
+            if (re === '4') {
+                out = prompt('确定要退出吗？ (Y/N)')
+                if (out === 'Y') {
+                    alert('欢迎下次使用~')
+                    break
+                } else {
+                    continue
+                }
+            }
+            switch (re) {
+                case '1':
+                    money += +prompt('输入要存入的金额：')
+                    break
+                case '2':
+                    money -= +prompt('输入要取出的金额：')
+                    break
+                case '3':
+                    alert(`余额为: ${money}`)
+                    break
+                // case '4':
+                //     out = prompt('确定要退出吗？ (Y/N)')
+                //     if (out === 'Y') {
+                //         alert('欢迎下次使用~')
+                //         break  // 只能跳出switch循环
+                //     } else {
+                //         continue
+                //     }
+                default:
+                    break
+            }
+        }
+    </script>
+</body>
+</html>

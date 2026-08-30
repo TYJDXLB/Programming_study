@@ -10,13 +10,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JS入门</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .chengFaBiao {
+            display: inline-block;
+            padding: 2px 4px;
+            margin: 4px;
+            width: 85.23px; /* 把宽按照最大宽度写死 */
+            border: 1px solid #6cf;
+            border-radius: 5px;
+            box-shadow: 2px 2px 2px #6cf;
+        }
+    </style>
 </head>
 <body>
     
 
     
     <!-- 行内js -->
-    <button onclick="alert('逗你玩的~')">点我月薪过万！</button>
+    <button onclick="alert('逗你玩的~')">点我月薪过万！</button><br>
     <!-- 内部js -->
     <!-- <script>  // D1
         /* 我是块注释Ctrl+Alt+A */
@@ -29,7 +45,7 @@
         console.log('right or not?')
         // 4. 输入语句（alert和prompt会跳过页面渲染先被执行）
         prompt('请输入文本：')
-        /* 5. 变量
+        /* 5. 变量 变量可以不使用关键字let就直接声明，但是是隐式全局变量可能会造成全局污染
         命名规则：1.不能用关键词；2.只能用字母，下划线，数字，$组成，数字不能开头；3.严格区分大小写
         规范：遵循小驼峰命名法，第一个字母小写后面每个单词首字母大写 eg：userName
         （大驼峰命名法：第一个字母也大写；下划线命名法：单词之间用下划线连接 */
@@ -95,8 +111,7 @@
         // test5
         alert(`相加结果为：${+prompt('请输入第一个数：') + parseFloat(prompt('请输入第二个数：'))}`)
     </script> -->
-
-    <script>  // D2
+    <!-- <script>  // D2
     // 1. 运算符  +=, -=, *=, /=, %= 和python的类似
     // 2. 自增，自减 (前置自增：++i；后置自增：i++；二者都类似于i += 1)
     let i = 1
@@ -125,15 +140,194 @@
         6. 逻辑运算符：先&& 后||
         7. 赋值运算符：=
         8. 逗号：, */
+    /* 表达式：是可以被求职的代码，JS引擎会将其计算出一个结果  可以被赋值
+    语句：可以被执行的代码  不能被赋值 */
+    // 5. 控制语句：1.顺序结构 2.分支结构 3.循环结构
+    // 6. if语句
+    ifright = true
+    if (ifright) {
+        console.log('执行语句')
+    }
+    // 除了0所有的数字都为真 除了空字符串所有的字符串都为真 bool参与运算则会转化为数字0或1
+    if (0) {
+        console.log('loading...')
+    }
+    if ('') {
+        console.log('loading...')
+    }
+    // test6
+    if (+prompt('请输入成绩：') >= 700) {
+        alert('已上岸')
+    } else {
+        alert('error!')
+    }
+    // test7
+    let uname = prompt('请输入用户名：')
+    let umm = prompt('请输入密码：')
+    if (uname === 'admine' && umm === '123456') {
+        alert('登入成功!')
+    } else if (uname !== 'admine' || umm !== '123456') {
+        alert('密码或用户名错误！！')
+    } else {
+        alert('登入失败!!!')
+    }
+    // 7. 三元运算符（简化的if语句，一般用来取值） 条件 ？ 满足条件运行的代码 ：不满足条件执行的代码
+    3 > 5 ? alert('True!') : alert('False!')
+    // test8
+    let num1 = +prompt('num1:')
+    let num2 = +prompt('num2:')
+    alert(`输入的最大值为：${num1 > num2 ? num1 : num2}`)
+    test9
+    let buling = prompt('请输入0-99数字：')
+    buling = +buling > 9 ? buling : 0 + buling
+    console.log(buling)
+    // 8. switch-case语句 要加break语句防止case穿透
+    // test10
+    let num1 = +prompt('num1:')
+    let num2 = +prompt('num2:')
+    let fuhao = prompt('请输入运算符(+, -, *, /)：')
+    switch (fuhao) {
+        case '+':
+            alert(num1 + num2)
+            break
+        case '-':
+            alert(num1 - num2)
+            break
+        case '*':
+            alert(num1 * num2)
+            break
+        case '/':
+            alert(num1 / num2)
+            break
+        default:
+            alert('请输入正确的运算符！')
+    }
+    </script> -->
 
-
-
-
+    <script>  // D3
+    // // 1. while循环(满足条件一直执行)
+    // let i = 0 // 变量起始值
+    // let cishu = parseInt(prompt('print_num:'))
+    // while (i <= cishu) {  // 终止条件
+    //     document.write('我正在循环<br>')
+    //     i++  // 变量变化
+    // }
+    // // test11
+    // let i = 1
+    // let total = 0
+    // let ou_total = 0
+    // while (i <= 100) {
+    //     // 页面输出1-100 10个换行
+    //     document.write(`${i}&nbsp;`)
+    //     if (i % 10 === 0) {
+    //         document.write('<br>')
+    //     }
+    //     // 计算从1加到100
+    //     total += i
+    //     // 计算所有偶数和
+    //     if (i % 2 === 0) {
+    //         ou_total += i
+    //     }
+    //     i++
+    // }
+    // document.write(`总数为${total} <br>`)
+    // document.write(`偶数总数为${ou_total}`)
+    // // 结束循环 continue(跳出本次循环) break(直接结束循环)
+    // // test12
+    // while (true) {
+    //     let answer = prompt('Just Monic ?  (Y/N)')
+    //     if (answer === 'Y') {
+    //         alert('Love U')
+    //         break
+    //     } else {
+    //         continue
+    //     }
+    // }
+    // // 3. for循环 for(变量起始值; 终止条件; 变量变化量) { 循环体 }
+    // for (let i = 1; i <= 3; i++) {
+    //     document.write(`循环第${i}次<br>`)
+    // }
+    // let shuzu = [11, 22, 33, 44, '55']
+    // for (let i = 0; i <= shuzu.length - 1; i++) {
+    //     document.write(`${shuzu[i]}<br>`)
+    // }
+    // // for(; ;){循环体}  也可构造无线循环，类似while(true)
+    // // test13
+    // let h = +prompt('请输入行数：')
+    // let w = +prompt('请输入每行个数：')
+    // for (let i = 1; i <= h; i++) {
+    //     for (let j = 1; j <= w; j++) {
+    //         document.write('*&nbsp;')
+    //     }
+    //     document.write('<br>')
+    // }
+    // // test14
+    // for (let i = 1; i <= 9; i++) {
+    //     for (let j = 1; j <= i; j++) {
+    //         document.write(`<span class="chengFaBiao">${i} * ${i} = ${i*j}</span>`)
+    //     }
+    //     document.write('<br>') // 换行
+    // }
+    // // 4. 数组(array 是一种可以按顺序保存数据的数据类型)
+    // // 声明数组：1.字面量声明 2.构造函数声明
+    // let arr1 = [11, 22, 33, 44]
+    // let arr2 = new Array(55, 66, 77)
+    // // test15
+    // let arr = [2, 6, 1, 7, 4]
+    // let total = 0
+    // for (let i = 0; i <= arr.length - 1; i++) {  // 因为i是从0开始的所以需要减去1
+    //     total += arr[i]
+    //     // console.log(total)
+    // }
+    // console.log(`元素和：${total}；平均值：${total / arr.length}`)
+    // // test16
+    // let arr = [2, 6, 1, 77, 52, 25, 7]
+    // let max = arr[0]
+    // let min = arr[0]
+    // for (let i = 1; i < arr.length; i++) { // 切记为小于号，不要加等于
+    //     max = max > arr[i] ? max : arr[i]
+    //     min = min < arr[i] ? min : arr[i]
+    //     // console.log(arr[i+1]) // 不能写i+1 因为不然就超过(length - 1)长度了
+    // }
+    // console.log(`最大值：${max}；最小值：${min}`)
+    // // 操作数组 （增删改查）
+    // let arr = [1, 2, '3', 'Hello']
+    // console.log(arr[0]) // 查
+    // arr[0] = 'new'
+    // console.log(arr[0]) // 改
+    // // 数组.push(元素1,元素2,...) 将元素添加到数组末尾，并返回数组新长度
+    // console.log(arr.push('World!'))
+    // console.log(arr)
+    // // 数组.unshift(元素1,元素2,...) 将元素添加到数组开头，并返回数组新长度
+    // console.log(arr.unshift('First')) 
+    // console.log(arr)
+    // // 数组.pop()删除最后一个元素，并返回该元素的值
+    // console.log(arr.pop())
+    // console.log(arr)
+    // // 数组.shift()删除第一个元素，并返回该元素的值
+    // console.log(arr.shift())
+    // console.log(arr)
+    // // 数组.splice(起始位置(索引), 删除元素个数)
+    // arr.splice(1, 2)
+    // console.log(arr)
+    // // test17
+    // let arr = [2, 0, 6, 1, 77, 0, 52, 0, 25, 7]
+    // let arr_new = new Array()
+    // for (let i = 0; i < arr.length; i++) {
+    //     if (arr[i] >= 10) {
+    //         arr_new.push(arr[i])
+    //     }
+    // }
+    // console.log(arr_new)
 
 
 
 
     </script>
+
+
+
+
     <!-- 外部js -->
     <script src="./01-JS入门_外部js.js">// 中间不要写内容不然会被忽略</script>
 </body>

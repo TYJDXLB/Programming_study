@@ -1,0 +1,83 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi6
+{
+    public enum Gender
+    {
+        男,
+        女
+    }
+    /// <summary>
+    /// Person类，描述人
+    /// </summary>
+    internal class Person
+    {
+        private string name;
+        private int age;
+        private Gender gender;
+        private string address;
+
+        public Person()     //空的构造
+        { }
+        //构造方法
+        public Person(string name,int age,Gender gender,string address)     //有参的构造
+        {
+            this.name = name;
+            this.age = age;
+            this.gender = gender;
+            this.address = address;
+        }
+
+
+        public string Name
+        { get { return name; } set { name = value; } }
+
+        public int Age 
+        { 
+            get { return age; }
+            set 
+            { 
+                if(value >100||value<0)
+                {
+                    age = 17;
+                }
+                else
+                {
+                    age = value;
+                } 
+            } 
+        }
+
+        public Gender Gender
+        { get { return gender; } set { gender = value; } }
+
+        public string Address
+        { get { return address; } set { address = value; } }
+
+        public void Eat()
+        {
+            Console.WriteLine(Name+"正在吃饭。。。");
+        }
+        public void Sleep()
+        {
+            Console.WriteLine(Name + "正在睡觉。。。");
+        }
+        public void Work()
+        {
+            Console.WriteLine(Name + "正在工作。。。");
+        }
+        /// <summary>
+        /// 打招呼
+        /// </summary>
+        public void Hellow()
+        {
+            Console.WriteLine("我的名字是：{0}，年龄是：{1}，性别是：{2}，地址是：{3}。",Name,Age,Gender,Address);
+        }
+
+
+    }
+}

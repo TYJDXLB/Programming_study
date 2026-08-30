@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi7
+{
+    internal class XiaoB:Hero
+    {
+        //构造方法
+        public XiaoB() { }      //空的方法
+        public XiaoB(string name, string info, int attack, int defense, int speed, string nickname)
+    : base(name, info, attack, defense, speed, nickname)      //用base把子类的值传递给父类
+        { }
+
+
+        public void JiNengC()
+        {
+            Console.WriteLine("技能C");
+        }
+        public void JiNengD()
+        {
+            Console.WriteLine("技能D");
+        }
+
+
+    }
+}

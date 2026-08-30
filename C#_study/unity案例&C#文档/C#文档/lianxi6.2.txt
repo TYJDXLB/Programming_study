@@ -1,0 +1,38 @@
+﻿namespace lianxi6
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            /*
+            Person p1 = new Person();
+               
+            p1.Name = "洛天依";
+            p1.Age = 17;
+            p1.Gender = Gender.女;
+            p1.Address = "上海禾念";
+            p1.Eat();
+            p1.Sleep();
+            p1.Work();
+            Console.WriteLine("p1的名字是：{0}，年龄是：{1}，性别是：{2}，地址是：{3}。",p1.Name,p1.Age,p1.Gender,p1.Address);
+
+            Person p2 = new Person("严轲",18,Gender.男,"周口");
+            Console.WriteLine("p2的名字是：{0}，年龄是：{1}，性别是：{2}，地址是：{3}。", p2.Name, p2.Age, p2.Gender, p2.Address);
+            */
+
+            //对象赋值              是引用类型的
+            Person p1 = new Person("洛天依",17,Gender.女,"上海禾念");
+            Person p2;
+            p2 = p1;
+            p1.Hellow();
+            p2.Hellow();
+            Console.WriteLine("--------------------");
+            p2.Name = "严轲";
+            p1.Hellow();
+            p2.Hellow();
+
+
+
+        }
+    }
+}

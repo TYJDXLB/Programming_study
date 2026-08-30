@@ -1,0 +1,43 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi8
+{
+    internal class Animal
+    {
+        /// <summary>
+        /// 腿的数量
+        /// </summary>
+        private int leg;        //字段
+        /// <summary>
+        /// 腿数量的属性
+        /// </summary>
+        public int Leg
+        {
+            get { return leg; }
+            set { leg = value; }
+        }
+
+        public void walk()      //方法
+        {
+            Console.WriteLine("可以走路");
+        }
+        public void Eat()
+        {
+            Console.WriteLine("可以吃饭");
+        }
+        public void Sleep()
+        {
+            Console.WriteLine("可以睡觉");
+        }
+        public void Cry()
+        {
+            Console.WriteLine("我会叫");
+        }
+
+
+    }
+}

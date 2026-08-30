@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi8
+{
+    internal class Tiger:CatType
+    {
+        //创建一个具体的类后，就去主程序中将其实例化
+        public void CR()
+        {
+            Console.WriteLine("我可以吃肉，啊呜~");
+        }
+    }
+}

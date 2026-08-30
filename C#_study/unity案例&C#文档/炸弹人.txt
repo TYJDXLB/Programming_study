@@ -1,0 +1,383 @@
+摄像机跟随
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Cameracontrol : MonoBehaviour
+{
+    //保存向量
+    private Vector3 vector;
+    //关联玩家
+    public GameObject player;
+    // Start is called before the first frame update
+    void Start()
+    {
+        //获取从摄像机到玩家的向量
+        vector = player.transform.position-transform.position;
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //执行计算，时刻更新摄像机的位置进行跟随
+        transform.position = player.transform.position-vector;
+    }
+}
+加载到第几个场景（序号表示生成设置中的场景序号）
+SceneManager.LoadScene(5,LoadSceneMode.Single);
+检测是否有炸弹，从而播放声音（为了解决还没播放声音就销毁物体的问题）
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class bomb : MonoBehaviour
+{
+    private AudioSource Bomb;
+    private GameObject bo;
+    // Start is called before the first frame update
+    void Start()
+    {
+        //获取一下游戏物体身上的音频源
+        Bomb = GetComponent<AudioSource>();
+        Bomb.clip = Resources.Load<AudioClip>("bomb");//通过路径获取音乐
+        //文件几名好像只能是Resources
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        bo = GameObject.Find("Bomb(Clone)");
+        if(bo != null)
+        {
+            //播放音效
+            Invoke("Bofang", 2f);
+        }
+    }
+    void Bofang()
+    {
+        //播放音效
+        Bomb.PlayOneShot(Bomb.clip);
+    }
+}
+炸弹控制
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Bombcontrol : MonoBehaviour
+{
+    //创建一个关联的变量，关联一个爆炸效果
+    public GameObject EffectPer;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        //该方法是2秒以后执行"Boom"方法
+        Invoke("Boom", 2f);
+    }
+
+    void Boom()
+    {
+
+        //创建一个游戏物体，把他实例化成爆炸效果
+        GameObject effect = Instantiate(EffectPer, transform.position, transform.rotation);
+
+        //2秒后删除爆炸效果
+        Destroy(effect,2f);
+
+        //判断是否炸到敌人
+        //1.获取场景中的所有敌人（用标签的方法，获取该标签的所有物体，只要敌人都加上该标签即可获取敌人）
+        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemys");
+        //遍历敌人(也可以用foreach遍历i，像书中一样）
+        for(int i = 0; i < enemys.Length; i++)
+        {
+            GameObject enemy = enemys[i];
+            if(Vector3.Distance(transform.position, enemy.transform.position) < 3f)
+            {
+                Destroy(enemy);
+            }
+        }
+
+        //破坏炸弹本体
+        Destroy(gameObject);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}
+结束游戏（测试时没用）
+Application.Quit();
+敌人控制
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class Enemycotrol : MonoBehaviour
+{
+    //获取玩家
+    private GameObject player;
+    //僵尸音效
+    private AudioSource jiangshi;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        //通过标签找到玩家
+        player = GameObject.FindWithTag("player");
+        //获取音源
+        jiangshi = GetComponent<AudioSource>();
+        //获取音乐
+        jiangshi.clip = Resources.Load<AudioClip>("丧尸");
+        jiangshi.loop = true;
+        jiangshi.Play();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //获取与玩家的距离
+        float distance = Vector3.Distance(player.transform.position,transform.position);
+        //判断与玩家的距离
+        if (distance < 5f)
+        {
+            //追踪玩家
+            //看向玩家
+            transform.LookAt(player.transform);
+            //向玩家移动
+            transform.Translate(Vector3.forward * 4f * Time.deltaTime);
+        }
+        //如果与玩家距离小于2米（两者中心点为两米说明两者差不多挨着）
+        if(distance < 1.5f)
+        {
+            //Debug.Log("游戏失败！");
+            SceneManager.LoadScene(3, LoadSceneMode.Single);
+        }
+    }
+}
+人物控制
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using UnityEngine;
+
+public class Playercontrol : MonoBehaviour
+{
+    //获取摇杆
+    public FloatingJoystick floatingjoystick;
+
+
+    //获取音频源
+    private AudioSource player;
+    //声明一个变量储存物体当前的位置
+    private Vector3 now;
+
+    //制作人物放炸弹的功能
+    //关联一下炸弹的预制体
+    public GameObject BombPre;
+    //炸弹的CD
+    private float CD = 2;//先设置为2是为了保证第一发炸弹可随时放）
+
+
+    void Start()
+    {
+        //获取一下游戏物体身上的音频源
+        player = GetComponent<AudioSource>();
+        player.clip = Resources.Load<AudioClip>("脚步");//通过路径获取音乐
+                       //文件几名好像只能是Resources
+    }
+
+
+    void Update()
+    {
+        //获取一下当前位置（一定要写在Update中，并且写在控制移动的代码之前）
+        now = gameObject.transform.position;
+        //控制移动(用键盘）
+        //float horizontal = Input.GetAxis("Horizontal");
+        //float vertical = Input.GetAxis("Vertical");
+
+        //改为摇杆控制
+        float horizontal = floatingjoystick.input.x;
+        float vertical = floatingjoystick.input.y;
+
+        Vector3 dir = new Vector3(horizontal, 0, vertical);
+        if(dir != Vector3.zero)
+        {
+            transform.rotation = Quaternion.LookRotation(dir);
+            transform.Translate(Vector3.forward * 5 * Time.deltaTime);
+        }
+
+        //判断物体是否不移动
+        if (now != gameObject.transform.position)
+        {
+            player.volume = 0.5f;
+            //UnityEngine.Debug.Log("移动了");
+            if(player.isPlaying)
+            {
+                
+            }
+            else
+            {
+                player.Play();
+            }
+        }
+        else
+        {
+            player.Stop();
+        }
+
+        //制作一个CD的计时器
+        CD += Time.deltaTime;
+
+        //当按下空格时
+        if (Input.GetButtonDown("Jump"))
+        {
+            //判断一下是否满足CD
+            if (CD > 2)
+            {
+                //重置CD
+                CD = 0;
+                //释放炸弹(实例化出来一个炸弹）
+                Instantiate(BombPre, transform.position, transform.rotation);
+            }
+        }
+    }
+    public void Put()
+    {
+        //判断一下是否满足CD
+        if (CD > 2)
+        {
+            //重置CD
+            CD = 0;
+            //释放炸弹(实例化出来一个炸弹）
+            Instantiate(BombPre, transform.position, transform.rotation);
+        }
+    }
+}
+胜利条件
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class sheng : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemys");
+        float a = enemys.Length;
+        if (a == 0)
+        {
+            //Debug.Log("游戏胜利！");
+            SceneManager.LoadScene(4, LoadSceneMode.Single);
+        }
+    }
+}
+说明的控制（预先把说明设置为非激活）
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+
+public class shuoming : MonoBehaviour
+{
+    //public GameObject ui;
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    GameObject js = GameObject.Find("Canvas");
+        //    js.transform.GetChild(5).gameObject.SetActive(false);
+        //}
+    }
+
+    public void Open()
+    {
+        GameObject js =  GameObject.Find("Canvas");//找到UI面板
+        js.transform.GetChild(5).gameObject.SetActive(true);//把UI面板下的第6个子物体（也就是说明）设置为激活
+    }
+
+    public void Close()
+    {
+        GameObject js = GameObject.Find("Canvas");
+        js.transform.GetChild(5).gameObject.SetActive(false);//把UI面板下的第6个子物体（也就是说明）设置为非激活
+    }
+
+}
+下拉选项各个选项对应选项的方法
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+public class yi : MonoBehaviour
+{
+    
+    // Start is called before the first frame update
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+    public void XuanZe(int value)//int value为一个形式参数，用于调用选项的索引（就是第几个选项从0开始选项）
+    {
+        switch(value)               //每一个情况对应一个选项
+        {
+            case 0:
+                //Debug.Log("我是警察");
+                Police();
+                break;
+            case 1:
+                //Debug.Log("我是医生");
+                Doctor();
+                break;
+            case 2:
+                //Debug.Log("我是猪");
+                Pig();
+                break;
+        }
+    }
+
+    public void Police()
+    {
+        SceneManager.LoadScene(0, LoadSceneMode.Single);
+    }
+
+    public void Doctor()
+    {
+        SceneManager.LoadScene(1, LoadSceneMode.Single);
+    }
+
+    public void Pig()
+    {
+        SceneManager.LoadScene(2, LoadSceneMode.Single);
+    }
+
+
+}

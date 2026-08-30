@@ -1,0 +1,41 @@
+﻿using System.Text;          //如果编译器中没有则应自行引入
+using System.Diagnostics;
+
+
+
+
+namespace TimeTest
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            /*string类型测试
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            string a = "";
+            for(int i = 0; i < 90000; i++)
+            {
+                a += i;
+            }
+            sw.Stop();
+            Console.WriteLine(sw.Elapsed);      //5.06s
+            */
+
+            /*stringbuilder类型测试
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            StringBuilder sb = new StringBuilder();
+            for(int i = 0; i < 90000; i++)
+            {
+                sb.Append(i);
+            }
+            sw.Stop();
+            Console.WriteLine(sw.Elapsed);      //0.002s
+            */
+
+
+
+        }
+    }
+}

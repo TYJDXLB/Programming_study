@@ -1,0 +1,129 @@
+NPC
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi11
+{
+    /// <summary>
+    /// NPC的类型枚举
+    /// </summary>
+    enum NPCType
+    {
+        /// <summary>
+        /// 任务类
+        /// </summary>
+        Task,
+        /// <summary>
+        /// 商贩类
+        /// </summary>
+        shop
+    }
+    /// <summary>
+    /// NPC父类
+    /// </summary>
+    internal abstract class NPC     //因为有抽象方法所以要建个抽象类
+    {
+        private string name;
+        private NPCType type;
+        //用属性进行封装
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+        public NPCType Type
+        {
+            get { return type; }
+            set { type = value; }
+        }
+        //进行方法构造
+        public NPC()        //空构造
+        { }
+        public NPC(string name, NPCType type)
+        {
+            this.name = name;
+            this.type = type;
+        }
+        //抽象方法
+        public abstract void Speak();
+    }
+}
+NPCshop
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi11
+{
+    /// <summary>
+    /// 商贩类型的NPC
+    /// </summary>
+    internal class NPCshop:NPC
+    {
+        /// <summary>
+        /// 商品描述
+        /// </summary>
+        private string item;
+
+        public NPCshop(string item, string name,NPCType type):base(name,type)
+        {
+            this.item = item;
+        }
+
+        public override void Speak()
+        {
+            Console.WriteLine("NPC:{0},贩卖:{1}商品", base.Name, item);
+        }
+    }
+}
+NPCtask
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi11
+{
+    /// <summary>
+    /// 任务类型NPC
+    /// </summary>
+    internal class NPCtask:NPC
+    {
+        /// <summary>
+        /// 任务描述
+        /// </summary>
+        private string taskInfo;
+
+        public NPCtask(string taskInfo,string name,NPCType type):base(name,type)
+        {
+            this.taskInfo = taskInfo;
+        }
+
+        public override void Speak()
+        {                                    //加上base指是父类中的字段
+            Console.WriteLine("NPC:{0},任务:{1}", base.Name, taskInfo);
+        }
+    }
+}
+Program
+namespace lianxi11
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            //实例化一下
+            NPCtask npc1=new NPCtask("去采萝卜2根","小兔子",NPCType.Task);
+            npc1.Speak();
+
+            NPCshop npc2 = new NPCshop("盖饭", "食堂大妈", NPCType.shop);
+            npc2.Speak();
+        }
+    }
+}

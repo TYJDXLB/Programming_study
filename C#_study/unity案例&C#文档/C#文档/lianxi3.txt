@@ -1,0 +1,40 @@
+﻿namespace DiGui
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            //Console.Write("请输入值：");
+            //int a=LeiJia(Convert.ToInt32(Console.ReadLine()));
+            //Console.Write("累加为：");
+            //Console.WriteLine(a);
+
+            Console.WriteLine(DiGui(100));
+        }
+        /// <summary>
+        /// 从1累加到N(for循环)
+        /// </summary>
+        /// <param name="a">N的值</param>
+        /// <returns></returns>
+        static int LeiJia(int a)
+        {
+            int total=0;
+            for(int i = 0; i <= a; i++)
+            {
+                total += i;
+            }
+            return total;
+        }
+
+        /// <summary>
+        /// 从1累加到N(递归)
+        /// </summary>
+        /// <param name="n">N的值</param>
+        /// <returns></returns>
+        static int DiGui(int n)
+        {
+            if (n == 1) return 1;
+            return n+DiGui(n-1);
+        }
+    }
+}

@@ -1,0 +1,559 @@
+旧版动画组件
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class animation : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(Input.GetMouseButtonDown(0))
+        {
+            GetComponent<Animation>().Play("an");//直接写play是播放默认动画，可以在括号里写名字,播放该动画
+        }
+    }
+}
+新版动画组件
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class animator : MonoBehaviour
+{
+    //声明一个Animator类型的变量
+    private Animator animator_;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        //让该变量获取一下Animator组件
+        animator_ = GetComponent<Animator>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            //再使用该组件下的方法
+            animator_.Play("right");
+        }
+
+
+        /*与未注释的代码效果相同
+        if (Input.GetMouseButtonDown(0))
+        {
+            GetComponent<Animator>().Play("right");
+        }
+        */
+    }
+}
+音频
+using JetBrains.Annotations;
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+
+public class audio : MonoBehaviour
+{
+    //声明两个Audio Clip（音频）
+    public AudioClip music;
+    public AudioClip se;
+
+    //声明一个组件类型的变量
+    private AudioSource player;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        //获取一下组件
+        player = GetComponent<AudioSource>();
+        //设定播放的音频片段
+        player.clip = music;
+        //循环播放      (true为循环）
+        player.loop = true;
+        //音量
+        player.volume = 0.1f;
+        //播放
+        player.Play();
+        //停止
+        player.Stop();
+        //暂停
+        player.Pause();
+        //非暂停
+        player.UnPause();
+
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //做一个按下空格就会播放，再按就会停止
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            //判断一下是否正在播放
+            if(player.isPlaying)
+            {
+                player.Stop();
+            }
+            else
+            {
+                player.Play();
+            }
+        }
+
+        //鼠标按一下就播放一次
+        if(Input.GetMouseButtonDown(0))
+        {
+            player.PlayOneShot(se);     //括号内写音效名
+        }
+    }
+}
+爆炸后销毁物体
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class explosion : MonoBehaviour
+{
+    //爆炸后销毁预制体
+    float timer = 0;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        timer += Time.deltaTime;
+        if(timer > 1)
+        {
+            Destroy(gameObject);
+        }
+    }
+}
+爆炸
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class frie : MonoBehaviour
+{
+    //创建一个爆炸的预设体
+    public GameObject prefab;
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+    //监听发生碰撞(碰撞瞬间发生一次)
+    private void OnCollisionEnter(Collision collision)  //括号内的参数表示撞与被撞物体的信息
+    {
+        //创建一个爆炸物体
+        Instantiate(prefab,transform.position,Quaternion.identity);
+        //销毁自身
+        Destroy(gameObject);
+        //打印一下被撞物体的名称
+        Debug.Log(collision.gameObject.name);
+    }
+    //持续碰撞中
+    private void OnCollisionStay(Collision collision)
+    {
+        
+    }
+    //结束碰撞
+    private void OnCollisionExit(Collision collision)
+    {
+        
+    }
+}
+画线
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class line : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        //通过代码设定线段位置
+        //获取线段渲染器组件
+        LineRenderer lineRenderer = GetComponent<LineRenderer>();
+        //需要的点
+        lineRenderer.positionCount = 3;
+        //设置点
+        //lineRenderer.SetPositions()是数组，
+        lineRenderer.SetPosition(0,Vector3.zero);       //第一个参数是声明的第几个点，第二个参数是点的位置
+        lineRenderer.SetPosition(0, Vector3.one);
+        lineRenderer.SetPosition(0, Vector3.down);
+
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}
+移动
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class move : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+        Vector3 a = new Vector3 (horizontal,0,vertical);
+        //用转移组件移动
+        transform.Translate(a*5*Time.deltaTime);    //乘以Time.deltaTime可以转换成以秒为单位
+
+
+    }
+}
+人物一
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class player : MonoBehaviour
+{
+    //反向动力学
+    //先拿到球体的transform组件
+    public Transform target;
+
+    //声明变量
+    private Animator animator;
+    // Start is called before the first frame update
+    void Start()
+    {
+        //获取组件
+        animator = GetComponent<Animator>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //按F拾东西
+        if(Input.GetKeyDown(KeyCode.F))
+        {
+            //触发pickup参数
+            GetComponent<Animator>().SetTrigger("pick up");
+        }
+        //移动
+        //水平轴
+        float horizontal = Input.GetAxis("Horizontal");
+        //竖直轴
+        float vertical = Input.GetAxis("Vertical");
+        //设置向量
+        Vector3 dir = new Vector3(horizontal, 0, vertical);
+        //当用户按下方向键
+        if(dir != Vector3.zero)     //当方向向量不是0向量，是就是按下了方向键
+        {
+            //使人物面相向量      Quaternion是四元数的类     LookRotation是看向向量的方法
+            transform.rotation = Quaternion.LookRotation(dir);
+            //播放跑步动画
+            GetComponent<Animator>().SetBool("isrun", true);//前一个参数是要修改的名称，后一个是要修改为什么状态
+            //朝前方移动
+            transform.Translate(Vector3.forward * 2 * Time.deltaTime);
+        }
+        else
+        {
+            //播放站立动画
+            GetComponent<Animator>().SetBool("isrun", false);
+        }
+        //随时获得test参数数值，并打印出来
+        //Debug.Log(animator.GetFloat("test"));
+    }
+    void leftfoot()
+    {
+        Debug.Log("左脚");
+    }
+
+    void rightfoot()
+    {
+        Debug.Log("右脚");
+    }
+
+    //IK相关的都写到这个方法中
+    private void OnAnimatorIK(int layerIndex)//参数为动画控制的层数
+    {
+        //设置头部IK
+        animator.SetLookAtWeight(1);//设置头部IK权重
+        animator.SetLookAtPosition(target.position);//看向 物体的位置
+        //设置右手IK（位置权重）
+        animator.SetIKPositionWeight(AvatarIKGoal.RightHand,1);
+        //SetIKPositionWeight（）是设置某个部位的IK（除了头）权重、AvatarIKGoal是一个枚举，枚举出要设置的位置，第二个参数是权重
+        //旋转权重
+        animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 1);
+        //设置右手IK位置
+        animator.SetIKPosition(AvatarIKGoal.RightHand,target.position);//右手IK的指向物体
+        //设置右手IK旋转
+        animator.SetIKRotation(AvatarIKGoal.RightHand,target.rotation);
+    }
+
+}
+人物二
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;//需要该命名空间
+
+public class player2 : MonoBehaviour
+{
+    //声明一个导航组件的变量
+    private NavMeshAgent agent;
+    // Start is called before the first frame update
+    void Start()
+    {
+        //获取代理组件
+        agent = GetComponent<NavMeshAgent>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //如果按下鼠标左键
+        if (Input.GetMouseButtonDown(0))
+        {
+            //获取点击位置（用射线）
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);//从摄像机发射一条射线,括号内是鼠标位置
+            //声明一个碰撞信息类
+            RaycastHit hit;
+            //碰撞检测
+            if(Physics.Raycast(ray, out hit))
+            {
+                //点击位置
+                Vector3 point = hit.point;
+                //设置该位置为导航目标点
+                agent.SetDestination(point);
+            }
+
+        }
+    }
+}
+人物控制器控制移动
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class playercontrol : MonoBehaviour
+{
+    //用人物控制器控制移动
+
+    //声明一个组件类型的变量
+    private CharacterController player;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        //获取一下组件
+        player = GetComponent<CharacterController>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //获取两轴向
+        //水平轴
+        float horizontal = Input.GetAxis("Horizontal");
+        //竖直轴
+        float vertical = Input.GetAxis("Vertical");
+        //创建一个方向向量
+        Vector3 dir = new Vector3(horizontal, 0, vertical);
+        //输出看一下
+        //Debug.DrawRay(transform.position, dir,Color.red);
+        //朝该方向移动(括号内写朝的方向向量)
+        player.SimpleMove(dir*2);     //受重力影响
+        //player.Move(dir);         不受重力影响
+
+
+    }
+}
+射线
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ray : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        //创建一个射线
+        //方法一
+        //Ray ray = new Ray(Vector3.zero,Vector3.up); //两参数是射线起点，方向
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))//按下鼠标左键瞬间发射射线
+        {
+            //方法二
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);//从摄像机发射一条射线,括号内是鼠标位置
+            //声明一个碰撞信息类
+            RaycastHit hit;
+            //碰撞检测      执行完该行代码如果碰撞到的情况下，hit内就有内容了
+            bool res = Physics.Raycast(ray, out hit);//括号内第一个参数填射线类，第二个out后加空格和hit表示向hit中填写信息
+            if(res == true)
+            {
+                Debug.Log(hit.point);
+                transform.position = hit.point;
+            }
+            //多检测
+            RaycastHit[] hits = Physics.RaycastAll(ray, 100, 1 << 10);//100是距离,"1<<10"是只检测第十图层的物体。
+        }
+    }
+}
+到达后验证
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class test : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        string name = other.name;
+        Debug.Log(name+"已抵达");
+    }
+}
+人物控制器移动2
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class testmove : MonoBehaviour
+{
+    private CharacterController player;
+    // Start is called before the first frame update
+    void Start()
+    {
+        player = GetComponent<CharacterController>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+
+        Vector3 a = new Vector3(horizontal, 0, vertical);
+        player.SimpleMove(a*5);
+    }
+}
+触发器
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class tirgger : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name == "men")
+        {
+            Open();
+        }
+    }
+
+    public void Clear() //清除门（把门设置为非激活）
+    {
+        GameObject qiang = GameObject.Find("qiang");//找到该物体
+        qiang.SetActive(false);//设置为非激活
+    }
+
+    public void Open()    //该方法是播放把门升起的动画
+    {
+        GameObject qiang = GameObject.Find("qiang");
+        qiang.GetComponent<Animation>().Play("door");
+    }
+}
+动画
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Video;    //应引入该命名空间
+
+public class video : MonoBehaviour
+{
+    //声明一个组件类型的变量
+    private VideoPlayer player;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        //获取一下组件
+        player = GetComponent<VideoPlayer>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(Input.GetMouseButtonDown(2))     //暂停后再次点击不会暂停而是继续播放
+        {
+            player.Play();
+        }
+        if (Input.GetMouseButtonDown(0))
+        {
+            player.Pause();
+        }
+    }
+}

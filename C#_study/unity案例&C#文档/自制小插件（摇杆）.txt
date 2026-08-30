@@ -1,0 +1,74 @@
+脚本如下：
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.EventSystems;
+
+public class joystickhandle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
+{
+    //先拿到handle的位置
+    public Transform handleTransform;
+    //获取按下位置的坐标，由于是UI所以用vector2
+    private Vector2 Pointdownpos;
+    //由于handle不能一直拖拽，所以定一个范围,定一个最大半径
+    public float Maxradius;
+    //让摇杆与外界结合起来
+    private Vector2 moveinput;
+    //可以从外界获取moveinput的值
+    public Vector2 MoveInput => (moveinput);
+
+
+    public void OnPointerDown(PointerEventData eventData)   //手指点击
+    {
+       Pointdownpos = eventData.position;   //当前触摸操作的位置
+    }
+
+    public void OnDrag(PointerEventData eventData)          //拖拽
+    {
+        Vector2 dis = eventData.position - Pointdownpos;    //拖拽到的位置减去按下的位置，得到了一个方向
+
+        float clamp = Mathf.Clamp(dis.magnitude, 0f, Maxradius);//得到了实际可以拖动的半径
+        /*Unity中限制轴向移动范围Mathf.Clamp
+        Mathf.Clamp                    (magnitude是大小的意思）
+        在游戏中, 为了限制玩家的某一轴向的移动不超过一定的范围,可以用Mathf.Clamp来解决
+
+        Mathf.Clamp(float value, float min, float max)
+        在 Mathf.Clamp 中传入三个参数:value,min,max
+        限制 value的值在min,max之间,如果value大于max,则返回max,如果value小于min,则返回min,否者返回value;*/
+
+        //归一化一下dis，normalized是归一化的意思，就是由于dis可能很大，所以让它归一成该方向的单位向量，再乘以它的半径clamp
+        Vector2 normalized = dis.normalized * clamp;        //操作后仍是vector2类型的
+        //给handle一个相对与父物体的坐标让他能到达
+        handleTransform.localPosition = normalized;
+        //让拖拽的方向赋给moveinput
+        moveinput = dis.normalized;     //往上下WS键是X轴，左右AD是Y轴
+
+    }
+
+    public void OnPointerUp(PointerEventData eventData)     //手指抬起
+    {
+        handleTransform.localPosition = Vector2.zero;       //结束的时候再把其坐标设为0，就可以在松手的时候回去了
+        moveinput = Vector2.zero;       //结束的时候要置为0
+    }
+}
+
+
+使用方法：
+在unity的层级面板中
+Canvas->新建一个Panel在其下创建一个 joystick 图象作为摇杆背景，再在其下建一个 handle 图象作为摇杆移动的“杆”，把该脚本挂载到 joystick 图象上，在该脚本的“Handle Transform”处与handle 图象关联一下，在“Maxradius”中输入摇杆移动的最大半径。
+在控制人物移动的脚本里写上以下代码：
+public FloatingJoystick floatingJoystick;	//关联一下摇杆
+在Update中写：
+        //用虚拟摇杆来代替虚拟轴（要提前把Joystick Pack => Scripts => base => Joystick脚本中的
+        // private Vector2 input = Vector2.zero;改为 public Vector2 input = Vector2.zero;
+
+        float horizontal = floatingJoystick.input.x;     //原Input.GetAxis("Horizontal");
+        float vertical = floatingJoystick.input.y;       //原Input.GetAxis("Vertical");
+        Vector3 dir = new Vector3(horizontal,0,vertical);
+        if (dir != Vector3.zero)
+        {
+            transform.rotation = Quaternion.LookRotation(dir);
+            transform.Translate(Vector3.forward * 2 * Time.deltaTime);
+        }
+
+即可用摇杆控制人物移动。

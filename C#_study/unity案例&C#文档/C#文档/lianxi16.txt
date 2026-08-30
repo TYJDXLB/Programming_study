@@ -1,0 +1,201 @@
+Dian
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi15
+{
+    /// <summary>
+    /// 电脑类
+    /// </summary>
+    internal class Dian
+    {
+        //设定两个接口
+        public IUSB USB_1;
+        public IUSB USB_2;
+
+
+
+
+
+        private string brand;       //定义一个字段，用于存储电脑品牌。
+        public string Brand         //属性，用于封装字段  
+        {
+            get { return brand; }
+            set { brand = value; }
+        }
+        public Dian(string brand)   //一个构造方法用于接收品牌
+        {
+            this.brand = brand;
+        }
+        //电脑还需要一点行为，用普通方法
+        public void start()         //模拟开机
+        {
+            Console.WriteLine("{0}品牌的电脑正在开机中....",brand);
+        }
+        public void End()           //模拟关机
+        {
+            Console.WriteLine("{0}品牌的电脑正在关机中....",brand);
+        }
+
+
+
+    }
+}
+Fu
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi15
+{
+    internal class Fu
+    {
+        private string brand;
+        public string Brand
+        {
+            get { return brand; }
+            set { brand = value; }
+        }
+        public Fu(string brand)
+        {
+            this.brand = brand;
+        }
+
+
+
+    }
+}
+IUSB
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi15
+{
+    internal interface IUSB
+    {
+        //功能
+
+        /// <summary>
+        /// 读取数据
+        /// </summary>
+        void Read();
+        /// <summary>
+        /// 写入数据
+        /// </summary>
+        void Write(string content);
+
+
+    }
+}
+Program
+namespace lianxi15
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            //实例化U盘
+            U u1 = new U("金士顿16GB");
+            //u1.Write("ok");           这样可以。
+
+            //实例化一个硬盘
+            Yi y1 = new Yi("三星500GB");
+
+
+            //实例化两个电脑
+            Dian d1 = new Dian("联想");
+            d1.USB_1 = u1;          //把U盘插到USB_1接口中
+            d1.USB_2 = y1;          //把硬盘插到USB_2接口中
+
+            d1.start();
+
+            d1.USB_1.Write("洛天依");
+            d1.USB_1.Write("赛高！");
+            d1.USB_1.Read();
+
+            d1.USB_2.Write("勾指起誓");
+            d1.USB_2.Write("最棒！");
+            d1.USB_2.Read();
+
+            d1.End();
+
+            Console.WriteLine("---------------------");
+
+            Dian d2 = new Dian("戴尔");
+            d2.start();
+            d2.End();
+
+            Console.WriteLine("---------------------");
+
+
+
+
+        }
+    }
+}
+U
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi15
+{
+    internal class U : Fu,IUSB
+    {
+        /// <summary>
+        /// 模拟U盘的存储空间
+        /// </summary>
+        private string content;
+
+        public U(string brand) : base(brand)        //构造方法传递给父类
+        { }
+
+        public void Read()
+        {
+            Console.WriteLine("{0}品牌读取数据{1}", Brand, content);
+        }
+
+        public void Write(string content)
+        {
+            this.content += content;
+            Console.WriteLine("{0}存入数据{1}",Brand,content);
+        }
+    }
+}
+Yi
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi15
+{
+    internal class Yi : Fu, IUSB
+    {
+        private string content;
+        public Yi(string brand) : base(brand)
+        { }
+
+        public void Read()
+        {
+            Console.WriteLine("{0}品牌读取数据{1}", Brand, content);
+        }
+
+        public void Write(string content)
+        {
+            this.content += content;
+            Console.WriteLine("{0}存入数据{1}", Brand, content);
+        }
+    }
+}

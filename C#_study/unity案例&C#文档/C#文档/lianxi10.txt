@@ -1,0 +1,71 @@
+Cat
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi9
+{
+    internal class Cat:CatType
+    {
+        public override void Cry()
+        {
+            base.Cry();
+            Console.WriteLine("喵呜");
+        }
+    }
+}
+CatType
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi9
+{
+    internal class CatType
+    {
+        public virtual void Cry()           //加上virtual变成虚方法
+        {
+            Console.WriteLine("深呼吸，张开嘴，开始：");
+        }
+    }
+}
+Program
+namespace lianxi9
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            
+            Cat c=new Cat();
+            c.Cry();
+
+            Console.WriteLine();
+
+            Tiger t=new Tiger();
+            t.Cry();
+        }
+    }
+}
+Tiger
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi9
+{
+    internal class Tiger:CatType
+    {
+        public override void Cry()
+        {
+            base.Cry();
+            Console.WriteLine("咆哮");
+        }
+    }
+}

@@ -1,0 +1,43 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace OOP
+{
+    /// <summary>
+    /// 一个枚举
+    /// </summary>
+    public enum Gender
+    {
+        男,
+        女
+    }
+    /// <summary>
+    /// Person类描述人
+    /// </summary>
+    internal class Person
+    {
+        public string name;
+        private int age;
+        public Gender gender;
+
+        //用属性保护
+        public int Age
+        {
+            get { return age; }         //取值
+            set                         //赋值
+            {
+                if(value>100||value<0)
+                {
+                    age = 17;
+                }
+                else
+                {
+                    age = value;
+                } 
+            }
+        }
+    }
+}

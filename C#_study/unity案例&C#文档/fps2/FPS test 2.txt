@@ -1,0 +1,1677 @@
+change(换枪组件，挂载到weaponholder上）
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class change : MonoBehaviour
+{
+    private Transform ak47;
+    private Transform glock;
+    //判断是否为主武器
+    private bool iszhu = true;
+
+    [Header("图标设置")]
+    public Image GLOCK;
+    public Image AK47;
+    public Text gun;
+
+    private string name;
+
+    [Header("检测是否武器齐全(用假的判断)")]
+    public GameObject jiaAK;
+    public GameObject jiaGL;
+
+    private AudioListener listener;
+    void Start()
+    {
+        //获取到武器物体
+        ak47 = transform.FindChild("ak47");
+        glock = transform.FindChild("glock");
+        //调用听组件
+        listener = GetComponent<AudioListener>();
+    }
+    void Update()
+    {
+        if(jiaAK.gameObject.activeSelf&&jiaGL.gameObject.activeSelf)
+        {
+            if (iszhu == false && (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetAxis("Mouse ScrollWheel") > 0))
+            {
+                Debug.Log("按下了1");
+                ak47.gameObject.SetActive(true);
+                glock.gameObject.SetActive(false);
+                iszhu = true;
+                //设置UI
+                AK47.gameObject.SetActive(true);
+                GLOCK.gameObject.SetActive(false);
+                name = "AK47";
+                gun.text = name;
+                //暂时“失聪”一下可以不听见多余的开抢声
+                listener.enabled = false;
+                Invoke("relisten", 0.25f);
+            }
+            if (iszhu == true && (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetAxis("Mouse ScrollWheel") < 0))
+            {
+                Debug.Log("按下了2");
+                ak47.gameObject.SetActive(false);
+                glock.gameObject.SetActive(true);
+                iszhu = false;
+                //设置UI
+                AK47.gameObject.SetActive(false);
+                GLOCK.gameObject.SetActive(true);
+                name = "Glock";
+                gun.text = name;
+                //暂时“失聪”一下可以不听见多余的开抢声
+                listener.enabled = false;
+                Invoke("relisten", 0.25f);
+            }
+
+        }
+    }
+
+    //恢复听力
+    void relisten()
+    {
+        //激活听组件
+        listener.enabled = true;
+    }
+
+}
+---------------------------------------------------------------------------------------------------------------
+Danjia（挂载到DanJia--glock与DanJia--ak47上）
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class DanJia : MonoBehaviour
+{
+    [Header("关联假弹夹，判断是否捡到了弹夹")]
+    public GameObject jiadanjia;
+    //判断是否拿着武器
+    [Header("假武器")]
+    public GameObject jiagun;
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.tag == "player" && jiadanjia.gameObject.activeSelf == false && jiagun.gameObject.activeSelf == true)
+        {
+            Debug.Log("捡了弹夹");
+            jiadanjia.SetActive(true);
+            Destroy(gameObject);
+        }
+    }
+}
+---------------------------------------------------------------------------------------------------------------
+dun（挂载到player上）
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class dun : MonoBehaviour
+{
+    //蹲下与站立的高度
+    private float crouchh;
+    private float standarh;
+    //站立与蹲下的摄像机位置
+    private Vector3 camerapos;
+    private Vector3 cameracpose;
+    //实例化相机
+    private GameObject camera;
+    //获取人物控制器组件
+    private CharacterController cha;
+    //判断是否蹲下（初始为否）
+    private bool iscrouch = false;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        //找到相机物体（提前把摄像机的标签设置为MainCamera）
+        camera = GameObject.FindGameObjectWithTag("MainCamera");
+        //获取人物控制器组件
+        cha = GetComponent<CharacterController>();
+        //设置站立高度为人物高度
+        standarh = cha.height;
+        //设置蹲下高度为站立高度的一半
+        crouchh = cha.height / 2f;
+        //站立时相机的相对父物体的位置
+        camerapos = camera.transform.localPosition;
+        //蹲下时摄像机的位置相对于父物体的位置
+        cameracpose = new Vector3(camerapos.x,camerapos.y/16,camerapos.z);
+
+    }
+    //蹲下函数
+    void crouch()
+    {
+        //设置人物高度为蹲下时的高度
+        cha.height = crouchh;
+        //人物的中心为原本的一半
+        cha.center = new Vector3(0, -0.5f, 0);
+        //把摄像机的位置设置为蹲下时的位置
+        camera.transform.localPosition = cameracpose;
+    }
+    //起立函数
+    void getup()
+    {
+        //人物的位置设置为原本的位置
+        transform.position = new Vector3(transform.position.x,transform.position.y,transform.position.z);
+        //人物的中心设置为原本的中心
+        cha.center = new Vector3(0, 0, 0);
+        //高度设置为站立高度
+        cha.height = standarh;
+        //相机的位置设置为原本的位置
+        camera.transform.localPosition = camerapos;
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        if(cha.isGrounded)//如果在地上
+        {
+            if (Input.GetKeyDown(KeyCode.C))//如果按下c键
+            {
+                if (iscrouch == false)//如果没有蹲下
+                {
+                    crouch();//调用蹲下函数
+                    iscrouch = true;//把是否蹲下设置为是
+                }
+                else
+                {
+                    getup();//调用站立函数
+                    iscrouch = false;//把是否蹲下设置为否
+                }
+            }
+        }
+        else
+        {
+            getup();//调用站立函数
+            iscrouch = false;//把是否蹲下设置为否
+        }
+
+    }
+}
+-------------------------------------------------------------------------------------------------------
+GetGun（挂载到player上）
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class GetGun : MonoBehaviour
+{
+    //射线范围（捡东西的范围）
+    private int range = 2;
+    [Header("真正的ak")]
+    public GameObject ak47;
+    [Header("真正的glock")]
+    public GameObject glock;
+    [Header("假的（判断标准）ak47")]
+    public GameObject jiaak;
+    [Header("假的（判断标准）glock")]
+    public GameObject jiagl;
+    [Header("丢枪点")]
+    public Transform cassingpoint;
+    [Header("ak47模型")]
+    public GameObject AK47;
+    [Header("glock模型")]
+    public GameObject GLOCK;
+
+    [Header("假刀")]
+    public GameObject jiaknife;
+
+    [Header("UI设置")]
+    public Image Glock;
+    public Image Ak47;
+    public Image Knife;
+
+    //计时器
+    private float timer = 0;    //防止丢的时候枪全丢
+    private float time = 0;     //防止枪刚到手就掉
+    //丢枪最小时间
+    private float cd = 1f;
+    private float CD = 5f;
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //增加计时器
+        if (timer < cd)
+        {
+            timer += Time.deltaTime;
+        }
+        //增加计时器
+        if (time < CD)
+        {
+            time += Time.deltaTime;
+        }
+
+        //射线方向
+        Vector3 dir = Camera.main.transform.forward;
+        //射线检测
+        RaycastHit hit;
+        if(Physics.Raycast(Camera.main.transform.position, dir, out hit, range)&&Input.GetKeyDown(KeyCode.G))
+        {
+            //捡枪
+            //如果物体的标签为ak47，并且假ak没有（表示没有ak）
+            if(hit.transform.tag == "ak47"&&jiaak.gameObject.activeSelf == false)
+            {
+                Debug.Log("没有ak并且捡到了ak");
+                //清除射线射到的物体
+                Destroy(hit.collider.gameObject);
+                //把真假ak设置为true，表示已经捡到了ak
+                jiaak.SetActive(true);
+                ak47.SetActive(true);
+                //把真Glock设置为false
+                glock.SetActive(false);
+                //把ak的ui打开
+                Ak47.gameObject.SetActive(true);
+                //如果已经有glock
+                if (jiagl.gameObject.activeSelf == true)
+                {
+                    //把glock的ui关掉
+                    Glock.gameObject.SetActive(false);
+                }
+            }
+            //如果物体的标签为glock，并且假glock没有（表示没有glock）
+            if (hit.transform.tag == "glock" && jiagl.gameObject.activeSelf == false)
+            {
+                Debug.Log("没有glock并且捡到了glock");
+                //清除射线射到的物体
+                Destroy(hit.collider.gameObject);
+                //把真假glock设置为true，表示已经捡到了glock
+                jiagl.SetActive(true);
+                glock.SetActive(true);
+                //把真ak设置为false
+                ak47.SetActive(false);
+                //把glock的ui打开
+                Glock.gameObject.SetActive(true);
+                //如果已经有ak
+                {
+                    //把ak47的ui关掉
+                    Ak47.gameObject.SetActive(false);
+                }
+            }
+            //捡刀
+            if(hit.transform.tag == "knife")
+            {
+                //把假刀状态设置为true
+                jiaknife.SetActive(true);
+                //打开刀的ui
+                Knife.gameObject.SetActive(true);
+                //销毁刀模型
+                Destroy(hit.collider.gameObject);
+            }
+        }
+
+        //丢枪
+        if (Input.GetKeyDown(KeyCode.G)&&time>CD)
+        {
+            //清空计时器
+            time = 0;
+            //如果拿着ak
+            if (ak47.gameObject.activeSelf == true && timer > cd)
+            {
+                //实例化一个ak47模型
+                Instantiate(AK47, cassingpoint.position, cassingpoint.rotation);
+                //把真假ak设置为false
+                jiaak.SetActive(false);
+                ak47.SetActive(false);
+                //把ak47的ui关掉
+                Ak47.gameObject.SetActive(false);
+                //如果有glock
+                if (jiagl.gameObject.activeSelf == true)
+                {
+                    //把真glock设置为true
+                    glock.SetActive(true);
+                    //把glock的ui打开
+                    Glock.gameObject.SetActive(true);
+                }
+                //重置计时器
+                timer = 0;
+            }
+            if (glock.gameObject.activeSelf == true && timer > cd)//如果拿着glock
+            {
+                //实例化一个glock模型
+                Instantiate(GLOCK, cassingpoint.position, cassingpoint.rotation);
+                //把真假glock设置为false，表示已经扔了glock
+                jiagl.SetActive(false);
+                glock.SetActive(false);
+                //把glock的ui关掉
+                Glock.gameObject.SetActive(false);
+                //如果有ak
+                if (jiaak.gameObject.activeSelf == true)
+                {
+                    //把真ak设置为true
+                    ak47.SetActive(true);
+                    //把ak的ui打开
+                    Ak47.gameObject.SetActive(true);
+                }
+                //重置计时器
+                timer = 0;
+            }
+        }
+    }
+}
+-------------------------------------------------------------------------------------------------------
+Head（挂载到Head上）
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Head : MonoBehaviour
+{
+    //获取一下摄像机与人物的transform组件
+    private Transform head;
+    private Transform player;
+    // Start is called before the first frame update
+    void Start()
+    {
+        //获取一下摄像机与人物的transform组件
+        head = transform;
+        player = transform.parent;
+        //隐藏鼠标指针
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        Screen();
+    }
+
+    //转视角的代码
+    void Screen()
+    {
+        //获取鼠标水平轴数值
+        float mousex = Input.GetAxis("Mouse X");
+        if(mousex != 0)//如果鼠标在水平方向上有移动
+        {
+            player.Rotate(Vector3.up * mousex * 120 * Time.deltaTime);
+        }
+        //获取鼠标竖直轴数值
+        float mousey = Input.GetAxis("Mouse Y");
+        if (mousey != 0)//如果鼠标在竖直方向上有移动
+        {
+            head.Rotate(Vector3.left * mousey * 120 * Time.deltaTime);
+        }
+
+
+        //限制上下转头角度
+        if (Vector3.Angle(player.forward,head.forward)>60)
+        {
+            head.Rotate(Vector3.left * mousey * -120 * Time.deltaTime);
+        }
+    }
+}
+------------------------------------------------------------------------------------------------------
+PlayerC（挂载到player上）
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerC : MonoBehaviour
+{
+    //由于player身上没挂载动画控制器，所以动画代码都要到WeaponC里写
+
+    //获取人物控制器组件
+    private CharacterController cha;
+
+    //速度
+    private float speed;
+    //是否跑步判断
+    private bool isrun;
+    //走路速度
+    private float movespeed = 4f;
+    //跑步速度
+    private float runspeed = 7f;
+
+    //下蹲速度
+    private float dun = 1.5f;
+    //判断是否蹲下
+    private bool isdun = false;
+
+    //跳跃高度
+    private float jumphigh = 1f;
+    //重力加速度
+    private int g = 10;
+    private Vector3 up = Vector3.zero;
+
+
+    [Header("按键设置")]//设置一个标题
+    [SerializeField][Tooltip("奔跑按键")]public KeyCode run;//疾跑键位设置
+
+    [Header("声音设置")]
+    [SerializeField] private AudioSource aud;
+    public AudioClip walks;
+    public AudioClip runs;
+
+    void Start()
+    {
+        //获取一下组件
+        cha = GetComponent<CharacterController>();
+        aud = GetComponent<AudioSource>();
+
+        run = KeyCode.LeftShift;
+    }
+
+    void Update()
+    {
+        Run();
+        //isduning();
+        cha.Move(up * Time.deltaTime);
+        jump();
+    }
+    //移动函数
+    void Run()
+    {
+        //获取水平竖直轴的数值
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+        //运动方向
+        Vector3 move = (transform.right* horizontal + transform.forward* vertical).normalized;
+
+        //移动
+        isrun = Input.GetKey(run);
+        speed = isrun?runspeed:movespeed;//与下方代码效果一致
+        //if(Input.GetKey(run))
+        //{
+        //    cha.Move(move * runspeed * Time.deltaTime);
+        //}
+        //else
+        //{
+        //    cha.Move(move * movespeed * Time.deltaTime);
+        //}
+        if (cha.isGrounded&&(horizontal != 0 || vertical != 0))
+        {
+            ////移动声音播放
+            //aud.clip = isrun ? runs : walks;//设置行走或奔跑的声音
+            if (aud.isPlaying == false)
+            { 
+                if(isrun)
+                {
+                    aud.clip = runs;
+                    aud.Play();
+                }
+                else
+                {
+                    aud.clip = walks;
+                    aud.Play();
+                }
+            }
+        }
+        else
+        {
+            aud.Stop();
+        }
+
+        //蹲下
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            if(isdun == false)
+            {
+                isdun = true;             
+                Debug.Log("蹲下");
+            }
+            else
+            {
+                isdun = false;
+                Debug.Log("正常");
+            }
+        }
+        if(Input.GetKeyDown(KeyCode.Space)&&isdun == true)
+        {
+            isdun = false;
+            Debug.Log("正常");
+        }
+
+        if(isdun == true)
+        {
+            cha.Move(move * dun * Time.deltaTime);
+        }
+        else
+        {
+            cha.Move(move * speed * Time.deltaTime);
+        }
+    }
+    //跳跃函数
+    public void jump()
+    {
+        bool a = cha.isGrounded;
+        Debug.Log(a);
+        if(cha.isGrounded)
+        {
+            if(Input.GetButtonDown("Jump"))
+            {
+                up.y = Mathf.Sqrt(2*g*jumphigh);              
+            }
+
+            if(up.y < -1)
+                up.y = -1;
+        }
+        else
+        {
+            up.y -= g*Time.deltaTime;
+        }
+    }
+    //音频播放函数
+    void soundplay()
+    {
+        if (cha.isGrounded)
+            //移动声音播放
+            aud.clip = isrun ? runs : walks;//设置行走或奔跑的声音
+        if (aud.isPlaying)
+        {
+            aud.Play();
+        }
+    }
+
+}
+-------------------------------------------------------------------------------------------------------
+WeaponC（挂载到arms_assault_rifle_01上）
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class WeaponC : MonoBehaviour
+{
+    //发射点的位置
+    public Transform shooterpoint;
+    //一个弹夹的子弹量
+    private int bulletC = 31;
+    //射程
+    private int range = 100;
+    //总子弹量
+    public int bullectall = 300;
+    //当前子弹数
+    private int nowbulletC;
+
+    //射速(越小，设计速度越快）
+    private float firerate = 0.1f;
+    //计时器
+    private float timer = 0;
+
+    [Header("枪口特效，光，弹孔")]
+    //枪口火焰效果
+    public ParticleSystem fireflesh;
+    //枪口火光
+    public Light firelight;
+    //子弹击中粒子特效
+    public GameObject hitflesh;
+    //弹孔
+    public GameObject bullethole;
+
+    //音频组件
+    private AudioSource aud;
+    [Header("音频设置")]
+    public AudioClip ak47;
+    //换子弹的声音1
+    public AudioClip reload1;
+    //换子弹的声音2
+    public AudioClip reload2;
+    //瞄准声音
+    public AudioClip ami;
+
+
+    //获取动画组件
+    private Animator ani;
+
+    //判断是否正在装弹
+    private bool isreload;
+
+    //判断是否瞄准
+    private bool isaiming;
+
+    //判断是否蹲下
+    private bool isdun = false;
+
+    //关联一下假弹夹，判断是否捡到了弹夹
+    [Header("关联假弹夹")]
+    public GameObject jiadanjia;
+
+    //关联一下假刀
+    [Header("假刀")]
+    public GameObject jiaknife;
+    //判断是否挥刀
+    private bool ishui = false;
+    //判断是否刺刀
+    private bool isci = false;
+    //刀的攻击范围
+    private int kniferange = 1; 
+    //捡刀的范围
+    private int cassrange = 3;
+
+    //获取主摄像机
+    private Camera maincamera;
+    [Header("为后坐力")]
+    //获取player
+    public Transform player;
+    [Header("弹壳设置")]
+    //抛弹壳的位置
+    public Transform casingpoint;
+    //子弹壳预制体
+    public Transform casingprefb;
+
+    [Header("抛枪实例")]
+    public GameObject ak;
+
+    [Header("UI设置")]
+    public Image firep;
+    public Text bulletnow;
+    public Text shootmodle;
+    public Image AK47;
+    public Image glock;
+
+    //用枚举定义全自动与半自动
+    public enum ShootModle
+    { 
+        quan,
+        ban
+    }
+    //定义一个枚举类型
+    private ShootModle shooting;
+    //1表示全自动，0表示半自动
+    private int ModeNum = 1;
+    //模式名称（方便UI展示）
+    private string shootname;
+    //根据全自动半自动的按键不同，来判断射击状态
+    private bool shootinput;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        //获取一下主相机
+        maincamera = Camera.main;
+        //获取一下组件
+        aud = GetComponent<AudioSource>();
+        ani = GetComponent<Animator>();
+
+        //令初始现在子弹数等于一个弹夹的子弹数
+        nowbulletC = bulletC;
+
+        //ak47默认为全自动
+        shooting = ShootModle.quan;
+        shootname = "全自动";
+
+        //初始的时候调用一次
+        updateui();
+        glock.gameObject.SetActive(false);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //全半自动切换
+        if(Input.GetKeyDown(KeyCode.X) && ModeNum != 1)
+        {
+            ModeNum = 1;
+            shootname = "全自动";
+            shooting = ShootModle.quan;
+            shootmodle.text = shootname;
+        }
+        else if(Input.GetKeyDown(KeyCode.X) && ModeNum != 0)
+        {
+            ModeNum = 0;
+            shootname = "半自动";
+            shooting = ShootModle.ban;
+            shootmodle.text = shootname;
+        }
+        switch (shooting)
+        {
+            case ShootModle.quan:
+                //如果一直按住左键
+                shootinput = Input.GetMouseButton(0);
+                //设置为全自动射速
+                firerate = 0.1f;
+                break;
+            case ShootModle.ban:
+                //如果一下一下按左键
+                shootinput = Input.GetMouseButtonDown(0);
+                //设置为半自动射速
+                firerate = 0.2f;
+                break;
+        }
+
+        //开火
+        if(shootinput && nowbulletC>0)
+        {
+            Fire();
+        }
+        else
+        {
+            firelight.enabled = false;
+        }
+
+        //捡弹夹，加子弹
+        getdanjia();
+
+        //计时器
+        if(timer < firerate)
+        {
+            timer += Time.deltaTime;
+        }
+
+        //获取当前动画状态(获取第0层的动画状态）
+        AnimatorStateInfo info = ani.GetCurrentAnimatorStateInfo(0);
+        //两种换子弹动画
+        if(info.IsName("reload_ammo_left@assault_rifle_01")|| info.IsName("reload_out_of_ammo@assault_rifle_01"))
+        {
+            isreload = true;
+        }
+        else
+        {
+            isreload = false;
+        }
+        //换子弹更新UI
+        if(Input.GetKeyDown(KeyCode.R)&& nowbulletC< bulletC&& bullectall>0)
+        {
+            renewb();
+            updateui();
+        }
+
+        //瞄准
+        doaiming();
+
+        //检查枪支
+        check();
+
+        //奔跑动画
+        Isrun();
+
+        //走路动画
+        iswalk();
+
+        //蹲下
+        isduning();
+
+        //刀函数
+        knife();
+    }
+
+    //开火函数
+    void Fire()
+    {
+        //射速控制如果,计时器时间小于射速时间,子弹数为0,换子弹,跑步,挥刀,刺刀,则跳出该方法（不执行该方法）
+        if(timer < firerate||nowbulletC <= 0||isreload|| Input.GetKey(KeyCode.LeftShift)||ishui==true||isci==true) return;
+
+        //射击方向（向前）
+        Vector3 shootdir = shooterpoint.forward;
+        //碰撞检测（一定别忘了写）储存射线击中的信息
+        RaycastHit hit;
+        //Physics.Raycast()中的四个参数分别为：起点，方向，out hit，距离
+        if (Physics.Raycast(shooterpoint.position, shootdir,out hit,range))
+        {
+            //防止后退时射击会莫名其妙的打在自己身上，给人物添加一个player标签
+            if(hit.transform.tag != "player")
+            {
+                Debug.Log("打到了" + hit.transform.name);
+                //创建一个火花特效
+                //Quaternion.FromToRotation(Vector3.up,hit.normal)的意思是让该物体向上旋转到hit的方向
+                GameObject fire = Instantiate(hitflesh, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
+                //创建弹孔
+                GameObject hole = Instantiate(bullethole, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
+                //销毁弹孔和火花
+                Destroy(fire, 1f);
+                Destroy(hole, 3f);
+            }
+        }
+        if(!isaiming)//如果没瞄准的话
+        {
+            //射击动画(CrossFadeInFixedTime是对动画进行淡入淡出的方法,前面的参数是动画的名称，后面的参数是淡入淡出的时间)
+            ani.CrossFadeInFixedTime("fire@assault_rifle_01", 0.1f);
+        }
+        else
+        {
+            //瞄准下的射击动画
+            ani.CrossFadeInFixedTime("aim_fire@assault_rifle_01", 0.1f);
+        }
+
+        //实例化抛弹壳
+        Instantiate(casingprefb, casingpoint.transform.position, casingpoint.transform.rotation);
+        //设置音效为ak47的音效
+        aud.clip = ak47;
+        //播放音效
+        aud.Play();
+        //播放粒子效果(火光）
+        fireflesh.Play();
+        //显示灯光
+        firelight.enabled = true;
+        //减少子弹
+        nowbulletC--;
+        //调用UI更新函数
+        updateui();
+        //重置计时器
+        timer = 0;
+        //后坐力
+        //如果视角不超过最大视角的情况下
+        if (Vector3.Angle(player.forward, maincamera.transform.forward) < 60)
+        {
+            //让摄像机向上旋转模拟后座力
+            maincamera.transform.Rotate(Vector3.left * 90 * Time.deltaTime);
+        }     
+    }
+
+    //更新UI
+    public void updateui()
+    {
+        //子弹数UI
+        bulletnow.text = nowbulletC + "/" + bullectall;
+        //全半自动UI
+        shootmodle.text = shootname;
+        //显示枪械图标
+        AK47.gameObject.SetActive(true);
+    }
+
+    //捡弹夹，加子弹
+    void getdanjia()
+    {
+        if(jiadanjia.gameObject.activeSelf == true&&bullectall != 300)
+        {
+            if (bullectall >= 269)
+            {
+                bullectall = 300;
+            }
+            else
+            {
+                bullectall += 31;
+            }
+            //更新一下ui
+            updateui();
+            //把假弹夹设置为false
+            jiadanjia.SetActive(false);
+        }
+    }
+
+    //换子弹
+    void renewb()
+    {
+        //换子弹声音，动画
+        reload();
+        //计算需要填装的子弹数
+        int needb = bulletC - nowbulletC;
+        //如果总子弹数大于等于一个弹夹的子弹数
+        if(bullectall >= bulletC)
+        {
+            //总子弹数减去需要填装的子弹数
+            bullectall = bullectall - needb;
+            //把当前子弹数赋值为一个弹夹的子弹数
+            nowbulletC = bulletC;
+        }
+        else
+        {
+            //把当前子弹数赋值为总子弹数
+            nowbulletC = bullectall;
+            //令总子弹数为0
+            bullectall = 0;  
+        }
+    }
+
+    //换子弹声音，动画
+    void reload()
+    {
+        if(nowbulletC > 0)
+        {
+            //播放动画1
+            ani.Play("reload_ammo_left@assault_rifle_01", 0, 0);
+            aud.clip = reload1;
+            aud.Play();
+        }
+        if(nowbulletC == 0)
+        {
+            //播放动画2
+            ani.Play("reload_out_of_ammo@assault_rifle_01", 0, 0);
+            aud.clip = reload2;
+            aud.Play();
+        }
+    }
+
+    //检查枪支函数
+    void check()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            ani.SetTrigger("check");
+        }
+    }
+
+    //是否瞄准
+    void doaiming()
+    {
+        if(Input.GetMouseButtonDown(1))
+        {
+            //播放瞄准声音
+            aud.clip = ami;
+            aud.Play();
+        }
+        if(Input.GetMouseButton(1) && !isreload && !Input.GetKey(KeyCode.LeftShift))
+        {   
+            //瞄准  视野集中靠前  准星消失
+            //设置瞄准状态
+            isaiming = true;
+            ani.SetBool("aim", true);
+            //准星消失
+            firep.gameObject.SetActive(false);
+            //视野集中靠前(摄像机视野变小)
+            maincamera.fieldOfView = 30;
+        }
+        else
+        {
+            //非瞄准
+            isaiming = false;
+            ani.SetBool("aim", false);
+            //准星出现
+            firep.gameObject.SetActive(true);
+            maincamera.fieldOfView = 60;
+        }
+    }
+
+    //是否奔跑
+    void Isrun()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift)&&isdun == false)
+        {
+            ani.SetBool("isrun", true);
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            ani.SetBool("isrun", false);
+        }
+    }
+
+    //是否行走
+    void iswalk()
+    {
+        //获取水平竖直轴的数值
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+        if(horizontal != 0|| vertical != 0)
+        {
+            ani.SetBool("iswalk", true);
+        }
+        else
+        {
+            ani.SetBool("iswalk", false);
+        }
+    }
+
+    //是否蹲下
+    void isduning()
+    {
+        //蹲下
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            if (isdun == false)
+            {
+                isdun = true;
+                ani.SetBool("isdun", true);
+                Debug.Log("dun");
+            }
+            else
+            {
+                isdun = false;
+                ani.SetBool("isdun", false);
+                Debug.Log("zhan");
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Space) && isdun == true)
+        {
+            isdun = false;
+            ani.SetBool("isdun", false);
+            Debug.Log("zhan");
+        }
+    }
+
+    //刀的函数
+    void knife()
+    {
+        if (Input.GetKeyDown(KeyCode.Q)&&jiaknife.gameObject.activeSelf == true)
+        {
+            //攻击
+            //攻击方向
+            Vector3 knifedir = shooterpoint.forward;
+            //储存射击信息
+            RaycastHit hit;
+            if (Physics.Raycast(shooterpoint.position, knifedir, out hit, kniferange))
+            {
+                if (hit.transform.tag != "player")
+                {
+                    Debug.Log("挥刀了成功!挥到了" + hit.transform.name);
+                }
+            }
+            //动画
+            ani.SetBool("ishui", true);
+            ishui = true;
+            Invoke("renewhui", 0.28f);
+        }
+
+        if(Input.GetKeyDown(KeyCode.E) && jiaknife.gameObject.activeSelf == true)
+        {
+            //攻击
+            //攻击方向
+            Vector3 knifedir = shooterpoint.forward;
+            //储存射击信息
+            RaycastHit hit;
+            if (Physics.Raycast(shooterpoint.position, knifedir, out hit, kniferange))
+            {
+                if (hit.transform.tag != "player")
+                {
+                    Debug.Log("刺刀了成功!刺到了" + hit.transform.name);
+                }
+            }
+            //动画
+            ani.SetBool("isci", true);
+            isci = true;
+            Invoke("renewci", 2.12f);
+        }
+    }
+    //挥刀回复函数
+    void renewhui()
+    {
+        ani.SetBool("ishui", false);
+        ishui = false;
+    }
+    //刺刀回复函数
+    void renewci()
+    {
+        ani.SetBool("isci", false);
+        isci = false;
+    }  
+
+}
+---------------------------------------------------------------------------------------------------------------
+WeaponHeadC（挂载到arms_handgun_01上）
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class WeaponHandC : MonoBehaviour
+{
+    //发射点的位置
+    public Transform shooterpoint;
+    //一个弹夹的子弹量
+    private int bulletC = 10;
+    //射程
+    private int range = 15;
+    //总子弹量
+    private int bullectall = 51;
+    //当前子弹数
+    private int nowbulletC;
+
+    //射速(越小，设计速度越快）
+    private float firerate;
+    //计时器
+    private float timer = 0;
+
+    [Header("枪口特效，光，弹孔")]
+    //枪口火焰效果
+    public ParticleSystem fireflesh;
+    //枪口火光
+    public Light firelight;
+    //子弹击中粒子特效
+    public GameObject hitflesh;
+    //弹孔
+    public GameObject bullethole;
+
+    //音频组件
+    private AudioSource aud;
+    [Header("音频设置")]
+    public AudioClip glock;
+    //换子弹的声音1
+    public AudioClip reload1;
+    //换子弹的声音2
+    public AudioClip reload2;
+
+    //获取动画组件
+    private Animator ani;
+
+    //判断是否正在装弹
+    private bool isreload;
+
+    //判断是否瞄准
+    private bool isaiming;
+
+    //判断是否蹲下
+    private bool isdun = false;
+
+    //关联一下假弹夹
+    [Header("关联假弹夹，判断是否捡到了弹夹")]
+    public GameObject jiadanjia;
+
+    //关联一下假刀
+    [Header("假刀")]
+    public GameObject jiaknife;
+    //判断是否挥刀
+    private bool ishui = false;
+    //判断是否刺刀
+    private bool isci = false;
+    //刀的攻击范围
+    private int kniferange = 1;
+
+    //获取主摄像机
+    private Camera maincamera;
+    [Header("为后坐力")]
+    //获取player
+    public Transform player;
+    [Header("弹壳设置")]
+    //抛弹壳的位置
+    public Transform casingpoint;
+    //子弹壳预制体
+    public Transform casingprefb;
+
+    [Header("UI设置")]
+    public Image firep;
+    public Text bulletnow;
+    public Text shootmodle;
+    public Image GLOCK;
+    public Image ak47;
+
+    //用枚举定义全自动与半自动
+    public enum ShootModle
+    {
+        quan,
+        ban
+    }
+    //定义一个枚举类型
+    private ShootModle shooting;
+    //1表示全自动，0表示半自动
+    private int ModeNum = 1;
+    //模式名称（方便UI展示）
+    private string shootname;
+    //根据全自动半自动的按键不同，来判断射击状态
+    private bool shootinput;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        //获取一下主相机
+        maincamera = Camera.main;
+        //获取一下组件
+        aud = GetComponent<AudioSource>();
+        ani = GetComponent<Animator>();
+
+        //令初始现在子弹数等于一个弹夹的子弹数
+        nowbulletC = bulletC;
+
+        //glock默认为全自动
+        shooting = ShootModle.ban;
+        shootname = "半自动";
+
+        //初始的时候调用一次
+        updateui();
+        //关闭ak的图像
+        ak47.gameObject.SetActive(false);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //全半自动切换
+        if (Input.GetKeyDown(KeyCode.X) && ModeNum != 1)
+        {
+            ModeNum = 1;
+            shootname = "全自动";
+            shooting = ShootModle.quan;
+            shootmodle.text = shootname;
+        }
+        else if (Input.GetKeyDown(KeyCode.X) && ModeNum != 0)
+        {
+            ModeNum = 0;
+            shootname = "半自动";
+            shooting = ShootModle.ban;
+            shootmodle.text = shootname;
+        }
+        switch (shooting)
+        {
+            case ShootModle.quan:
+                //如果一直按住左键
+                shootinput = Input.GetMouseButton(0);
+                //设置为全自动射速
+                firerate = 0.3f;
+                break;
+            case ShootModle.ban:
+                //如果一下一下按左键
+                shootinput = Input.GetMouseButtonDown(0);
+                //设置为半自动射速
+                firerate = 0.5f;
+                break;
+        }
+
+        //开火
+        if (shootinput && nowbulletC > 0)
+        {
+            Fire();
+        }
+        else
+        {
+            firelight.enabled = false;
+        }
+
+        //捡弹夹，加子弹
+        getdanjia();
+
+        //计时器
+        if (timer < firerate)
+        {
+            timer += Time.deltaTime;
+        }
+
+        //获取当前动画状态(获取第0层的动画状态）
+        AnimatorStateInfo info = ani.GetCurrentAnimatorStateInfo(0);
+        //两种换子弹动画
+        if (info.IsName("reload_ammo_left@handgun_01") || info.IsName("reload_out_of_ammo@handgun_01"))
+        {
+            isreload = true;
+        }
+        else
+        {
+            isreload = false;
+        }
+        //换子弹更新UI
+        if (Input.GetKeyDown(KeyCode.R) && nowbulletC < bulletC && bullectall > 0)
+        {
+            renewb();
+            updateui();
+        }
+
+        //瞄准
+        doaiming();
+
+        //检查枪支
+        check();
+
+        //奔跑动画
+        Isrun();
+
+        //走路动画
+        iswalk();
+
+        //蹲下
+        isduning();
+
+        //刀函数
+        knife();
+    }
+
+    //开火函数
+    void Fire()
+    {
+        //射速控制如果,计时器时间小于射速时间,子弹数为0,换子弹,跑步,挥刀,刺刀,则跳出该方法（不执行该方法）
+        if (timer < firerate || nowbulletC <= 0 || isreload || Input.GetKey(KeyCode.LeftShift) || ishui == true || isci == true) return;
+
+        //射击方向（向前）
+        Vector3 shootdir = shooterpoint.forward;
+        //碰撞检测（一定别忘了写）储存射线击中的信息
+        RaycastHit hit;
+        //Physics.Raycast()中的四个参数分别为：起点，方向，out hit，距离
+        if (Physics.Raycast(shooterpoint.position, shootdir, out hit, range))
+        {
+            //防止后退时射击会莫名其妙的打在自己身上，给人物添加一个player标签
+            if (hit.transform.tag != "player")
+            {
+                Debug.Log("打到了" + hit.transform.name);
+                //创建一个火花特效
+                //Quaternion.FromToRotation(Vector3.up,hit.normal)的意思是让该物体向上旋转到hit的方向
+                GameObject fire = Instantiate(hitflesh, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
+                //创建弹孔
+                GameObject hole = Instantiate(bullethole, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
+                //销毁弹孔和火花
+                Destroy(fire, 1f);
+                Destroy(hole, 3f);
+            }
+        }
+        if (!isaiming)//如果没瞄准的话
+        {
+            //射击动画(CrossFadeInFixedTime是对动画进行淡入淡出的方法,前面的参数是动画的名称，后面的参数是淡入淡出的时间)
+            ani.CrossFadeInFixedTime("fire@handgun_01", 0.1f);
+        }
+        else
+        {
+            //瞄准下的射击动画
+            ani.CrossFadeInFixedTime("aim_fire@handgun_01", 0.1f);
+        }
+
+        //实例化抛弹壳
+        Instantiate(casingprefb, casingpoint.transform.position, casingpoint.transform.rotation);
+        //设置音效为ak47的音效
+        aud.clip = glock;
+        //播放音效
+        aud.Play();
+        //播放粒子效果(火光）
+        fireflesh.Play();
+        //显示灯光
+        firelight.enabled = true;
+        //减少子弹
+        nowbulletC--;
+        //调用UI更新函数
+        updateui();
+        //重置计时器
+        timer = 0;
+        //后坐力
+        //如果视角不超过最大视角的情况下
+        if (Vector3.Angle(player.forward, maincamera.transform.forward) < 60)
+        {
+            //让摄像机向上旋转模拟后座力
+            maincamera.transform.Rotate(Vector3.left * 90 * Time.deltaTime);
+        }
+    }
+
+    //更新UI
+    public void updateui()
+    {
+        //子弹数UI
+        bulletnow.text = nowbulletC + "/" + bullectall;
+        //全半自动UI
+        shootmodle.text = shootname;
+        //显示枪械图标
+        GLOCK.gameObject.SetActive(true);
+    }
+
+    //捡弹夹，加子弹
+    void getdanjia()
+    {
+        if (jiadanjia.gameObject.activeSelf == true&&bullectall != 51)
+        {
+            if (bullectall >= 41)
+            {
+                bullectall = 51;
+            }
+            else
+            {
+                bullectall += 10;
+            }
+            //更新一下ui
+            updateui();
+            //把假弹夹设置为false
+            jiadanjia.SetActive(false);
+        }
+    }
+
+    //换子弹
+    void renewb()
+    {
+        //换子弹声音，动画
+        reload();
+        //计算需要填装的子弹数
+        int needb = bulletC - nowbulletC;
+        //如果总子弹数大于等于一个弹夹的子弹数
+        if (bullectall >= bulletC)
+        {
+            //总子弹数减去需要填装的子弹数
+            bullectall = bullectall - needb;
+            //把当前子弹数赋值为一个弹夹的子弹数
+            nowbulletC = bulletC;
+        }
+        else
+        {
+            //把当前子弹数赋值为总子弹数
+            nowbulletC = bullectall;
+            //令总子弹数为0
+            bullectall = 0;
+        }
+    }
+
+    //换子弹声音，动画
+    void reload()
+    {
+        if (nowbulletC > 0)
+        {
+            //播放动画1
+            ani.Play("reload_ammo_left@handgun_01", 0, 0);
+            aud.clip = reload1;
+            aud.Play();
+        }
+        if (nowbulletC == 0)
+        {
+            //播放动画2
+            ani.Play("reload_out_of_ammo@handgun_01", 0, 0);
+            aud.clip = reload2;
+            aud.Play();
+        }
+    }
+
+    //检查枪支函数
+    void check()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            ani.SetTrigger("check");
+        }
+    }
+
+    //是否瞄准
+    void doaiming()
+    {
+        if (Input.GetMouseButton(1) && !isreload && !Input.GetKey(KeyCode.LeftShift))
+        {
+            //瞄准  视野集中靠前  准星消失
+            //设置瞄准状态
+            isaiming = true;
+            ani.SetBool("aim", true);
+            //准星消失
+            firep.gameObject.SetActive(false);
+            //视野集中靠前(摄像机视野变小)
+            maincamera.fieldOfView = 30;
+        }
+        else
+        {
+            //非瞄准
+            isaiming = false;
+            ani.SetBool("aim", false);
+            //准星出现
+            firep.gameObject.SetActive(true);
+            maincamera.fieldOfView = 60;
+        }
+    }
+
+    //是否奔跑
+    void Isrun()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift)&&isdun == false)
+        {
+            ani.SetBool("isrun", true);
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            ani.SetBool("isrun", false);
+        }
+    }
+
+    //是否行走
+    void iswalk()
+    {
+        //获取水平竖直轴的数值
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+        if (horizontal != 0 || vertical != 0)
+        {
+            ani.SetBool("iswalk", true);
+        }
+        else
+        {
+            ani.SetBool("iswalk", false);
+        }
+    }
+
+    //是否蹲下
+    void isduning()
+    {
+        //蹲下
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            if (isdun == false)
+            {
+                isdun = true;
+                ani.SetBool("isdun", true);
+                Debug.Log("dun");
+            }
+            else
+            {
+                isdun = false;
+                ani.SetBool("isdun", false);
+                Debug.Log("zhan");
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Space) && isdun == true)
+        {
+            isdun = false;
+            ani.SetBool("isdun", false);
+            Debug.Log("zhan");
+        }
+    }
+
+    //刀的函数
+    void knife()
+    {
+        if (Input.GetKeyDown(KeyCode.Q)&&jiaknife.gameObject.activeSelf == true)
+        {
+            //攻击
+            //攻击方向
+            Vector3 knifedir = shooterpoint.forward;
+            //储存射击信息
+            RaycastHit hit;
+            if (Physics.Raycast(shooterpoint.position, knifedir, out hit, kniferange))
+            {
+                if (hit.transform.tag != "player")
+                {
+                    Debug.Log("挥刀了成功!挥到了" + hit.transform.name);
+                }
+            }
+            //动画
+            ani.SetBool("ishui", true);
+            ishui = true;
+            Invoke("renewhui", 0.28f);
+        }
+
+        if (Input.GetKeyDown(KeyCode.E)&& jiaknife.gameObject.activeSelf == true)
+        {
+            //攻击
+            //攻击方向
+            Vector3 knifedir = shooterpoint.forward;
+            //储存射击信息
+            RaycastHit hit;
+            if (Physics.Raycast(shooterpoint.position, knifedir, out hit, kniferange))
+            {
+                if (hit.transform.tag != "player")
+                {
+                    Debug.Log("刺刀了成功!刺到了" + hit.transform.name);
+                }
+            }
+            //动画
+            ani.SetBool("isci", true);
+            isci = true;
+            Invoke("renewci", 2.12f);
+        }
+    }
+    //挥刀回复函数
+    void renewhui()
+    {
+        ani.SetBool("ishui", false);
+        ishui = false;
+    }
+    //刺刀回复函数
+    void renewci()
+    {
+        ani.SetBool("isci", false);
+        isci = false;
+    }
+}
+---------------------------------------------------------------------------------------------------------------
+WeaponWay（挂载到ak47与glock上）
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class weaponsWay : MonoBehaviour
+{
+    //设置为public可以在外边自己设置大小，这次为amout=0.05,smoothAmout=6,maxAmout=0.1
+    [Header("摇摆幅度")]
+    //摇摆幅度
+    public float amout;
+    [Header("摇摆平滑度")]
+    //摇摆的平滑度
+    public float smoothAmout;
+    [Header("摇摆最大值")]
+    //摇摆的最大值
+    public float maxAmout;
+    [Header("初始位置")]
+    //初始位置
+    [SerializeField] private Vector3 originPosition;
+
+    void Start()
+    {
+        //自身位置（相对于父物体的位置）
+        originPosition = transform.localPosition;
+    }
+
+
+    void Update()
+    {
+        //获取鼠标的值(要乘上摇摆值）
+        float x = -Input.GetAxis("Mouse X") * amout;
+        float y = -Input.GetAxis("Mouse Y") * amout;
+        //限制摆臂范围为两个最大值之间
+        x = Mathf.Clamp(x, -maxAmout, maxAmout);
+        y = Mathf.Clamp(y, -maxAmout, maxAmout);
+        //手臂位置变化的值
+        Vector3 finP = new Vector3(x, y, 0);
+        //lerp是指两个点之间的线性插值
+        transform.localPosition = Vector3.Lerp(transform.localPosition, originPosition + finP, Time.deltaTime * smoothAmout);
+    }
+}
+----------------------------------------------------------------------------------------------------------------
+zhiyin（挂载到Canvas中的zhiyin上）
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class zhiyin : MonoBehaviour
+{
+    // Update is called once per frame
+    void Update()
+    {
+        //如果第一个子物体为true，并且按下w键
+        if(Input.GetKeyUp(KeyCode.W)&& transform.GetChild(0).gameObject.activeSelf == true)
+        {
+            //把第一个子物体状态设置为false
+            transform.GetChild(0).gameObject.SetActive(false);
+            //把下一个状态设置为true
+            transform.GetChild(1).gameObject.SetActive(true);
+        }
+        if (Input.GetKeyUp(KeyCode.S) && transform.GetChild(1).gameObject.activeSelf == true)
+        {
+            //把第2个子物体状态设置为false
+            transform.GetChild(1).gameObject.SetActive(false);
+            //把下一个状态设置为true
+            transform.GetChild(2).gameObject.SetActive(true);
+        }
+        if(Input.GetKeyDown(KeyCode.A) && transform.GetChild(2).gameObject.activeSelf == true)
+        {
+            //把第3个子物体状态设置为false
+            transform.GetChild(2).gameObject.SetActive(false);
+            //把下一个状态设置为true
+            transform.GetChild(3).gameObject.SetActive(true);
+        }
+        if(Input.GetKeyDown(KeyCode.D) && transform.GetChild(3).gameObject.activeSelf == true)
+        {
+            //把第4个子物体状态设置为false
+            transform.GetChild(3).gameObject.SetActive(false);
+        }
+    }
+}
+----------------------------------------------------------------------------------------------------------------
+

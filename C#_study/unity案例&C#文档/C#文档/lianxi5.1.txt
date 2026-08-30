@@ -1,0 +1,32 @@
+﻿namespace lianxi5
+{
+    //枚举定义的位置
+    public enum week
+    {
+        星期一,
+        星期二,
+        星期三,
+        星期四,
+        星期五,
+        星期六,
+        星期日
+    }
+    public enum Gender
+    {
+        boy,
+        girl
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            week day = week.星期一;
+            Console.WriteLine(day);
+
+            Gender P1 = Gender.girl;
+            Gender P2 = Gender.boy;
+            Console.WriteLine("P1:{0}P2:{1}",P1,P2);
+
+        }
+    }
+}

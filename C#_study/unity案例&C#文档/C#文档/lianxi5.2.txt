@@ -1,0 +1,23 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace OOP
+{
+    public enum Color
+    {
+        red,
+        green
+    }
+
+    internal class Apple
+    {
+        //描述信息
+        public Color color;     //颜色
+        public int weight;      //重量
+        public string shape;    //形状
+
+    }
+}

@@ -1,0 +1,73 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi7
+{
+    /// <summary>
+    /// hero类，所有英雄的父类
+    /// </summary>
+    internal class Hero
+    {
+        public string name;
+        private string info;
+        private int attack;
+        private int defense;
+        private int speed;
+        private string nickname;
+
+        //方法
+        public Hero(){}         //空方法
+        public Hero(string _name, string _info, int _attack, int _defense, int _speed, string _nickname)
+        {
+            this.name = _name;
+            this.info = _info;
+            this.attack = _attack;
+            this.defense = _defense;
+            this.speed = _speed;
+            this.nickname = _nickname;
+        }
+
+        public void Hello()
+        {
+            Console.WriteLine("姓名：{0}，信息：{1}，攻击：{2}，防御：{3}，速度：{4}，昵称：{5}", this.name, this.info, this.attack, this.defense, this.speed, this.nickname);
+        }
+
+        //属性
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+        public string Info
+        {
+            get { return info; }
+            set { info = value; }
+        }
+        public int Attack
+        {
+            get { return attack; }
+            set { attack = value;}
+        }
+        public int Defense
+        {
+            get { return defense; }
+            set { defense = value;}
+        }
+        public int Speed
+        {
+            get { return speed; }
+            set { speed = value;}
+        }
+        public string Nickname
+        {
+            get { return nickname; }
+            set { nickname = value;}
+        }
+
+
+
+    }
+}

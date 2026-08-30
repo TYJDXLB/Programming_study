@@ -1,0 +1,92 @@
+MiFeng
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi18
+{
+    internal sealed class MiFeng
+    {
+    }
+}
+Person
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi18
+{
+    /// <summary>
+    /// 外部类
+    /// </summary>
+    internal class Person
+    {
+        private string name;
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+        public void Hellow()
+        {
+            Console.WriteLine("Person类.");
+        }
+        //写一个嵌套类
+        /// <summary>
+        /// 嵌套类
+        /// </summary>
+        public class Web
+        {
+            public string WebName;
+            public string WebUrl;
+
+            public void Show()
+            {
+                Console.WriteLine(WebName+"----"+WebUrl);
+            }
+        }
+
+    }
+}
+Program
+namespace lianxi18
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+             Person p=new Person();
+            p.Hellow();
+            //声明一个嵌套类的对象
+            Person.Web w=new Person.Web();
+            w.WebName = "严轲";
+            w.WebUrl = "洛天依";
+            w.Show();
+            //匿名类
+            var yk = new { Name = "严轲", Age = 18, Address = "周口" };                                                                                                             
+            Console.WriteLine("姓名：{0}，年龄：{1}，地址：{2}。",yk.Name, yk.Age, yk.Address);
+
+
+
+
+
+        }
+    }
+}
+ZiLei
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi18
+{
+    internal class ZiLei//:MiFeng       不能继承
+    {
+    }
+}

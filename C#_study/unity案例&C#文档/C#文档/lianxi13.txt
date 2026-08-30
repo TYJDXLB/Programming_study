@@ -1,0 +1,131 @@
+HardDisk
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi13
+{
+    internal class HardDisk:IUSB
+    {
+        public string content;
+
+        public void Read()
+        {
+            Console.WriteLine(content);
+        }
+
+        public void Write()
+        {
+            content = Console.ReadLine();
+        }
+    }
+}
+IUSB
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi13
+{
+    internal interface IUSB
+    {
+        void Read();
+        void Write();
+    }
+}
+Person
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi13
+{
+    internal class Person
+    {
+        private string name;
+        //常规属性
+        public string Name
+        {
+            get
+            {
+                if (name == null || name == "")
+                {
+                    return "当前名字为空";
+                }
+                else
+                {
+                    return name;
+                }
+            }
+            set { name = value; }
+        }
+
+        //自动属性
+        public int Age { get; set; }
+
+
+        
+    }
+}
+Program
+namespace lianxi13
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            /*
+            Person p1 = new Person();
+            p1.Name = "yanke";
+            p1.Age = 100;
+            Console.WriteLine(p1.Name);
+            Console.WriteLine(p1.Age);
+            */
+
+            UDisk u=new UDisk();
+            u.Write();
+            u.Read();
+            
+            HardDisk h=new HardDisk();
+            Console.WriteLine("写入：");    
+            h.Write();
+            Console.WriteLine("输出：");
+            h.Read();
+
+
+        }
+    }
+}
+UDisk
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi13
+{
+    internal class UDisk:IUSB
+    {
+        /// <summary>
+        /// U盘本身的存储空间.
+        /// </summary>
+        private string content;
+
+        public void Read()
+        {
+            Console.WriteLine(content);
+        }
+
+        public void Write()
+        {
+            content = "yankeyo";
+        }
+    }
+}

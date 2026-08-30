@@ -1,0 +1,110 @@
+﻿// 单行注释
+/* 多行注释 */
+/// 文档注释，用于给类，方法进行注释
+// 变量(先声明，在赋值，最后使用；使用小驼峰命名法命名)
+int score;
+score = 100;
+Console.WriteLine(score);  // 输出
+Console.ReadKey();  // ReadKey暂停程序，等待用户输入一个按键（可用作暂停程序）
+int aaa = 19;
+Console.WriteLine(aaa);
+double she = 1.89; // 双精度小数，精确到后15位
+Console.WriteLine(she);
+float q = 1;
+Console.WriteLine(q);
+float s = 1.1f;  // 单精度小数，精确到后7位
+Console.WriteLine(s);
+bool ok = true;
+string playerName = "apple"; // string类型用双引号
+string playerType = "xxxxxx";
+Console.WriteLine(playerType + playerName); // 相加拼接字符串
+char ww = '严'; // 单个字符，用单引号括住
+Console.WriteLine(ww);
+string name = "严轲";
+int age = 18;
+int Age = 10;
+Console.WriteLine(Age+age);
+// 运算符号 +, -, *, /, %(取模，取余数), ++, --
+Console.WriteLine(10f / 3); // 加上f可以带小数
+//求成绩练习
+float chinese = 104.2f;
+float english = 118;
+float math = 128;
+
+float total = chinese + english + math;
+float avg = total / 3;
+Console.WriteLine("总分"+total+"平均分"+avg);
+//练习结束
+Console.WriteLine(200 % 3);
+//练习365由几个100 10 1组成
+int zong= 365;
+int bai = zong / 100;
+int shi = (zong % 100) / 10;
+int ge = zong % 10;
+Console.WriteLine("百位" + bai + "十位" + shi + "个位" + ge);
+// ++i：先自增再参与运算；i++：先参与运算再自增
+int a = 100;
+//a++;后加加
+Console.WriteLine(a);
+int a = 1;
+int b = ++a; 
+int c = 3;
+int d = c++;
+Console.WriteLine("a:"+a+"b:"+b+"c:"+c+"d:"+d);
+int a = 2;
+int b = --a;
+int c = 4;
+int d = c--;
+Console.WriteLine("a:{0}b:{1}c:{2}d:{3}",a,b,c,d);
+int a = 10;
+a += 5;
+Console.WriteLine(a);
+// 关系运算符：<, <=, >, >=, ==, !=
+// 逻辑运算符：&&, ||, !
+Console.WriteLine(3 > 4);
+Console.WriteLine(10 > 1 && 2 < 10);
+Console.WriteLine(10 > 2 || 22 < 10);
+Console.WriteLine(!(4 > 3));
+int a = 2022;
+int b = a
+bool nain = 3 < 4;
+Console.WriteLine(nain);
+//判断是否是闰年练习
+int nian = 1880;
+bool runnian = (nian % 400 == 0) || (nian % 4 == 0 && nian % 100 != 0);
+Console.WriteLine(runnian);
+int nain = 2020;
+bool runnain = (nain % 400 == 0) || (nain % 4 == 0 && nain % 100 != 0);
+Console.WriteLine(runnain);
+//小练习  占位符 {0}, {1}, {2}....
+string name = "严轲";
+int age = 18;
+char grander = '男';
+Console.WriteLine("我的名字是{0}年龄是{1}性别是{2}",name,age,grander);
+Console.WriteLine("hellow word");
+Console.WriteLine("hellow word");
+string a = "hao";
+Console.ReadKey();
+string name;
+name = Console.ReadLine(); // 输入
+Console.WriteLine("我的名字是：{0}", name);
+//小测试
+string name;
+string gender;
+string age;
+
+Console.WriteLine("请输入您的姓名：");
+name = Console.ReadLine();
+Console.WriteLine("请输入您的性别：");
+gender = Console.ReadLine();
+Console.WriteLine("请输入您的年龄：");
+age = Console.ReadLine();
+
+Console.WriteLine("我的名字{0}，性别{1}，年龄{2}", name, gender, age);
+// 转义符：\   \n为换行，\t表示tab，\b表示将光标向前移动一格，遇到\n,\r停止，并从此位置输出后面的内容
+Console.WriteLine("我的名字是\"严轲\"，\n性别为\t男");
+Console.WriteLine("我的名字是@\b严轲");
+//\b是将光标从当前位置移动一个字符（遇到\n或\r停止）
+//并从此位置开始输出后面的字符。（一个汉字两个字符宽）
+Console.WriteLine(@"wodemingzi    shi    yan    ke");
+//练习项目1已到此为止

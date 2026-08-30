@@ -1,0 +1,22 @@
+﻿namespace lianxi7
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            XiaoA p1 = new XiaoA("小A", "我是小A", 87, 65, 76, "严");
+            p1.Hello();
+            p1.JiNengA();
+            p1.JiNengB();
+
+            XiaoB p2 = new XiaoB("小B", "我是小B", 56, 87, 23, "轲");
+            p2.Hello();
+            p2.JiNengC();
+            p2.JiNengD();
+
+
+            
+
+        }
+    }
+}

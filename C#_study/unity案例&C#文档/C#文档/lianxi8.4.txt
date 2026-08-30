@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lianxi8
+{
+    internal class CatType:Animal
+    {
+        public void YSNL()
+        {
+            Console.WriteLine("可以在晚上看到东西");
+        }
+    }
+}
