@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>渲染柱形图</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        li {
+            list-style: none;
+        }
+
+        .box {
+            margin: 50px auto;
+            width: 600px;
+            height: 250px;
+            border-left: 2px solid rgb(172, 172, 172);
+            border-bottom: 2px solid rgb(172, 172, 172);
+        }
+        .box ul:nth-child(1) {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            /* ul再box中不会自动撑开，要手动设置盒子大小，从而使align-items: flex-end;生效 */
+            width: 600px;
+            height: 250px;
+        }
+        .box ul:nth-child(1) li {
+            position: relative;
+            width: 50px;
+            /* height: 100px; */
+            background-color: pink;
+        }
+        .box ul:nth-child(1) li span {
+            position: absolute;
+            top: -21px;
+            display: inline-block;
+            width: 50px;
+            text-align: center;
+        }
+
+        .box ul:nth-child(2) {
+            display: flex;
+            justify-content: space-around;
+            width: 600px;
+        }
+    </style>
+</head>
+<body>
+    <!-- <div class="box">
+        <ul>
+            <li style="height: 100px;">
+                <span>100</span>
+            </li>
+            <li style="height: 150px;">
+                <span>150</span>
+            </li>
+            <li style="height: 200px;">
+                <span>200</span>
+            </li>
+            <li style="height: 168px;">
+                <span>168</span>
+            </li>
+        </ul>
+        <ul>
+            <li>第一季度</li>
+            <li>第二季度</li>
+            <li>第三季度</li>
+            <li>第四季度</li>
+        </ul>
+    </div> -->
+
+    <script>
+        // let quarter1 = +prompt('请输入第一季度数据：')
+        // let quarter2 = +prompt('请输入第二季度数据：')
+        // let quarter3 = +prompt('请输入第三季度数据：')
+        // let quarter4 = +prompt('请输入第四季度数据：')
+        // 如果多的话直接写不方便，因此用for循环，把数据存放到一个数组中
+        let scores = []
+        for (let i = 1; i <= 5; i++) { // 通过修改i的最大值可以修改季度数
+            scores.push(+prompt(`请输入第${i}季度数据：`))
+        }
+        // console.log(scores)
+        document.write(`<div class="box">`)
+
+            document.write(`<ul>`)
+                for (let i = 0; i < scores.length; i++) {
+                    document.write(`
+                    <li style="height: ${scores[i]}px;">
+                        <span>${scores[i]}</span>
+                    </li>
+                    `)
+                }
+            document.write(`</ul>`)
+
+            document.write(`<ul>`)
+                for (let i = 0; i < scores.length; i++) {
+                    document.write(`<li>第${i+1}季度</li>`)
+                }
+            document.write(`</ul>`)
+
+        document.write(`</div>`)
+    </script>
+</body>
+</html>

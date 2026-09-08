@@ -292,3 +292,22 @@ expect [异常类型 as 变量名]
 #     print("ERROR!")
 # finally:
 #     print("运行结束!!!")
+
+# 异常上报
+def fun1():
+    print("fun1...running...")
+    fun2()
+
+def fun2():
+    print("fun2...running...")
+    fun3()
+
+def fun3():
+    print("fun3...running...")
+    print(bug)  #fun3中的错误会上报给fun2，再上报给fun1，最终在主程序中报错
+
+if __name__ == "__main__":
+    try:
+        fun1()
+    except Exception as e:
+        print("wrong!")
