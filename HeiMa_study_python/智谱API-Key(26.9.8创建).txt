@@ -1,0 +1,2 @@
+API-Key（AI-Stuydy）: 064639e7e7024f4bb6f535381dd1ce20.BbEG29awUCHMBKej
+已配置环境变量：ZAI_API_KEY	(后续命名不要用-)
