@@ -1,4 +1,4 @@
-# from math import fabs
+# 学习使用API调用大模型，以OpenAI兼容形式调用
 
 import os
 from zai import ZhipuAiClient

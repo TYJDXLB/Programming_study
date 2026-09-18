@@ -64,3 +64,9 @@ st.write(say)
 # 单选按钮
 gender = st.radio("请选择性别：", ["boy", "girl", "Uknown"], index=1) #index表示默认索引
 st.write(f"您的性别为：{gender}")
+
+# 按钮
+if st.button("按下为真", icon="🙆", type="tertiary"): # type属性：primary红色，secondary默认透明，tertiary没有边框透明
+    st.write("True")
+else:
+    st.write("False")

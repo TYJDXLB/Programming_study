@@ -1,0 +1,9 @@
+{
+    "name": "张三",
+    "age": 21,
+    "gender": "boy",
+    "hobbies": [
+        "reading",
+        "swiming"
+    ]
+}

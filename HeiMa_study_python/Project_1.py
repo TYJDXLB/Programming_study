@@ -8,8 +8,8 @@
 # # 更上一层楼 #
 # # # # # # #  #
 # """)
-# replace语句：替换字符串中的某个字符
-print("说~的~道~理~".replace("~", r"!")) # 说!的!道!理! 
+# # replace语句：替换字符串中的某个字符
+# print("说~的~道~理~".replace("~", r"!")) # 说!的!道!理! 
 """
 ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 """
@@ -356,7 +356,8 @@ continue语句，表示跳出本次循环，继续执行下次循环
 # print(ss)   #Hello-Python-Hello-World
 # #原始字符串是不变的，因为字符串是不可变的，以上诸多方法只是生成了新的字符串并储存
 # print(s)    #Hello-Python-Hello-World
-
+# ss = "aabbccaa"
+# print(ss.rstrip("aa")) # rstrip只切右边，lstrip只切左边
 
 # #练习20:
 # # 1.1
@@ -1197,8 +1198,8 @@ from 模块名 import *                    引入某个模块的全部方法，�
 # print(PI)
 # log_separator4()
 
-#包(package): 本质就是一个文件夹,该文件中可以包含若干Python模块(.py文件),文件夹下还包含了一个__init__.py文件(用来描述当前包的信息)
-#作用:模块文件较多的时候,用来管理多个模块(包的本质也是一个模块)
+# 包(package): 本质就是一个文件夹,该文件中可以包含若干Python模块(.py文件),文件夹下还包含了一个__init__.py文件(用来描述当前包的信息)
+# 作用:模块文件较多的时候,用来管理多个模块(包的本质也是一个模块)
 """                                     调用方式
 import 包名.模块名                       包名.模块名.方法名()
 from 包名 import 模块名                  模块名.方法名()
@@ -1206,18 +1207,18 @@ from 包名 import *                       模块名.方法名()
 from 包名.模块名 import 方法名            方法名()
 from 包名.模块名 import *                 方法名()
 """
-#导入包的模块
+# # 导入包的模块
 # import utils_package.my_module1
-#调用
+# # 调用
 # utils_package.my_module1.log_separator1()
 # print(utils_package.__author__)
 
-#导入模块中的方法
-#from utils_package.my_module1 import log_separator1,log_separator2   #相对路径导入
-#绝对路径导入(切记绝对路径不能从和.venv同级的文件夹开始),包要么放在最外层用相对路径导入,要么放内层用绝对路径
-from z_study.utils_package.my_module1 import log_separator1,log_separator2  
-#调用
-log_separator2()
+# # 导入模块中的方法
+# # from utils_package.my_module1 import log_separator1,log_separator2   #相对路径导入
+# # 绝对路径导入(切记绝对路径不能从和.venv同级的文件夹开始),包要么放在最外层用相对路径导入,要么放内层用绝对路径
+# from z_study.utils_package.my_module1 import log_separator1,log_separator2  
+# #调用
+# log_separator2()
 
 # #注:如果要通过from 包名 import * 的方式导入包下面所有的模块,需要在__init__.py 文件中添加 __all__ = []
 # from utils_package import * 
@@ -1233,6 +1234,68 @@ log_separator2()
 # print(next(g)) # first
 # print(next(g)) # second
 # print(next(g)) # third
+
+# 文件读写操作
+"""
+open("文件地址(相对地址和绝对地址均可)","模式",encoding="UTF-8"（编码类型）)
+模式：r是只读，w是只写(用w写的话，如果文件不存在可以创建它，如果原文件已存在则会清空原文件再写入)，a是附加，
+    r+可读可写（，要先读后写不然会覆盖源文件），a+可读可写（不会覆盖原文件，但是不能直接读因为进入文本指针默认在尾部读不了，可以调用seek(0)从头读起）
+"""
+# f = open("data.txt","r",encoding="utf-8")  
+# content = f.read()
+# print(content)
+# f.close()   #记得关闭文件\
+# 为避免读写文件的时候出现故障，可以把操作放到try中，关闭文档代码放到finally里面
+# try:
+#     content = f.read()
+# finally:
+#     f.close()
+
+# with open("data.txt","r",encoding="utf-8") as f:    #用with语句(上下文管理器)无需关闭文件
+#     print(f.readline()) #打印一行
+
+#     content = f.read()
+#     print(content)  #全部打印
+
+#     print(f.readlines())    #返回一个列表，列表里的每个元素都是其中一行。
+#     lines = f.readlines()    #可跟着for循环使用
+#     for i in lines:
+#         print(i)
+
+
+# with open("./poem.txt","w",encoding="utf-8") as f:  #创建文件的时候相对地址要加上./
+#     f.write("我欲乘风飞去，\n又恐琼楼玉宇，\n高处不胜寒，\n")
+
+# with open("poem.txt","a+",encoding="utf-8") as f:   #打开文件的时候相对地址不要加上./
+#     f.write("起舞弄清影，\n何似在人间。")
+#     f.seek(0)   #回到首个字符
+#     print(f.read())
+
+# # 读写json文件，由于json文件是最常用的储存数据的文件，因此python内置了json库用于json文件的处理
+# import json # 引入json库
+
+
+# obj = { # 用类似json格式的字典进行数据储存
+#     "name": "张三",
+#     "age": 21,
+#     "gender": "boy",
+#     "hobbies": ["reading", "swiming"]
+# }
+# # 文件序列化（对象转化为json文件）
+# with open("resource/User.json", "w", encoding="utf-8") as f:
+#     # 第一个参数为对象，第二个为写入到哪里,第三个为关闭ascii码自动转译,第四个表示缩进几格
+#     json.dump(obj, f, ensure_ascii=False, indent=4)
+
+# # 文件反序列化（读取json文件到对象）
+# with open("resource/User.json", "r", encoding="utf-8") as f:
+#     User = json.load(f)
+#     print(User)
+#     print(type(User))
+
+# # 获取当前系统时间
+# from datetime import datetime
+# print(datetime.now()) # 2026-09-14 13:00:35.711054
+# print(datetime.now().strftime("%Y-%m-%d_%H:%M:%S")) # 2026-09-14_13:00:35
 
 """
 ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————

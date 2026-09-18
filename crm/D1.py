@@ -265,8 +265,13 @@ open("文件地址(相对地址和绝对地址均可)","模式",encoding="UTF-8"
 # content = f.read()
 # print(content)
 # f.close()   #记得关闭文件
+# 为避免读写文件的时候出现故障，可以把操作放到try中，关闭文档代码放到finally里面
+# try:
+#     content = f.read()
+# finally:
+#     f.close()
 
-# with open("data.txt","r",encoding="utf-8") as f:    #用with语句无需关闭文件
+# with open("data.txt","r",encoding="utf-8") as f:    #用with语句(上下文管理器)无需关闭文件
 #     print(f.readline()) #打印一行
 
 #     content = f.read()
@@ -278,16 +283,16 @@ open("文件地址(相对地址和绝对地址均可)","模式",encoding="UTF-8"
 #         print(i)
 
 
-# with open("./poem.txt","w",encoding="utf-8") as f:  #创建文件的时候相对地址要加上./
+# with open("./poem.txt","w",encoding="utf-8") as f:
 #     f.write("我欲乘风飞去，\n又恐琼楼玉宇，\n高处不胜寒，\n")
 
-# with open("poem.txt","a+",encoding="utf-8") as f:   #打开文件的时候相对地址不要加上./
+# with open("poem.txt","a+",encoding="utf-8") as f: # ./可以省略
 #     f.write("起舞弄清影，\n何似在人间。")
 #     f.seek(0)   #回到首个字符
 #     print(f.read())
 
 
-#捕捉异常
+# # 捕捉异常
 # try:
 #     user_weight = float(input("请输入您的体重(KG)："))
 #     user_height = float(input("请输入您的身高(M)："))
