@@ -18,7 +18,7 @@ print("&&&页面已加载&&&")
 
 # 设置页面配置
 st.set_page_config(
-    page_title="AI 智能伴侣", # 网页标签标题
+    page_title="AI 智能聊天助手", # 网页标签标题
     page_icon="🤖", # 网页标签logo
     #布局
     layout="wide", # 页面效果为整个区域
@@ -28,7 +28,7 @@ st.set_page_config(
 )
 
 # 大标题
-st.title("AI 智能伴侣")
+st.title("AI 智能聊天助手")
 # logo
 st.logo("./media/logo.png", size="large") # 切记一定要在AI_parnter文件目录下运行streamli，cd进该文件夹
 
@@ -106,7 +106,7 @@ prompt_system = f"""
         5. 用符合伴侣性格的方式进行对话
         6. 回复的内容要充分体现伴侣的性格特征
         7. 匹配用户的语言
-    伴侣性格：
+    伴侣兼助手性格：
         * %s
     你必须严格遵守上述规则来回复用户
 """
@@ -177,7 +177,7 @@ with st.sidebar:
     st.divider()
 
     # 伴侣信息
-    st.subheader("伴侣信息")
+    st.subheader("助手信息")
     name = st.text_input("昵称", placeholder="请输入昵称", value=st.session_state.ai_information["iname"]) # value属性为，文本框上默认显示的值
     if name: # 把信息储存在session_state.ai_information中
         st.session_state.ai_information["iname"] = name

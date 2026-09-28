@@ -54,7 +54,7 @@
 1. 第一次使用 git，配置用户信息
 
    1. 配置用户名：`git config --global user.name "your name"`;
-   2. 配置用户邮箱：`git config --global user.email "youremail@github.com"`;
+   2. 配置用户邮箱：`git config --global user.email "youremail"`;
 
 2. > 查询配置信息
 
