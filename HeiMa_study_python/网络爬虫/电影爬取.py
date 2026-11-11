@@ -6,20 +6,38 @@
 import requests
 import csv
 from lxml import html
+import re
 
 
 # 常量(一般全大写)
-BC_URL = "https://ssr1.scrape.center"
+BC_BASE_URL = "https://ssr1.scrape.center" # 直接访问是第一页
 # 模拟请求头，让网站返回信息（按F12在网络处获取）模拟真实请求防止某些网站反爬
 HEADERS = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0"}
 MOVIE_LIST_FILE = "./网络爬虫/CSV_data/电影数据.csv"
 
 
+# 数据处理（封装到函数中）
+def optimize_names(name):
+    return re.sub(r" - ", "（", name)+"）"
+
+def optimize_dates(date):
+    if date:
+        return re.search(r"\d{4}-\d{2}-\d{2}", date).group()
+
+def optimize_tags(tag):
+    return tag.replace(", ", "/")
+
+def optimize_cost_times(cost_time):
+    zmin = re.search(r"\d+", cost_time).group()
+    h = int(zmin) // 60
+    m = int(zmin) % 60
+    return f"{h}小时{m}分钟"
+
 # 向电影详细信息页面发送请求，获得详细信息
-def get_movie_info(url):
+def get_movie_info(url, num):
     # 发送请求
     movie_resp = requests.get(url, timeout=60, headers=HEADERS)
-    print(f"发送请求{url}，获取电影详情中。。。")
+    print(f"发送请求{url}，获取第{num}页电影详情中。。。")
     print(f"状态码：{movie_resp.status_code}；返回文本长度：{len(movie_resp.text)}") # 判断请求状况，如果文本长度为0则为爬取失败
     movie_doc = html.fromstring(movie_resp.text)
     # 解析数据  following-sibling::text()[1]后面第一个文本
@@ -30,13 +48,12 @@ def get_movie_info(url):
     scores = movie_doc.xpath('//*[@id="detail"]/div[1]/div/div/div[1]/div/div[3]/p[1]/text()')
     directors = movie_doc.xpath('//*[@id="detail"]/div[2]/div/div/div/div/div/p/text()')
     discriptions = movie_doc.xpath('//*[@id="detail"]/div[1]/div/div/div[1]/div/div[2]/div[4]/p/text()')
-    # print(names, dates, tags, cost_times, scores, directors, discriptions)
     # 定义字典用于储存数据
     movie_info_dic = {
-        "电影名": names[0].strip() if names else '',
-        "上映时间": dates[0].strip() if dates else '', 
-        "类型": ", ".join(t.strip() for t in tags) if tags else '', # "".join()方法是用双引号里面的符号隔开几个字符
-        "时长": cost_times[0].strip() if cost_times else '', 
+        "电影名": optimize_names(names[0].strip() if names else ''),
+        "上映时间": optimize_dates(dates[0].strip() if dates else ''), 
+        "类型": optimize_tags(", ".join(t.strip() for t in tags) if tags else ''), # "".join()方法是用双引号里面的符号隔开几个字符
+        "时长": optimize_cost_times(cost_times[0].strip() if cost_times else ''), 
         "评分": scores[0].strip() if scores else '', 
         "导演": directors[0].strip() if directors else '', 
         "简介": discriptions[0].strip() if discriptions else ''
@@ -53,30 +70,29 @@ def save_all_movies(infos):
 
 # 主函数
 def main():
-    # 1.发送请求，解析数据获取电影列表
-    response = requests.get(BC_URL, timeout=60, headers=HEADERS)  # timeout=60指超过60s则请求超时
-    print(f"状态码：{response.status_code}；返回文本长度：{len(response.text)}") # 判断请求状况，如果文本长度为0则为爬取失败
-    document = html.fromstring(response.text)
-    movie_list = document.xpath("//*[@id='index']/div[1]/div[1]/div")
-
-    # 2.遍历列表获取详细信息
-        # 定义一个列表用于储存信息
+    # 定义一个列表用于储存信息
     movie_infos = []
-    for movie in movie_list:
-        movie_url = movie.xpath("./div/div/div[2]/a/@href") # xpath返回的项目封装成一个列表，拼成一个完整的网址
-        # 再向电影详细信息页面发送请求，获得详细信息
-        if movie_url:
-            movie_info_url = BC_URL + movie_url[0] # movie_url是一个只有一个数据的列表
-            movie_infos.append(get_movie_info(movie_info_url))
 
-    # 3. 将数据储存在CSV文件中
-    print("以获取所有电影数据，保存数据到CSV文件中。。。")
+    # 循环遍历页码得到前10页数据
+    for page_num in range(1, 11):
+        # 发送请求，解析数据获取电影列表
+        BC_URL = BC_BASE_URL + f"/page/{page_num}" # 按照网页结构拼接正确的网页
+        response = requests.get(BC_URL, timeout=60, headers=HEADERS)  # timeout=60指超过60s则请求超时
+        print(f"状态码：{response.status_code}；返回文本长度：{len(response.text)}") # 判断请求状况，如果文本长度为0则为爬取失败
+        document = html.fromstring(response.text)
+        movie_list = document.xpath("//*[@id='index']/div[1]/div[1]/div")
+
+        # 遍历列表获取详细信息
+        for movie in movie_list:
+            movie_url = movie.xpath("./div/div/div[2]/a/@href") # xpath返回的项目封装成一个列表，拼成一个完整的网址
+            # 再向电影详细信息页面发送请求，获得详细信息
+            if movie_url:
+                movie_info_url = BC_BASE_URL + movie_url[0] # movie_url是一个只有一个数据的列表
+                movie_infos.append(get_movie_info(movie_info_url, page_num))
+
+    # 将数据储存在CSV文件中
+    print("已获取所有电影数据，保存数据到CSV文件中。。。")
     save_all_movies(movie_infos)
-
-    # 4.数据处理
-
-
-
 
 
 # 当该文件直接运行的时候执行主函数，当作为模块导入时不执行主函数
